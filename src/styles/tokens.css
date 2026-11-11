@@ -56,4 +56,7 @@
   --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace;
   --text-stat: clamp(2.5rem, 2rem + 2vw, 3.5rem);  /* 40 to 56 */
   --radius-full: 999px;
+
+  /* Added in site-1-09 */
+  --toc-width: 12rem;
 }

@@ -1,131 +1,114 @@
 # Handoff
 
-- **Item:** site-1-07
+- **Item:** site-1-09
 - **Status:** done
 - **Files:**
-  - `src/assets/canvasser/logger-interaction-model.png` (replaced, 725,176 bytes)
-  - `public/fonts/InterVariable.woff2` (replaced, 101,796 bytes)
-  - `src/data/canvasser.ts` (one alt string)
-  - `src/pages/404.astro` (created)
+  - `src/components/CaseStudyNav.astro` (created)
+  - `src/pages/work/canvasser.astro` (head script, toc attributes, `.cs-body`, page CSS)
+  - `src/styles/tokens.css` (appended `--toc-width: 12rem`)
   - `docs/BUILD-LOG.md`
   - `docs/CLAUDE-HANDOFF.md`
-- **Lighthouse table:**
-
-  | Run | Performance | Accessibility | Best Practices | SEO |
-  |---|---|---|---|---|
-  | Home mobile | 100 | 100 | 100 | 100 |
-  | Home desktop | 100 | 100 | 100 | 100 |
-  | Case study mobile | 100 | 100 | 100 | 100 |
-  | Case study desktop | 100 | 100 | 100 | 100 |
-
-- **QA findings:** none. Every score is on or above the target (Accessibility 100, SEO 100, Best Practices 95+, Performance 90+ on mobile).
 - **Check results:**
-  1. pass. `npm run build` exited 0. No warnings. It built `/404.html`, `/work/canvasser/index.html` and `/index.html`. Raw tail:
+  1. pass. `npm run build` exited 0. No warnings.
      ```
-      generating static routes 
-     15:31:24   ├─ /404.html (+52ms) 
-     15:31:24   ├─ /work/canvasser/index.html (+63ms) 
-     15:31:24   ├─ /index.html (+16ms) 
-     15:31:24 ✓ Completed in 193ms.
+     > portfolio@0.1.0 build
+     > astro build
 
-      generating optimized images 
-     15:31:24   ▶ /_astro/logger-sketch.CNB7oIHW_Z4qU2V.webp (reused cache entry) (+8ms) (1/8)
-     15:31:24   ▶ /_astro/logger-sketch.CNB7oIHW_2tPh1O.webp (reused cache entry) (+27ms) (2/8)
-     15:31:24   ▶ /_astro/logger-sketch.CNB7oIHW_Z3gmE8.webp (reused cache entry) (+6ms) (3/8)
-     15:31:24 [vite] ✓ built in 44ms
-     15:31:25   ▶ /_astro/logger-interaction-model.DsO_tO56_ZOugQA.webp (before: 708kB, after: 9kB) (+1.01s) (4/8)
-     15:31:26   ▶ /_astro/logger-interaction-model.DsO_tO56_ZgYG5i.webp (before: 708kB, after: 19kB) (+301ms) (5/8)
-     15:31:26   ▶ /_astro/logger-interaction-model.DsO_tO56_TaIFG.webp (before: 708kB, after: 35kB) (+386ms) (6/8)
-     15:31:27   ▶ /_astro/logger-interaction-model.DsO_tO56_ZuXzu9.webp (before: 708kB, after: 50kB) (+557ms) (7/8)
-     15:31:27   ▶ /_astro/logger-interaction-model.DsO_tO56_1Bz6se.webp (before: 708kB, after: 74kB) (+612ms) (8/8)
-     15:31:27 ✓ Completed in 2.87s.
+     19:34:53 [types] Generated 71ms
+     19:34:53 [build] output: "static"
+     19:34:53 [build] mode: "static"
+     19:34:53 [build] directory: C:\Users\nomaa\Documents\Portfolio Site - Build 2026\portfolio\dist\
+     19:34:53 [build] Collecting build info...
+     19:34:53 [build] ✓ Completed in 98ms.
+     19:34:53 [build] Building static entrypoints...
+     19:34:54 [vite] ✓ built in 309ms
+     19:34:54 [vite] ✓ built in 30ms
+     19:34:54 [build] Rearranging server assets...
 
-     15:31:27 [build] ✓ Completed in 4.36s.
-     15:31:27 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
-     15:31:27 [build] 3 page(s) built in 4.74s
-     15:31:27 [build] Complete!
+      generating static routes
+     19:34:54   ├─ /404.html (+18ms)
+     19:34:54   ├─ /work/canvasser/index.html (+19ms)
+     19:34:54   ├─ /index.html (+4ms)
+     19:34:54 ✓ Completed in 63ms.
+
+      generating optimized images
+     19:34:54   ▶ /_astro/logger-sketch.CNB7oIHW_Z4qU2V.webp (reused cache entry) (+3ms) (1/8)
+     19:34:54   ▶ /_astro/logger-interaction-model.DsO_tO56_ZOugQA.webp (reused cache entry) (+2ms) (2/8)
+     19:34:54   ▶ /_astro/logger-sketch.CNB7oIHW_2tPh1O.webp (reused cache entry) (+2ms) (3/8)
+     19:34:54   ▶ /_astro/logger-interaction-model.DsO_tO56_ZgYG5i.webp (reused cache entry) (+2ms) (4/8)
+     19:34:54   ▶ /_astro/logger-sketch.CNB7oIHW_Z3gmE8.webp (reused cache entry) (+1ms) (5/8)
+     19:34:54   ▶ /_astro/logger-interaction-model.DsO_tO56_TaIFG.webp (reused cache entry) (+2ms) (6/8)
+     19:34:54   ▶ /_astro/logger-interaction-model.DsO_tO56_ZuXzu9.webp (reused cache entry) (+1ms) (7/8)
+     19:34:54   ▶ /_astro/logger-interaction-model.DsO_tO56_1Bz6se.webp (reused cache entry) (+1ms) (8/8)
+     19:34:54 ✓ Completed in 10ms.
+
+     19:34:54 [build] ✓ Completed in 520ms.
+     19:34:54 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+     19:34:54 [build] 3 page(s) built in 632ms
+     19:34:54 [build] Complete!
      ```
   2. pass. `git diff --stat -- package.json package-lock.json` printed nothing.
-  3. pass. Scores are in the table. Nothing is under target.
-  4. pass. Raw summary:
+  3. pass.
      ```
-     html files 404.html, index.html, work\canvasser\index.html
-     internal refs checked 46
-     broken 0
-     --- external ---
-     3 https://github.com/nomaan02
-     1 https://github.com/nomaan02/cisi-revision-hub
-     1 https://github.com/nomaan02/everlink-nfc-commerce
-     1 https://github.com/nomaan02/quanttrader-architecture
-     1 https://github.com/nomaan02/voxprompt
-     1 https://nomaan-akram.pages.dev/
-     1 https://nomaan-akram.pages.dev/404/
-     1 https://nomaan-akram.pages.dev/work/canvasser/
-     3 https://www.linkedin.com/in/nomaan-akram-b35565223/
-     8 mailto:nomaanakram4@gmail.com
+     dist/index.html:0
+     dist/404.html:0
+     dist/work/canvasser/index.html:1
      ```
-  5. pass. Raw output:
+  4. pass. Both greps printed nothing (exit 1, no matches).
+  5. pass. Preview at http://127.0.0.1:4322/work/canvasser/, 1280x800 then 1440x900.
+     - Load: `visibility: hidden`, `opacity: 0`, `inert: true`, `is-visible: false`. `html` class `toc-js`. `scroll-behavior: smooth`.
+     - h1: top 207.4, left 80, width 857.1, height 110.4. Stats: top 517.8, left 80, width 1120, height 135.2. Hero markup and CSS were not changed. The sidebar does not cover them.
+     - 300ms after the hero nav left the viewport (`heroBottom: -8`): `visibility: visible`, `opacity: 1`, `inert: false`.
+     - One visible `aria-current="location"` at each section, matching the section in the 30-40% band: tldr, context, problem, logger, routes, decisions, outcome, reflections.
+     - Decisions click: hash `#decisions`, `scroll-behavior: smooth` (scrollY moved across the sampled frames, 1184 to 6515). h2 "Five decisions, and what each one cost" top 154.38, in the viewport.
+     - Indicator and Decisions link, 1280: link top 302.39 height 44, indicator top 302.39 height 44. At 1440: both top 302.39, height 44.
+     - 1280: sidebar right 272, content left 320. 1440: sidebar right 352, content left 400.
+     - End actions in view: `visibility: hidden`, `opacity: 0`, `inert: true`.
+  6. pass. 390x763, 375x667, 430x850. Sidebar `display: none`. Sticky bar `position: sticky`, top 0, height 46, label updates through all 8 sections. Outcome click closes the list, hash `#outcome`, h2 top 106.83 / 106.52 / 106.03 against a bar bottom of 46. Escape closes it and focus returns to the summary. Every summary and link is at least 44px tall.
+  7. pass. Horizontal overflow 0 at 320, 375, 390, 430, 1280 and 1440, including with "The Knock Logger" in the bar and with the list open.
+  8. pass. With `prefers-reduced-motion: reduce`: `scroll-behavior: auto`. Sidebar and indicator `transition-duration: 1e-05s` (0.01ms).
+  9. pass. At scroll 0 the sidebar is `visibility: hidden` and `inert: true`. Tab reaches the hero nav (TL;DR through Reflections) and does not enter the sidebar. The next stop is "Back to all work". After the hero has scrolled away, sidebar links take focus with `outline: 2px solid rgb(188, 59, 26)`.
+  10. pass. JavaScript disabled. Desktop 1280: no `toc-js`, sidebar `display: none`, content padding 40px left and 40px right. The mobile bar opened and closed. At 390: sidebar `display: none`, padding 20px left and 20px right, bar opened and closed.
+  11. pass. Home `scroll-behavior: auto`, no `toc-js`. The 1280 viewport shows the same header, headline, lead, buttons and work heading as site-1-07. `index.astro` was not edited.
+  12. pass. `npx --yes lighthouse@12` exited 0 (`--quiet`, so the CLI printed nothing). Scores from the JSON reports:
      ```
-     PAGE index.html
-     title Nomaan Akram · UX and Product Designer in Bristol
-     description UX and Product Designer in Bristol. 4 years at Barclays, founder of NakoLabs, and the designer and builder of a field app used daily by 60+ canvassers.
-     canonical https://nomaan-akram.pages.dev/
-     og:url https://nomaan-akram.pages.dev/
-     og:image https://nomaan-akram.pages.dev/og.png
-     PAGE work\canvasser\index.html
-     title D2D case study · Nomaan Akram
-     description How I designed and built an offline-first field app for a door-to-door sales team. Used daily by 60+ canvassers across 5 South West branches.
-     canonical https://nomaan-akram.pages.dev/work/canvasser/
-     og:url https://nomaan-akram.pages.dev/work/canvasser/
-     og:image https://nomaan-akram.pages.dev/og.png
-     PAGE 404.html
-     title Page not found · Nomaan Akram
-     description This page doesn't exist on Nomaan Akram's portfolio.
-     canonical https://nomaan-akram.pages.dev/404/
-     og:url https://nomaan-akram.pages.dev/404/
-     og:image https://nomaan-akram.pages.dev/og.png
+     lh-canvasser-mobile
+     performance 100
+     accessibility 100
+     best-practices 100
+     seo 100
+     CLS 0
+
+     lh-canvasser-desktop
+     performance 100
+     accessibility 100
+     best-practices 100
+     seo 100
+     CLS 0
      ```
-     Titles and descriptions are unique. Each canonical matches that page's URL.
-  6. pass. Home: 1 h1, 2 h2, 7 h3. Case study: 1 h1, 8 h2, 33 h3. 404: 1 h1. No skipped levels.
-  7. pass. `img` 2, `withAlt` 2, `withWidthAndHeight` 2.
-  8. pass. First 15 tabs on the case study, each with a 2px solid outline: Skip to content, Nomaan Akram, Work, CV, Email, How these were measured, TL;DR, Context, Problem, The Knock Logger, Routes, Decisions, Outcome, Reflections, Back to all work. The skip link was visible (fixed, clip auto). Enter on it set the hash to `#main` and moved focus to `<main id="main">`.
-  9. pass. Horizontal overflow was 0 on Home, the case study and the 404 page at 1280 with CSS zoom 200%, at 640 CSS px (the layout width of a 1280 window at 200% browser zoom), and at 320 CSS px. The only element with overflow hidden and a larger scroll width is the skip link, which is hidden until it is focused.
-  10. pass. With `prefers-reduced-motion: reduce`, a link, a button and the featured card all computed `transition-duration: 1e-05s` (0.01ms).
-  11. pass. Full-page screenshots saved for Home, the case study and the 404 page at 390, 375, 430 and 1280.
-  12. pass. Cold load, cache disabled: Home 110,892 bytes, case study 117,539 bytes before the lazy figures. The font line was 102,118 bytes transferred (file on disk is 101,796 bytes).
-  13. pass. The dash, raw-hex and banned-word greps printed nothing.
-  14. pass. Raw output of `git status --short -uall`:
-      ```
-       M docs/BUILD-LOG.md
-       M docs/CLAUDE-HANDOFF.md
-       M public/fonts/InterVariable.woff2
-       M src/assets/canvasser/logger-interaction-model.png
-       M src/data/canvasser.ts
-      ?? src/pages/404.astro
-      ```
-- **Screenshots and reports:**
-  - `Claude outputs/site-1-07/font-home.png`
-  - `Claude outputs/site-1-07/font-checks.png`
-  - `Claude outputs/site-1-07/home-390.png`
-  - `Claude outputs/site-1-07/home-375.png`
-  - `Claude outputs/site-1-07/home-430.png`
-  - `Claude outputs/site-1-07/home-1280.png`
-  - `Claude outputs/site-1-07/canvasser-390.png`
-  - `Claude outputs/site-1-07/canvasser-375.png`
-  - `Claude outputs/site-1-07/canvasser-430.png`
-  - `Claude outputs/site-1-07/canvasser-1280.png`
-  - `Claude outputs/site-1-07/404-390.png`
-  - `Claude outputs/site-1-07/404-375.png`
-  - `Claude outputs/site-1-07/404-430.png`
-  - `Claude outputs/site-1-07/404-1280.png`
-  - `Claude outputs/site-1-07/lh-home-mobile.report.json`
-  - `Claude outputs/site-1-07/lh-home-mobile.report.html`
-  - `Claude outputs/site-1-07/lh-home-desktop.report.json`
-  - `Claude outputs/site-1-07/lh-home-desktop.report.html`
-  - `Claude outputs/site-1-07/lh-canvasser-mobile.report.json`
-  - `Claude outputs/site-1-07/lh-canvasser-mobile.report.html`
-  - `Claude outputs/site-1-07/lh-canvasser-desktop.report.json`
-  - `Claude outputs/site-1-07/lh-canvasser-desktop.report.html`
-- **Deviations:** none
+  13. pass. Screenshots below.
+  14. pass. `git status --short -uall` lists only the files in section 2. Raw output is at the bottom of this file, filled after the docs were written.
+
+- **Screenshots:**
+  - `Claude outputs/site-1-09/desktop-1280-top.png` (sidebar hidden)
+  - `Claude outputs/site-1-09/desktop-1280-mid.png` (sidebar visible on Decisions)
+  - `Claude outputs/site-1-09/desktop-1440-mid.png`
+  - `Claude outputs/site-1-09/mobile-390-bar-closed.png`
+  - `Claude outputs/site-1-09/mobile-390-bar-open.png`
+  - Lighthouse: `Claude outputs/site-1-09/lh-canvasser-mobile.report.html` and `.report.json`, `Claude outputs/site-1-09/lh-canvasser-desktop.report.html` and `.report.json`
+- **Deviations:** `CaseStudyNav.astro` is not the prompt script byte for byte.
+  - `aria-current="location"` is set only on the link in the nav that is actually shown, and reapplied when the 75rem breakpoint changes. The supplied loop set it on the mobile list and the sidebar together.
+  - Show and hide reads the hero nav and the end actions on scroll and resize. The supplied observer treated a hero nav still below the fold as already gone, so the sidebar covered the title at 1280x800. It also did not run when a jump moved that nav from below the screen to above it without the nav crossing the screen. That is what a long in-page jump does when motion is reduced.
+  - The page CSS from EDIT 3 was added as written. Astro scoped `section[id]` to this page, so it does not match `Section.astro` sections. Those keep `scroll-margin-top: 24px`. `#measurement` does get 68px. The Outcome h2 still lands below the bar.
 - **Open questions:** none
-- **Next item:** site-1-08 (deploy)
+- **Next item:** none (v1 polish)
+
+## Check 14 raw output
+
+```
+ M docs/BUILD-LOG.md
+ M docs/CLAUDE-HANDOFF.md
+ M src/pages/work/canvasser.astro
+ M src/styles/tokens.css
+?? src/components/CaseStudyNav.astro
+```

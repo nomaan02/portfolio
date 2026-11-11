@@ -42,3 +42,8 @@ Format:
 - Changed: src/assets/canvasser/logger-interaction-model.png, public/fonts/InterVariable.woff2, src/data/canvasser.ts, src/pages/404.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass, 11 pass, 12 pass, 13 pass, 14 pass
 - Notes: Lighthouse was 100/100/100/100 on home and the case study, mobile and desktop. Font file is 101,796 bytes. A cold load transferred 110,892 bytes for Home and 117,539 bytes for the case study before the lazy figures. Sitemap does not list 404, so astro.config.mjs was not changed. No QA score was under target.
+
+## site-1-09 · 2026-11-11 · done
+- Changed: src/components/CaseStudyNav.astro, src/pages/work/canvasser.astro, src/styles/tokens.css, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass, 11 pass, 12 pass, 13 pass, 14 pass
+- Notes: Lighthouse on /work/canvasser/ was Performance 100, Accessibility 100, Best Practices 100, SEO 100, mobile and desktop. CLS 0 on both. The supplied sidebar observer treated a hero nav that was still below the fold as already gone, so the sidebar covered the title at 1280x800, and a jump that skipped that nav never revealed the sidebar. The script now reads those rectangles on scroll. Astro scoped the new mobile `section[id]` rule to the page, so case-study sections keep a 24px scroll margin. The Outcome h2 still clears the 46px bar (h2 top about 106px).

@@ -1,0 +1,264 @@
+---
+type Item = { href: string; label: string };
+type Props = { items: Item[] };
+
+const { items } = Astro.props;
+const first = items[0]?.label ?? '';
+---
+
+<details class="toc-mobile" data-toc-mobile>
+  <summary class="toc-mobile__summary">
+    <span class="eyebrow">On this page</span>
+    <span class="toc-mobile__current" data-toc-current>{first}</span>
+  </summary>
+  <ul class="toc-mobile__list">
+    {items.map((i) => (
+      <li>
+        <a href={i.href} data-toc-link>{i.label}</a>
+      </li>
+    ))}
+  </ul>
+</details>
+
+<nav class="toc-side" aria-label="Case study sections" data-toc-side>
+  <p class="eyebrow">On this page</p>
+  <div class="toc-side__list">
+    <span class="toc-side__indicator" aria-hidden="true" data-toc-indicator></span>
+    <ul>
+      {items.map((i) => (
+        <li>
+          <a href={i.href} data-toc-link>{i.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const side = document.querySelector<HTMLElement>('[data-toc-side]');
+  const mobile = document.querySelector<HTMLDetailsElement>('[data-toc-mobile]');
+  const current = document.querySelector<HTMLElement>('[data-toc-current]');
+  const indicator = document.querySelector<HTMLElement>('[data-toc-indicator]');
+  const heroNav = document.querySelector<HTMLElement>('[data-toc-hero]');
+  const endMarker = document.querySelector<HTMLElement>('[data-toc-end]');
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+  const ids = [...new Set(links.map((a) => a.hash.slice(1)))];
+  const sections = ids
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
+
+  if (side && sections.length > 0) {
+    let activeId = sections[0].id;
+    const setActive = (id: string) => {
+      activeId = id;
+      const desktop = window.matchMedia('(min-width: 75rem)').matches;
+      for (const a of links) {
+        const inSide = a.closest('[data-toc-side]') !== null;
+        const shown = desktop ? inSide : !inSide;
+        if (shown && a.hash === `#${id}`) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+      }
+      const activeSide = side.querySelector<HTMLAnchorElement>(`a[href="#${id}"]`);
+      if (indicator && activeSide) {
+        indicator.style.transform = `translateY(${activeSide.offsetTop}px)`;
+        indicator.style.height = `${activeSide.offsetHeight}px`;
+      }
+      const label = links.find((a) => a.hash === `#${id}`)?.textContent;
+      if (current && label) current.textContent = label;
+    };
+
+    const visible = new Map<string, boolean>();
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) visible.set(e.target.id, e.isIntersecting);
+        const active = sections.find((s) => visible.get(s.id));
+        if (active) setActive(active.id);
+      },
+      { rootMargin: '-30% 0px -60% 0px' },
+    );
+    sections.forEach((s) => spy.observe(s));
+    setActive(sections[0].id);
+
+    let heroVisible = true;
+    let endVisible = false;
+    const updateSide = () => {
+      const show = !heroVisible && !endVisible;
+      side.classList.toggle('is-visible', show);
+      side.toggleAttribute('inert', !show);
+    };
+    const syncEdges = () => {
+      if (heroNav) heroVisible = heroNav.getBoundingClientRect().bottom > 0;
+      if (endMarker) {
+        const r = endMarker.getBoundingClientRect();
+        endVisible = r.top < window.innerHeight && r.bottom > 0;
+      }
+      updateSide();
+    };
+    window.addEventListener('scroll', syncEdges, { passive: true });
+    window.addEventListener('resize', syncEdges);
+    syncEdges();
+    window.matchMedia('(min-width: 75rem)').addEventListener('change', () => setActive(activeId));
+
+    mobile?.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) mobile.open = false;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobile?.open) {
+        mobile.open = false;
+        mobile.querySelector('summary')?.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Mobile and tablet: sticky bar below the hero */
+  .toc-mobile {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--color-bg);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .toc-mobile__summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap-min);
+    padding-inline: var(--container-pad);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .toc-mobile__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc-mobile__summary::after {
+    content: '';
+    margin-left: auto;
+    width: var(--space-2);
+    height: var(--space-2);
+    border-right: 2px solid var(--color-text);
+    border-bottom: 2px solid var(--color-text);
+    transform: rotate(45deg);
+  }
+
+  .toc-mobile[open] .toc-mobile__summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .toc-mobile__current {
+    display: none;
+    font-weight: var(--weight-semibold);
+  }
+
+  :global(.toc-js) .toc-mobile__current {
+    display: inline;
+  }
+
+  .toc-mobile__list {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0 var(--container-pad) var(--space-3);
+    list-style: none;
+  }
+
+  .toc-mobile__list a,
+  .toc-side a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .toc-mobile__list a[aria-current='location'],
+  .toc-side a[aria-current='location'] {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .toc-mobile__list a:hover,
+  .toc-side a:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  li {
+    max-width: none;
+  }
+
+  /* Desktop sidebar: only with JS, only at 75rem and up */
+  .toc-side {
+    display: none;
+  }
+
+  @media (min-width: 75rem) {
+    :global(.toc-js) .toc-mobile {
+      display: none;
+    }
+
+    :global(.toc-js) .toc-side {
+      display: block;
+      position: fixed;
+      top: var(--space-7);
+      left: max(var(--container-pad), calc((100% - var(--container-max)) / 2 + var(--container-pad)));
+      z-index: 1;
+      width: var(--toc-width);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(calc(var(--space-3) * -1));
+    }
+
+    :global(.toc-js) .toc-side.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+  }
+
+  .toc-side__list {
+    position: relative;
+    margin-top: var(--space-3);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .toc-side ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toc-side a {
+    padding-left: var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .toc-side__indicator {
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: 2px;
+    height: 0;
+    background-color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .toc-side {
+      transition:
+        opacity var(--duration-base) var(--ease-out),
+        transform var(--duration-base) var(--ease-out),
+        visibility var(--duration-base);
+    }
+
+    .toc-side__indicator {
+      transition:
+        transform var(--duration-base) var(--ease-out),
+        height var(--duration-base) var(--ease-out);
+    }
+  }
+</style>

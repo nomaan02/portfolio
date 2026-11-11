@@ -23,6 +23,7 @@ import DecisionCard from '../../components/DecisionCard.astro';
 import InfoCard from '../../components/InfoCard.astro';
 import Callout from '../../components/Callout.astro';
 import Figure from '../../components/Figure.astro';
+import CaseStudyNav from '../../components/CaseStudyNav.astro';
 
 const loggerImages = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/canvasser/*.{png,jpg,jpeg}',
@@ -34,6 +35,7 @@ const figures = loggerFigures
 ---
 
 <BaseLayout title={meta.title} description={meta.description}>
+  <script is:inline slot="head">document.documentElement.classList.add('toc-js');</script>
   <section class="container hero" aria-labelledby="cs-title">
     <p class="eyebrow">{hero.eyebrow}</p>
     <h1 id="cs-title">{hero.title}</h1>
@@ -57,7 +59,7 @@ const figures = loggerFigures
     <div class="tools">
       <ChipList items={hero.stack} label="Tools and data used" />
     </div>
-    <nav class="toc" aria-label="On this page">
+    <nav class="toc" aria-label="On this page" data-toc-hero>
       <p class="eyebrow">On this page</p>
       <ul>
         {
@@ -70,6 +72,9 @@ const figures = loggerFigures
       </ul>
     </nav>
   </section>
+
+  <div class="cs-body">
+  <CaseStudyNav items={toc} />
 
   <Section id="tldr" eyebrow="TL;DR" title="The 60-second version" tone="surface">
     <dl class="tldr">
@@ -215,9 +220,10 @@ const figures = loggerFigures
     </div>
   </Section>
 
-  <div class="container end">
+  <div class="container end" data-toc-end>
     <a class="button button--secondary" href="/#work">Back to all work</a>
     <a class="button" href="mailto:nomaanakram4@gmail.com">Email me</a>
+  </div>
   </div>
 </BaseLayout>
 
@@ -445,6 +451,27 @@ const figures = loggerFigures
   :global(section[id]),
   #measurement {
     scroll-margin-top: var(--space-5);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Clear the sticky mobile bar when jumping to a section */
+  @media (max-width: 74.99rem) {
+    section[id],
+    #measurement {
+      scroll-margin-top: calc(var(--tap-min) + var(--space-5));
+    }
+  }
+
+  /* Make room for the desktop sidebar (JS on only) */
+  @media (min-width: 75rem) {
+    :global(.toc-js) .cs-body :global(.container) {
+      padding-left: calc(var(--container-pad) + var(--toc-width) + var(--space-7));
+    }
   }
 
   @media (min-width: 40rem) {
