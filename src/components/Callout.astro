@@ -1,0 +1,55 @@
+---
+type Props = {
+  eyebrow?: string;
+  text: string;
+  note?: string;
+  size?: 'md' | 'lg';
+};
+
+const { eyebrow, text, note, size = 'md' } = Astro.props;
+---
+
+<aside class:list={['callout', size === 'lg' && 'callout--lg']}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <p class="callout__text">{text}</p>
+  {note && <p class="callout__note">{note}</p>}
+</aside>
+
+<style>
+  .callout {
+    min-width: 0;
+    background-color: var(--color-surface);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .callout {
+      padding: var(--space-6);
+    }
+  }
+
+  .callout__text {
+    max-width: var(--measure);
+    font-size: var(--text-base);
+  }
+
+  .eyebrow + .callout__text {
+    margin-top: var(--space-3);
+  }
+
+  .callout--lg .callout__text {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .callout__note {
+    margin-top: var(--space-3);
+    max-width: var(--measure);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

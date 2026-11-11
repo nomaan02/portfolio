@@ -1,0 +1,468 @@
+---
+import {
+  meta,
+  hero,
+  tldr,
+  context,
+  problem,
+  logger,
+  routes,
+  decisions,
+  outcome,
+  reflections,
+  toc,
+} from '../../data/canvasser';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import Stat from '../../components/Stat.astro';
+import ChipList from '../../components/ChipList.astro';
+import DecisionCard from '../../components/DecisionCard.astro';
+import InfoCard from '../../components/InfoCard.astro';
+import Callout from '../../components/Callout.astro';
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <section class="container hero" aria-labelledby="cs-title">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1 id="cs-title">{hero.title}</h1>
+    <p class="lead">{hero.lead}</p>
+    <div class="stats">
+      <StatGrid>
+        {hero.stats.map((stat) => <Stat value={stat.value} label={stat.label} />)}
+      </StatGrid>
+    </div>
+    <p class="measure-link"><a href="#measurement">How these were measured</a></p>
+    <dl class="facts">
+      {
+        hero.facts.map((fact) => (
+          <div>
+            <dt>{fact.term}</dt>
+            <dd>{fact.detail}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <div class="tools">
+      <ChipList items={hero.stack} label="Tools and data used" />
+    </div>
+    <nav class="toc" aria-label="On this page">
+      <p class="eyebrow">On this page</p>
+      <ul>
+        {
+          toc.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </section>
+
+  <Section id="tldr" eyebrow="TL;DR" title="The 60-second version" tone="surface">
+    <dl class="tldr">
+      {
+        tldr.map((row) => (
+          <>
+            <dt>{row.term}</dt>
+            <dd>{row.detail}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <Section id="context" eyebrow="Context" title={context.title} intro={context.intro}>
+    <div class="block">
+      <h3>{context.beforeTitle}</h3>
+      <div class="grid grid--3">
+        {
+          context.before.map((card) => (
+            <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />
+          ))
+        }
+      </div>
+    </div>
+    <div class="callout-wrap">
+      <Callout
+        size="lg"
+        eyebrow={context.question.eyebrow}
+        text={context.question.text}
+        note={context.question.note}
+      />
+    </div>
+    <div class="block">
+      <h3>{context.insiderTitle}</h3>
+      <p>{context.insider}</p>
+    </div>
+  </Section>
+
+  <Section id="problem" eyebrow="Problem and constraints" title={problem.title} intro={problem.intro} tone="surface">
+    <div class="block">
+      <h3>{problem.usersTitle}</h3>
+      <div class="grid grid--3">
+        {
+          problem.users.map((card) => (
+            <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />
+          ))
+        }
+      </div>
+    </div>
+    <div class="block">
+      <h3>{problem.constraintsTitle}</h3>
+      <div class="grid grid--2">
+        {
+          problem.constraints.map((card) => (
+            <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />
+          ))
+        }
+      </div>
+    </div>
+    <div class="block">
+      <h3>{problem.successTitle}</h3>
+      <ul class="checks">
+        {problem.success.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="logger" eyebrow="Design iterations" title={logger.title} intro={logger.intro}>
+    <div class="split">
+      <div>
+        <h3>{logger.roundsTitle}</h3>
+        <ol class="steps">
+          {logger.rounds.map((item) => <li>{item}</li>)}
+        </ol>
+      </div>
+      <div>
+        <h3>{logger.landedTitle}</h3>
+        <ul class="points">
+          {logger.landed.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="routes" eyebrow="Design iterations" title={routes.title} intro={routes.intro} tone="surface">
+    <div>
+      <h3>{routes.stepsTitle}</h3>
+      <ol class="steps">
+        {routes.steps.map((item) => <li>{item}</li>)}
+      </ol>
+    </div>
+    <div class="callout-top">
+      <Callout eyebrow={routes.tradeoff.eyebrow} text={routes.tradeoff.text} />
+    </div>
+  </Section>
+
+  <Section id="decisions" eyebrow="Decision log" title={decisions.title} intro={decisions.intro}>
+    <div class="grid grid--decisions">
+      {
+        decisions.items.map((item) => (
+          <DecisionCard
+            index={item.index}
+            title={item.title}
+            decision={item.decision}
+            why={item.why}
+            tradeoff={item.tradeoff}
+          />
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section id="outcome" eyebrow="Outcome" title={outcome.title} intro={outcome.intro} tone="surface">
+    <div class="block">
+      <h3>{outcome.changedTitle}</h3>
+      <div class="grid grid--2">
+        {
+          outcome.changed.map((card) => (
+            <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />
+          ))
+        }
+      </div>
+    </div>
+    <div id="measurement" class="measure" tabindex="-1">
+      <Callout eyebrow={outcome.measurement.eyebrow} text={outcome.measurement.text} />
+    </div>
+  </Section>
+
+  <Section id="reflections" eyebrow="Reflections" title={reflections.title} intro={reflections.intro}>
+    <div class="grid grid--3">
+      {
+        reflections.items.map((card) => (
+          <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />
+        ))
+      }
+    </div>
+    <div class="callout-top callout-top--room">
+      <Callout size="lg" eyebrow={reflections.summary.eyebrow} text={reflections.summary.text} />
+    </div>
+  </Section>
+
+  <div class="container end">
+    <a class="button button--secondary" href="/#work">Back to all work</a>
+    <a class="button" href="mailto:nomaanakram4@gmail.com">Email me</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-7);
+  }
+
+  .hero h1 {
+    max-width: 22ch;
+    margin-top: var(--space-3);
+  }
+
+  .lead {
+    margin-top: var(--space-5);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .stats {
+    margin-top: var(--space-7);
+  }
+
+  .measure-link {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .measure-link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin: var(--space-7) 0 0;
+  }
+
+  .facts div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .facts dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  .tools {
+    margin-top: var(--space-5);
+  }
+
+  .toc {
+    margin-top: var(--space-7);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-5);
+  }
+
+  .toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+
+  .toc li {
+    max-width: none;
+  }
+
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  .tldr {
+    display: grid;
+    row-gap: var(--space-4);
+    margin: 0;
+  }
+
+  .tldr dt {
+    font-weight: var(--weight-semibold);
+  }
+
+  .tldr dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  .block + .block {
+    margin-top: var(--space-7);
+  }
+
+  .block p {
+    margin-top: var(--space-4);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .grid:first-child {
+    margin-top: 0;
+  }
+
+  .callout-wrap {
+    margin-block: var(--space-7);
+  }
+
+  .callout-top {
+    margin-top: var(--space-6);
+  }
+
+  .callout-top--room {
+    margin-top: var(--space-7);
+  }
+
+  .split {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .steps,
+  .points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps {
+    counter-reset: step;
+  }
+
+  .steps li,
+  .points li {
+    min-width: 0;
+    max-width: var(--measure);
+  }
+
+  .steps li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    counter-increment: step;
+  }
+
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-accent);
+  }
+
+  .points {
+    list-style: disc;
+    padding-left: var(--space-5);
+  }
+
+  .checks {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .checks li {
+    position: relative;
+    min-width: 0;
+    max-width: var(--measure);
+    padding-left: var(--space-6);
+  }
+
+  .checks li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  .measure {
+    margin-top: var(--space-7);
+  }
+
+  .end {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-9);
+  }
+
+  :global(section[id]),
+  #measurement {
+    scroll-margin-top: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .facts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      padding-top: var(--space-9);
+    }
+
+    .tldr {
+      grid-template-columns: 10rem 1fr;
+      column-gap: var(--space-5);
+    }
+
+    .grid--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .facts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid--decisions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .split {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

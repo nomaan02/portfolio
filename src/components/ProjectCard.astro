@@ -37,7 +37,7 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
 const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 50vw, 100vw';
 ---
 
-<article class:list={['card', featured && 'card--featured', href && 'card--link']}>
+<article class:list={['card', featured && 'card--featured', image && 'card--has-image', href && 'card--link']}>
   {
     image && imageAlt && (
       <Image
@@ -152,12 +152,12 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
   }
 
   @media (min-width: 48rem) {
-    .card--featured {
+    .card--featured.card--has-image {
       display: grid;
       grid-template-columns: 3fr 2fr;
     }
 
-    .card--featured :global(.card__img) {
+    .card--featured.card--has-image :global(.card__img) {
       height: 100%;
       aspect-ratio: auto;
       border-bottom: 0;
@@ -167,5 +167,9 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
     .card--featured .card__title {
       font-size: var(--text-2xl);
     }
+  }
+
+  .card--featured:not(.card--has-image) .card__summary {
+    max-width: var(--measure);
   }
 </style>
