@@ -1,58 +1,131 @@
 # Handoff
 
-- **Item:** site-1-06
+- **Item:** site-1-07
 - **Status:** done
 - **Files:**
-  - `src/assets/canvasser/logger-sketch.png` (copied)
-  - `src/assets/canvasser/logger-interaction-model.png` (copied)
-  - `src/data/canvasser.ts` (figure copy appended)
-  - `src/pages/work/canvasser.astro`
+  - `src/assets/canvasser/logger-interaction-model.png` (replaced, 725,176 bytes)
+  - `public/fonts/InterVariable.woff2` (replaced, 101,796 bytes)
+  - `src/data/canvasser.ts` (one alt string)
+  - `src/pages/404.astro` (created)
   - `docs/BUILD-LOG.md`
   - `docs/CLAUDE-HANDOFF.md`
-- **Image sizes:**
-  - `logger-sketch.png`: 840×858
-  - `logger-interaction-model.png`: 2200×1664
-  - `logger-shipped.png`: not supplied
-- **Check results:**
-  1. pass. `npm run build` exited 0. No warnings. Last 15 lines:
-     ```
-     15:12:33 [vite] ✓ built in 45ms
-     15:12:33   ▶ /_astro/logger-sketch.CNB7oIHW_Z4qU2V.webp (before: 893kB, after: 37kB) (+676ms) (1/8)
-     15:12:34   ▶ /_astro/logger-interaction-model.DpdyX1d5_Z1GlqKU.webp (before: 760kB, after: 17kB) (+794ms) (2/8)
-     15:12:34   ▶ /_astro/logger-sketch.CNB7oIHW_2tPh1O.webp (before: 893kB, after: 68kB) (+366ms) (3/8)
-     15:12:34   ▶ /_astro/logger-interaction-model.DpdyX1d5_1pdIXT.webp (before: 760kB, after: 43kB) (+451ms) (4/8)
-     15:12:34   ▶ /_astro/logger-sketch.CNB7oIHW_Z3gmE8.webp (before: 893kB, after: 70kB) (+335ms) (5/8)
-     15:12:35   ▶ /_astro/logger-interaction-model.DpdyX1d5_Z151D5l.webp (before: 760kB, after: 78kB) (+687ms) (6/8)
-     15:12:36   ▶ /_astro/logger-interaction-model.DpdyX1d5_Z1sC6Wa.webp (before: 760kB, after: 114kB) (+960ms) (7/8)
-     15:12:37   ▶ /_astro/logger-interaction-model.DpdyX1d5_Z10T75b.webp (before: 760kB, after: 164kB) (+1.08s) (8/8)
-     15:12:37 ✓ Completed in 3.98s.
+- **Lighthouse table:**
 
-     15:12:37 [build] ✓ Completed in 5.01s.
-     15:12:37 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
-     15:12:37 [build] 2 page(s) built in 5.13s
-     15:12:37 [build] Complete!
+  | Run | Performance | Accessibility | Best Practices | SEO |
+  |---|---|---|---|---|
+  | Home mobile | 100 | 100 | 100 | 100 |
+  | Home desktop | 100 | 100 | 100 | 100 |
+  | Case study mobile | 100 | 100 | 100 | 100 |
+  | Case study desktop | 100 | 100 | 100 | 100 |
+
+- **QA findings:** none. Every score is on or above the target (Accessibility 100, SEO 100, Best Practices 95+, Performance 90+ on mobile).
+- **Check results:**
+  1. pass. `npm run build` exited 0. No warnings. It built `/404.html`, `/work/canvasser/index.html` and `/index.html`. Raw tail:
      ```
-  2. pass. `ls src/assets/canvasser/` listed `logger-interaction-model.png` and `logger-sketch.png`.
-  3. pass. Raw output of `ls dist/_astro | grep -c "logger-.*\.webp$"`:
+      generating static routes 
+     15:31:24   ├─ /404.html (+52ms) 
+     15:31:24   ├─ /work/canvasser/index.html (+63ms) 
+     15:31:24   ├─ /index.html (+16ms) 
+     15:31:24 ✓ Completed in 193ms.
+
+      generating optimized images 
+     15:31:24   ▶ /_astro/logger-sketch.CNB7oIHW_Z4qU2V.webp (reused cache entry) (+8ms) (1/8)
+     15:31:24   ▶ /_astro/logger-sketch.CNB7oIHW_2tPh1O.webp (reused cache entry) (+27ms) (2/8)
+     15:31:24   ▶ /_astro/logger-sketch.CNB7oIHW_Z3gmE8.webp (reused cache entry) (+6ms) (3/8)
+     15:31:24 [vite] ✓ built in 44ms
+     15:31:25   ▶ /_astro/logger-interaction-model.DsO_tO56_ZOugQA.webp (before: 708kB, after: 9kB) (+1.01s) (4/8)
+     15:31:26   ▶ /_astro/logger-interaction-model.DsO_tO56_ZgYG5i.webp (before: 708kB, after: 19kB) (+301ms) (5/8)
+     15:31:26   ▶ /_astro/logger-interaction-model.DsO_tO56_TaIFG.webp (before: 708kB, after: 35kB) (+386ms) (6/8)
+     15:31:27   ▶ /_astro/logger-interaction-model.DsO_tO56_ZuXzu9.webp (before: 708kB, after: 50kB) (+557ms) (7/8)
+     15:31:27   ▶ /_astro/logger-interaction-model.DsO_tO56_1Bz6se.webp (before: 708kB, after: 74kB) (+612ms) (8/8)
+     15:31:27 ✓ Completed in 2.87s.
+
+     15:31:27 [build] ✓ Completed in 4.36s.
+     15:31:27 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+     15:31:27 [build] 3 page(s) built in 4.74s
+     15:31:27 [build] Complete!
      ```
-     8
+  2. pass. `git diff --stat -- package.json package-lock.json` printed nothing.
+  3. pass. Scores are in the table. Nothing is under target.
+  4. pass. Raw summary:
      ```
-  4. pass. `grep -c 'alt="Pencil sketch'` printed `1`. `grep -c 'alt="Two phone mockups'` printed `1`.
-  5. pass. `grep -n 'loading="eager"' dist/work/canvasser/index.html` printed nothing. Both logger images have `loading="lazy"`.
-  6. pass. `LC_ALL=C.UTF-8 grep -rnP "\x{2014}|\x{2013}" src` printed nothing.
-  7. pass. Raw output of `git status --short -uall`:
+     html files 404.html, index.html, work\canvasser\index.html
+     internal refs checked 46
+     broken 0
+     --- external ---
+     3 https://github.com/nomaan02
+     1 https://github.com/nomaan02/cisi-revision-hub
+     1 https://github.com/nomaan02/everlink-nfc-commerce
+     1 https://github.com/nomaan02/quanttrader-architecture
+     1 https://github.com/nomaan02/voxprompt
+     1 https://nomaan-akram.pages.dev/
+     1 https://nomaan-akram.pages.dev/404/
+     1 https://nomaan-akram.pages.dev/work/canvasser/
+     3 https://www.linkedin.com/in/nomaan-akram-b35565223/
+     8 mailto:nomaanakram4@gmail.com
      ```
-      M docs/BUILD-LOG.md
-      M docs/CLAUDE-HANDOFF.md
-      M src/data/canvasser.ts
-      M src/pages/work/canvasser.astro
-     ?? src/assets/canvasser/logger-interaction-model.png
-     ?? src/assets/canvasser/logger-sketch.png
+  5. pass. Raw output:
      ```
-  8. pass. Logger screenshots saved. Horizontal overflow: 320 = 0, 375 = 0, 390 = 0, 430 = 0, 1280 = 0. At 1280, "door-to-door" is one line (one rect, 273px wide). Both figures load with `loading="lazy"`. One 1280 load transferred 559,595 bytes: HTML 31,883, Inter 352,240, CSS 15,055, favicon 8,057, sketch WebP 72,326, interaction WebP 80,034. No console errors. No failed requests.
-- **Screenshots:**
-  - `Claude outputs/site-1-06/390.png`
-  - `Claude outputs/site-1-06/1280.png`
-- **Deviations:** the images were copied from `Claude outputs/site 1-06/assets/` because `Claude outputs/site-1-06/assets/` is not on disk. The source files were not moved.
+     PAGE index.html
+     title Nomaan Akram · UX and Product Designer in Bristol
+     description UX and Product Designer in Bristol. 4 years at Barclays, founder of NakoLabs, and the designer and builder of a field app used daily by 60+ canvassers.
+     canonical https://nomaan-akram.pages.dev/
+     og:url https://nomaan-akram.pages.dev/
+     og:image https://nomaan-akram.pages.dev/og.png
+     PAGE work\canvasser\index.html
+     title D2D case study · Nomaan Akram
+     description How I designed and built an offline-first field app for a door-to-door sales team. Used daily by 60+ canvassers across 5 South West branches.
+     canonical https://nomaan-akram.pages.dev/work/canvasser/
+     og:url https://nomaan-akram.pages.dev/work/canvasser/
+     og:image https://nomaan-akram.pages.dev/og.png
+     PAGE 404.html
+     title Page not found · Nomaan Akram
+     description This page doesn't exist on Nomaan Akram's portfolio.
+     canonical https://nomaan-akram.pages.dev/404/
+     og:url https://nomaan-akram.pages.dev/404/
+     og:image https://nomaan-akram.pages.dev/og.png
+     ```
+     Titles and descriptions are unique. Each canonical matches that page's URL.
+  6. pass. Home: 1 h1, 2 h2, 7 h3. Case study: 1 h1, 8 h2, 33 h3. 404: 1 h1. No skipped levels.
+  7. pass. `img` 2, `withAlt` 2, `withWidthAndHeight` 2.
+  8. pass. First 15 tabs on the case study, each with a 2px solid outline: Skip to content, Nomaan Akram, Work, CV, Email, How these were measured, TL;DR, Context, Problem, The Knock Logger, Routes, Decisions, Outcome, Reflections, Back to all work. The skip link was visible (fixed, clip auto). Enter on it set the hash to `#main` and moved focus to `<main id="main">`.
+  9. pass. Horizontal overflow was 0 on Home, the case study and the 404 page at 1280 with CSS zoom 200%, at 640 CSS px (the layout width of a 1280 window at 200% browser zoom), and at 320 CSS px. The only element with overflow hidden and a larger scroll width is the skip link, which is hidden until it is focused.
+  10. pass. With `prefers-reduced-motion: reduce`, a link, a button and the featured card all computed `transition-duration: 1e-05s` (0.01ms).
+  11. pass. Full-page screenshots saved for Home, the case study and the 404 page at 390, 375, 430 and 1280.
+  12. pass. Cold load, cache disabled: Home 110,892 bytes, case study 117,539 bytes before the lazy figures. The font line was 102,118 bytes transferred (file on disk is 101,796 bytes).
+  13. pass. The dash, raw-hex and banned-word greps printed nothing.
+  14. pass. Raw output of `git status --short -uall`:
+      ```
+       M docs/BUILD-LOG.md
+       M docs/CLAUDE-HANDOFF.md
+       M public/fonts/InterVariable.woff2
+       M src/assets/canvasser/logger-interaction-model.png
+       M src/data/canvasser.ts
+      ?? src/pages/404.astro
+      ```
+- **Screenshots and reports:**
+  - `Claude outputs/site-1-07/font-home.png`
+  - `Claude outputs/site-1-07/font-checks.png`
+  - `Claude outputs/site-1-07/home-390.png`
+  - `Claude outputs/site-1-07/home-375.png`
+  - `Claude outputs/site-1-07/home-430.png`
+  - `Claude outputs/site-1-07/home-1280.png`
+  - `Claude outputs/site-1-07/canvasser-390.png`
+  - `Claude outputs/site-1-07/canvasser-375.png`
+  - `Claude outputs/site-1-07/canvasser-430.png`
+  - `Claude outputs/site-1-07/canvasser-1280.png`
+  - `Claude outputs/site-1-07/404-390.png`
+  - `Claude outputs/site-1-07/404-375.png`
+  - `Claude outputs/site-1-07/404-430.png`
+  - `Claude outputs/site-1-07/404-1280.png`
+  - `Claude outputs/site-1-07/lh-home-mobile.report.json`
+  - `Claude outputs/site-1-07/lh-home-mobile.report.html`
+  - `Claude outputs/site-1-07/lh-home-desktop.report.json`
+  - `Claude outputs/site-1-07/lh-home-desktop.report.html`
+  - `Claude outputs/site-1-07/lh-canvasser-mobile.report.json`
+  - `Claude outputs/site-1-07/lh-canvasser-mobile.report.html`
+  - `Claude outputs/site-1-07/lh-canvasser-desktop.report.json`
+  - `Claude outputs/site-1-07/lh-canvasser-desktop.report.html`
+- **Deviations:** none
 - **Open questions:** none
-- **Next item:** site-1-07 (QA)
+- **Next item:** site-1-08 (deploy)

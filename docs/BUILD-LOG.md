@@ -37,3 +37,8 @@ Format:
 - Changed: src/assets/canvasser/logger-sketch.png, src/assets/canvasser/logger-interaction-model.png, src/data/canvasser.ts, src/pages/work/canvasser.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass
 - Notes: Images copied from `Claude outputs/site 1-06/assets/` (space in the folder name). `site-1-06` does not exist. Sources were left in place. logger-sketch.png is 840×858. logger-interaction-model.png is 2200×1664. Shipped image not supplied. Both are at least 800px wide. A 1280 load transferred 559,595 bytes (HTML 31,883, font 352,240, CSS 15,055, favicon 8,057, sketch WebP 72,326, interaction WebP 80,034).
+
+## site-1-07 · 2026-11-11 · done
+- Changed: src/assets/canvasser/logger-interaction-model.png, public/fonts/InterVariable.woff2, src/data/canvasser.ts, src/pages/404.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass, 11 pass, 12 pass, 13 pass, 14 pass
+- Notes: Lighthouse was 100/100/100/100 on home and the case study, mobile and desktop. Font file is 101,796 bytes. A cold load transferred 110,892 bytes for Home and 117,539 bytes for the case study before the lazy figures. Sitemap does not list 404, so astro.config.mjs was not changed. No QA score was under target.

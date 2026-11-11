@@ -192,7 +192,7 @@ export const loggerFigures: FigureCopy[] = [
   },
   {
     file: 'logger-interaction-model.png',
-    alt: 'Two phone mockups. Tapping an outcome on door 24 moves straight to door 25, with progress shown as 13 of 50.',
+    alt: 'Two annotated phone wireframes. Tapping an outcome on door 24 moves straight to door 25, and a Back button returns to the previous door.',
     caption: 'Round 3: the annotated interaction model. One tap logs the outcome and moves to the next door, with no confirmation step.',
   },
   {
