@@ -62,3 +62,8 @@ Format:
 - Changed: src/data/canvasser.ts, src/components/FigureSlot.astro, src/assets/canvasser/before-paper-survey.jpg, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass
 - Notes: Lighthouse on /work/canvasser/ was Performance 100, Accessibility 100, Best Practices 100, SEO 100, mobile and desktop. CLS 0 on both. The first `npm run build` crashed with a memory allocation error. The re-run exited 0 with no warnings. At 1280 the text column ends at 767px and the image starts at 815px, 352px wide. The panel stacks on 390 and 375. The survey file was copied as-is.
+
+## site-2-05 · 2026-11-11 · done
+- Changed: src/data/canvasser.ts, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass
+- Notes: The Round 1 sketch uses the same aside panel as the Context survey. At 1280 both panels have a 20px radius, 32px padding and a 25px lead. The sketch text ends at 767px and the image starts at 815px, 352px wide. Round 2 stays full width at 880px with its caption. During the checks, hero.png was briefly a black 13KB file. It was restored from the last commit and is not part of this change.

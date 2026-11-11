@@ -212,8 +212,9 @@ export const figures = {
     {
       file: 'logger-sketch.png',
       alt: 'Pencil sketch on squared paper of the logging screen: a large door number, outcome buttons down the right edge and a notes box.',
-      caption: 'Round 1: the first paper sketch. One door, a huge number, big outcome buttons.',
-      layout: 'narrow',
+      text: 'Round 1: the first paper sketch.',
+      caption: 'One door, a huge number and big tap zones down the right edge, one for each outcome. That one-tap idea made it all the way to the shipped app.',
+      layout: 'aside',
     },
     {
       file: 'logger-figma-concepts.png',
