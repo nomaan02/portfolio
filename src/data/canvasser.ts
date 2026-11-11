@@ -182,22 +182,91 @@ export const toc = [
   { href: '#reflections', label: 'Reflections' },
 ];
 
-export type FigureCopy = { file: string; alt: string; caption: string };
+export type FigureCopy = {
+  file: string;
+  alt: string;
+  caption: string;
+  layout?: 'full' | 'narrow';
+};
 
-export const loggerFigures: FigureCopy[] = [
-  {
-    file: 'logger-sketch.png',
-    alt: 'Pencil sketch on squared paper of the logging screen: a large door number, outcome buttons down the right edge and a notes box.',
-    caption: 'Round 1: the first paper sketch. One door, a huge number, big outcome buttons.',
-  },
-  {
-    file: 'logger-interaction-model.png',
-    alt: 'Two annotated phone wireframes. Tapping an outcome on door 24 moves straight to door 25, and a Back button returns to the previous door.',
-    caption: 'Round 3: the annotated interaction model. One tap logs the outcome and moves to the next door, with no confirmation step.',
-  },
-  {
-    file: 'logger-shipped.png',
-    alt: 'The shipped Logger screen on a phone, with a directions banner at the top.',
-    caption: 'Round 7: shipped, then tuned in the field, with a directions banner added after a dry run.',
-  },
-];
+// Each slot shows on the live site only when its file exists in src/assets/canvasser/ and alt is filled in.
+export const figures = {
+  hero: [
+    {
+      file: 'hero.png',
+      alt: "The D2D manager dashboard on a laptop, showing today's doors, contacts and leads for three teams, next to the canvasser Logger on a phone, showing the current door in large type and the outcome buttons.",
+      caption: '',
+    },
+  ],
+  context: [
+    {
+      file: 'before-paper-survey.jpg',
+      alt: 'A handwritten paper survey sheet: columns of house numbers, each with a tick, a dash or nothing next to it, and the shift totals written at the top.',
+      caption: 'Before the app: one shift on paper. A house number and a mark for every door, with the totals added up at the top.',
+    },
+  ],
+  logger: [
+    {
+      file: 'logger-sketch.png',
+      alt: 'Pencil sketch on squared paper of the logging screen: a large door number, outcome buttons down the right edge and a notes box.',
+      caption: 'Round 1: the first paper sketch. One door, a huge number, big outcome buttons.',
+      layout: 'narrow',
+    },
+    {
+      file: 'logger-figma-concepts.png',
+      alt: 'Early concepts: pencil sketches of the map and logging screens, a first Knock logger screen in Figma, the two-step tap and advance model, and the record each tap saves to the database.',
+      caption: 'Round 2: the first Figma concepts, next to the sketches they came from and the record each tap would save.',
+    },
+    {
+      file: 'logger-interaction-model.png',
+      alt: 'Two annotated phone wireframes. Tapping an outcome on door 24 moves straight to door 25, and a Back button returns to the previous door.',
+      caption: 'Round 3: the annotated interaction model. One tap logs the outcome and moves to the next door, with no confirmation step.',
+    },
+    {
+      file: 'logger-door-scroll.png',
+      alt: '',
+      caption: 'Round 6: circles and the door scroll.',
+    },
+    {
+      file: 'logger-shipped.png',
+      alt: 'The shipped Logger on a phone: the current door number in large type with the doors either side, a directions banner, a mini map and big outcome buttons. Around it are specs for the location marker, the Near you chip, the Sharing pill and the Stop sheet.',
+      caption: 'Round 7: shipped, then tuned in the field, with a directions banner added after a dry run. The specs around it cover location: the You marker, the Near you chip and the Sharing pill.',
+    },
+  ],
+  routes: [
+    {
+      file: 'routes-walking-rules.png',
+      alt: "Three route maps. Left, labelled existing (fail): the first generated route, crossing back and forth. Middle, labelled target: the team's hand-drawn route. Right: a simpler area with the rules written on it: go up one side, cross at the end, come back on the opposite side.",
+      caption: "Attempt 1 next to the team's own drawings. Their rules (go up, cross at the end, come back the other side) became the spec for attempt 2.",
+    },
+    {
+      file: 'routes-generated.png',
+      alt: 'Three phone screens: a generated route drawn on the map from START to END past every door, the Logger following it with a turn banner, and a close-up of the route from its start.',
+      caption: 'Attempt 2 on the street: the route is drawn before the team arrives, and the Logger follows it door by door.',
+    },
+  ],
+  decisions: [
+    {
+      file: 'decision-sharing-pill.png',
+      alt: "Location sharing specs: the You marker on light and dark maps, the Near you chip, the Sharing and Not sharing pills, a first-open notice with a Stop link, the Stop sharing sheet, and a team strip showing a partner's distance along the route.",
+      caption: 'Decision 10 in the app: a visible Sharing pill, one tap to stop, and partners shown as a distance along the route, not a pin on a map.',
+    },
+  ],
+  outcome: [
+    {
+      file: 'outcome-dashboard.png',
+      alt: "The manager dashboard: today's doors, contacts and leads, a card for each team showing doors worked and left, and a Live now panel showing each canvasser's current position and when it last updated.",
+      caption: 'The manager view. Live now shows current position only, overwritten every 30 seconds and never kept as a trail.',
+    },
+    {
+      file: 'manager-flows.png',
+      alt: 'Eight manager flows, each shown as a row of steps: plan tomorrow, draw a new prop, monitor today, change a visit, clear stale visits, review canvassers, find props that are due, and settle a lead.',
+      caption: 'The manager flows. Each one starts from a main tab, and only drawing a prop and checking coverage need the map.',
+    },
+  ],
+} satisfies Record<string, FigureCopy[]>;
+
+export const homeCardImage = {
+  file: 'hero.png',
+  alt: 'The D2D manager dashboard on a laptop next to the canvasser Logger on a phone.',
+};

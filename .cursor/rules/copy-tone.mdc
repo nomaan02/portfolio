@@ -22,7 +22,7 @@ alwaysApply: true
 - Never invent metrics, quotes, dates, client names or outcomes. If copy needs a fact you don't have, write `TODO(owner): <what's needed>` and list it in your report.
 
 ## Content safety (hard rules)
-- Canvasser case study: no resident or homeowner names, no addresses, no door-level data. Property-level and synthetic data only.
+- Canvasser case study: no resident or homeowner names, no addresses, no door-level data. Property-level and synthetic data only. Exception: the street names, door numbers and canvasser names inside the images in `src/assets/canvasser/` are cleared by the owner (see `docs/DECISIONS.md`).
 - No real CRM screenshots unless they are blurred.
 - EPC and HM Land Registry Price Paid data: describe the method only. Never republish the data.
 - Barclays: process and outcomes only. No internal screens, code or confidential data.

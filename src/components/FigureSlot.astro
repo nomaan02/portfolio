@@ -1,0 +1,58 @@
+---
+import type { ImageMetadata } from 'astro';
+import Figure from './Figure.astro';
+
+type Props = {
+  file: string;
+  image?: ImageMetadata;
+  alt: string;
+  caption?: string;
+  layout?: 'full' | 'narrow';
+  priority?: boolean;
+};
+
+const { file, image, alt, caption, layout = 'full', priority = false } = Astro.props;
+const ready = Boolean(image) && alt.trim().length > 0;
+const showPlaceholder = !ready && import.meta.env.DEV;
+---
+
+{
+  ready && image && (
+    <div class:list={['slot', `slot--${layout}`]}>
+      <Figure image={image} alt={alt} caption={caption || undefined} priority={priority} />
+    </div>
+  )
+}
+{
+  showPlaceholder && (
+    <div class:list={['slot', `slot--${layout}`, 'slot--empty']} aria-hidden="true">
+      <p>Image slot</p>
+      <code>src/assets/canvasser/{file}</code>
+      <p>{image ? 'File found. Add alt text in src/data/canvasser.ts' : 'Add this file to show it'}</p>
+    </div>
+  )
+}
+
+<style>
+  .slot--narrow {
+    max-width: 32rem;
+  }
+
+  .slot--empty {
+    display: grid;
+    place-content: center;
+    gap: var(--space-2);
+    min-height: 12rem;
+    padding: var(--space-5);
+    border: 2px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+
+  .slot--empty p {
+    margin: 0;
+    max-width: none;
+  }
+</style>

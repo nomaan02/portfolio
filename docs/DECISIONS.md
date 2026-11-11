@@ -16,6 +16,8 @@ Last updated: 2026-11-11
 | v1 items | 04 Home + CV + SEO · 05 case study text · 06 case study images · 07 QA · 08 deploy |
 | Case study URL | /work/canvasser/ |
 | Test sizes | 390×763, 375×667, 430×850, 1280 desktop |
+| Case study images | Files live in `src/assets/canvasser/` and are listed in `figures` in `src/data/canvasser.ts`. A slot shows on the live site only when its file exists and its alt text is filled in. In dev, an empty slot shows a dashed placeholder with the filename. Added in site-2-02 |
+| Image clearances | Street names, door numbers and canvasser names shown inside the case study images are cleared by the owner: the streets aren't real props, the numbers are meaningless and the names aren't real. Don't flag or blur them. Case study prose still follows `copy-tone.mdc` |
 | Commits | The owner commits. Never you |
 
 ## Hard rules

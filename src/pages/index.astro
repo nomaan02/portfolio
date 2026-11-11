@@ -1,7 +1,17 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { homeCardImage } from '../data/canvasser';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+
+const cardImages = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/canvasser/*.{png,jpg,jpeg}',
+  { eager: true },
+);
+const cardImage = homeCardImage.alt.trim()
+  ? cardImages[`../assets/canvasser/${homeCardImage.file}`]?.default
+  : undefined;
 
 const person = {
   '@context': 'https://schema.org',
@@ -39,6 +49,8 @@ const person = {
     <ProjectCard
       featured
       headingLevel={3}
+      image={cardImage}
+      imageAlt={cardImage ? homeCardImage.alt : undefined}
       meta="First Home Improvements · 2026"
       title="D2D: from paper surveys to live data"
       summary="I knocked doors on this team, then designed and built the app it now runs on. Used daily by 60+ canvassers across 5 South West branches."

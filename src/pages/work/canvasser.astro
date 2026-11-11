@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro';
+import type { FigureCopy } from '../../data/canvasser';
 import {
   meta,
   hero,
@@ -12,7 +13,7 @@ import {
   outcome,
   reflections,
   toc,
-  loggerFigures,
+  figures,
 } from '../../data/canvasser';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Section from '../../components/Section.astro';
@@ -22,16 +23,26 @@ import ChipList from '../../components/ChipList.astro';
 import DecisionCard from '../../components/DecisionCard.astro';
 import InfoCard from '../../components/InfoCard.astro';
 import Callout from '../../components/Callout.astro';
-import Figure from '../../components/Figure.astro';
+import FigureSlot from '../../components/FigureSlot.astro';
 import CaseStudyNav from '../../components/CaseStudyNav.astro';
 
-const loggerImages = import.meta.glob<{ default: ImageMetadata }>(
+const images = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/canvasser/*.{png,jpg,jpeg}',
   { eager: true },
 );
-const figures = loggerFigures
-  .map((f) => ({ ...f, image: loggerImages[`../../assets/canvasser/${f.file}`]?.default }))
-  .filter((f) => f.image);
+const isDev = import.meta.env.DEV;
+const slots = (list: FigureCopy[]) =>
+  list
+    .map((f) => ({ ...f, image: images[`../../assets/canvasser/${f.file}`]?.default }))
+    .filter((f) => isDev || (Boolean(f.image) && f.alt.trim().length > 0));
+const fig = {
+  hero: slots(figures.hero),
+  context: slots(figures.context),
+  logger: slots(figures.logger),
+  routes: slots(figures.routes),
+  decisions: slots(figures.decisions),
+  outcome: slots(figures.outcome),
+};
 ---
 
 <BaseLayout title={meta.title} description={meta.description}>
@@ -40,6 +51,11 @@ const figures = loggerFigures
     <p class="eyebrow">{hero.eyebrow}</p>
     <h1 id="cs-title">{hero.title}</h1>
     <p class="lead">{hero.lead}</p>
+    {fig.hero.length > 0 && (
+      <div class="hero-figure">
+        {fig.hero.map((f) => <FigureSlot {...f} priority />)}
+      </div>
+    )}
     <div class="stats">
       <StatGrid>
         {hero.stats.map((stat) => <Stat value={stat.value} label={stat.label} />)}
@@ -99,6 +115,11 @@ const figures = loggerFigures
           ))
         }
       </div>
+      {fig.context.length > 0 && (
+        <div class="figures figures--top">
+          {fig.context.map((f) => <FigureSlot {...f} />)}
+        </div>
+      )}
     </div>
     <div class="callout-wrap">
       <Callout
@@ -144,9 +165,11 @@ const figures = loggerFigures
   </Section>
 
   <Section id="logger" eyebrow="Design iterations" title={logger.title} intro={logger.intro}>
-    <div class="figures">
-      {figures.map((f) => <Figure image={f.image} alt={f.alt} caption={f.caption} />)}
-    </div>
+    {fig.logger.length > 0 && (
+      <div class="figures">
+        {fig.logger.map((f) => <FigureSlot {...f} />)}
+      </div>
+    )}
     <div class="split">
       <div>
         <h3>{logger.roundsTitle}</h3>
@@ -164,6 +187,11 @@ const figures = loggerFigures
   </Section>
 
   <Section id="routes" eyebrow="Design iterations" title={routes.title} intro={routes.intro} tone="surface">
+    {fig.routes.length > 0 && (
+      <div class="figures">
+        {fig.routes.map((f) => <FigureSlot {...f} />)}
+      </div>
+    )}
     <div>
       <h3>{routes.stepsTitle}</h3>
       <ol class="steps">
@@ -189,6 +217,11 @@ const figures = loggerFigures
         ))
       }
     </div>
+    {fig.decisions.length > 0 && (
+      <div class="figures figures--top">
+        {fig.decisions.map((f) => <FigureSlot {...f} />)}
+      </div>
+    )}
   </Section>
 
   <Section id="outcome" eyebrow="Outcome" title={outcome.title} intro={outcome.intro} tone="surface">
@@ -202,6 +235,11 @@ const figures = loggerFigures
         }
       </div>
     </div>
+    {fig.outcome.length > 0 && (
+      <div class="figures">
+        {fig.outcome.map((f) => <FigureSlot {...f} />)}
+      </div>
+    )}
     <div id="measurement" class="measure" tabindex="-1">
       <Callout eyebrow={outcome.measurement.eyebrow} text={outcome.measurement.text} />
     </div>
@@ -448,6 +486,15 @@ const figures = loggerFigures
     align-items: start;
   }
 
+  .figures--top {
+    margin-top: var(--space-6);
+    margin-bottom: 0;
+  }
+
+  .hero-figure {
+    margin-top: var(--space-6);
+  }
+
   :global(section[id]),
   #measurement {
     scroll-margin-top: var(--space-5);
@@ -483,10 +530,6 @@ const figures = loggerFigures
   @media (min-width: 48rem) {
     .hero {
       padding-top: var(--space-9);
-    }
-
-    .figures {
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     }
 
     .tldr {
