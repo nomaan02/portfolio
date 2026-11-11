@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Nomaan Akram · UX and Product Designer"
+  description="Portfolio of Nomaan Akram, UX and Product Designer in Bristol."
+>
+  <section class="container style-check">
+    <h1>Nomaan Akram</h1>
+    <p class="lead">Style check page. This gets replaced in site-1-04.</p>
+    <h2>Heading two</h2>
+    <h3>Heading three</h3>
+    <p>
+      This paragraph checks body type, spacing and line length. Each line stays inside the measure so the eye can track it. The size is the body size from the type scale. The gap between blocks comes from the space scale. If a line runs too long, the measure is too wide. If the letters sit too close, the leading is too tight. If the page scrolls sideways, something has overflowed. This text is only a check. It is not a project claim.
+    </p>
+    <p>Open the <a href="#work">work</a> anchor to check the jump.</p>
+    <div class="actions">
+      <a class="button" href="#work">Read the case study</a>
+      <a class="button button--secondary" href="/nomaan-akram-cv.pdf">Download CV</a>
+    </div>
+    <ul class="swatches">
+      <li>
+        <span class="swatch swatch--bg"></span>
+        <span class="name">bg</span>
+        <span class="hex">#ffffff</span>
+      </li>
+      <li>
+        <span class="swatch swatch--surface"></span>
+        <span class="name">surface</span>
+        <span class="hex">#faf8f5</span>
+      </li>
+      <li>
+        <span class="swatch swatch--text"></span>
+        <span class="name">text</span>
+        <span class="hex">#1a1a1a</span>
+      </li>
+      <li>
+        <span class="swatch swatch--muted"></span>
+        <span class="name">text-muted</span>
+        <span class="hex">#5c5650</span>
+      </li>
+      <li>
+        <span class="swatch swatch--accent"></span>
+        <span class="name">accent</span>
+        <span class="hex">#bc3b1a</span>
+      </li>
+      <li>
+        <span class="swatch swatch--accent-strong"></span>
+        <span class="name">accent-strong</span>
+        <span class="hex">#9a2f14</span>
+      </li>
+    </ul>
+  </section>
+  <section id="work" class="container">
+    <h2>Work</h2>
+  </section>
+</BaseLayout>
+
+<style>
+  .style-check {
+    padding-block: var(--space-8);
+  }
+
+  .style-check > * + * {
+    margin-top: var(--space-5);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+
+  .swatches li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+    max-width: none;
+  }
+
+  .swatch {
+    width: var(--space-8);
+    height: var(--space-8);
+    border: 1px solid var(--color-border);
+  }
+
+  .swatch--bg {
+    background-color: var(--color-bg);
+  }
+
+  .swatch--surface {
+    background-color: var(--color-surface);
+  }
+
+  .swatch--text {
+    background-color: var(--color-text);
+  }
+
+  .swatch--muted {
+    background-color: var(--color-text-muted);
+  }
+
+  .swatch--accent {
+    background-color: var(--color-accent);
+  }
+
+  .swatch--accent-strong {
+    background-color: var(--color-accent-strong);
+  }
+
+  .name,
+  .hex {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  #work {
+    padding-block: var(--space-8);
+  }
+</style>

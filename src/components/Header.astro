@@ -1,0 +1,78 @@
+<header>
+  <div class="container bar">
+    <a class="wordmark" href="/">Nomaan Akram</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/nomaan-akram-cv.pdf">CV</a></li>
+        <li><a href="mailto:nomaanakram4@gmail.com">Email</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    min-height: var(--tap-min);
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .wordmark:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  nav {
+    flex-shrink: 0;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+
+  li {
+    max-width: none;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  nav a:hover,
+  nav a[aria-current="page"] {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+</style>

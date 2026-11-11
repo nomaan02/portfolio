@@ -1,0 +1,54 @@
+:root {
+  /* Colour */
+  --color-bg: #ffffff;
+  --color-surface: #faf8f5;        /* warm off-white for cards and sections */
+  --color-text: #1a1a1a;           /* 17.4:1 on bg */
+  --color-text-muted: #5c5650;     /* 7.24:1 on bg, 6.83:1 on surface */
+  --color-accent: #bc3b1a;         /* 5.56:1 on bg, 5.24:1 on surface */
+  --color-accent-strong: #9a2f14;  /* hover/active, 7.52:1 on bg */
+  --color-on-accent: #ffffff;      /* text on accent fill, 5.56:1 */
+  --color-border: #e5e1da;         /* decorative dividers only */
+  --color-border-strong: #8a847c;  /* UI boundaries that must be seen, 3.7:1 */
+  --color-focus: #bc3b1a;
+
+  /* Type */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+
+  --text-sm: 0.875rem;                                 /* 14px: meta, captions */
+  --text-base: 1.0625rem;                              /* 17px: body */
+  --text-lg: 1.25rem;                                  /* 20px: lead */
+  --text-xl: clamp(1.375rem, 1.2rem + 0.6vw, 1.5625rem);   /* h3: 22 to 25 */
+  --text-2xl: clamp(1.625rem, 1.35rem + 1vw, 1.9375rem);   /* h2: 26 to 31 */
+  --text-3xl: clamp(2rem, 1.5rem + 2vw, 3rem);              /* h1: 32 to 48 */
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-body: 1.6;
+  --tracking-tight: -0.02em;
+
+  /* Space (8pt, with 4 and 12 for tight spots) */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --space-9: 6rem;     /* 96 */
+
+  /* Layout */
+  --container-max: 75rem;                              /* 1200px, matches Figma */
+  --container-pad: clamp(1.25rem, 0.5rem + 3vw, 2.5rem); /* 20 to 40 */
+  --measure: 68ch;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --tap-min: 2.75rem;                                  /* 44px */
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
