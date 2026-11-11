@@ -12,7 +12,9 @@ Last updated: 2026-11-11
 | Accent | `#BC3B1A` (rust). Light theme only in v1 |
 | Contact | `mailto:nomaanakram4@gmail.com`, LinkedIn `https://www.linkedin.com/in/nomaan-akram-b35565223/`, GitHub `https://github.com/nomaan02` |
 | v1 pages | Home (positioning + project cards), Canvasser case study (condensed), CV PDF download |
-| Launch | Everything goes live together after QA (site-1-10) |
+| Launch | Everything goes live together after QA (site-1-07). Deploy is site-1-08 |
+| v1 items | 04 Home + CV + SEO · 05 case study text · 06 case study images · 07 QA · 08 deploy |
+| Case study URL | /work/canvasser/ |
 | Test sizes | 390×763, 375×667, 430×850, 1280 desktop |
 | Commits | The owner commits. Never you |
 

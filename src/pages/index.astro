@@ -1,115 +1,129 @@
 ---
-import sample from '../assets/sample/figure-sample.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ChipList from '../components/ChipList.astro';
-import DecisionCard from '../components/DecisionCard.astro';
-import Figure from '../components/Figure.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 import Section from '../components/Section.astro';
-import Stat from '../components/Stat.astro';
-import StatGrid from '../components/StatGrid.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Nomaan Akram',
+  jobTitle: 'UX and Product Designer',
+  url: 'https://nomaan-akram.pages.dev/',
+  address: { '@type': 'PostalAddress', addressLocality: 'Bristol', addressCountry: 'GB' },
+  sameAs: [
+    'https://www.linkedin.com/in/nomaan-akram-b35565223/',
+    'https://github.com/nomaan02',
+  ],
+};
 ---
 
 <BaseLayout
-  title="Nomaan Akram · UX and Product Designer"
-  description="Portfolio of Nomaan Akram, UX and Product Designer in Bristol."
+  title="Nomaan Akram · UX and Product Designer in Bristol"
+  description="UX and Product Designer in Bristol. 4 years at Barclays, founder of NakoLabs, and the designer and builder of a field app used daily by 60+ canvassers."
 >
-  <section class="container style-check">
-    <h1>Nomaan Akram</h1>
-    <p class="lead">Style check page. This gets replaced in site-1-04.</p>
-    <h2>Heading two</h2>
-    <h3>Heading three</h3>
-    <p>
-      This paragraph checks body type, spacing and line length. Each line stays inside the measure so the eye can track it. The size is the body size from the type scale. The gap between blocks comes from the space scale. If a line runs too long, the measure is too wide. If the letters sit too close, the leading is too tight. If the page scrolls sideways, something has overflowed. This text is only a check. It is not a project claim.
+  <script type="application/ld+json" set:html={JSON.stringify(person)} slot="head" />
+
+  <section class="hero container" aria-labelledby="hero-title">
+    <p class="eyebrow">UX and Product Designer · Bristol</p>
+    <h1 id="hero-title">I design products, then I build them.</h1>
+    <p class="lead">
+      4 years designing at Barclays, and since 2021 running NakoLabs, a small studio for design, dev and motion. Most recently I knocked doors for a sales team, then designed and built the app they now run on.
     </p>
-    <p>Open the <a href="#work">work</a> anchor to check the jump.</p>
     <div class="actions">
-      <a class="button" href="#work">Read the case study</a>
-      <a class="button button--secondary" href="/nomaan-akram-cv.pdf">Download CV</a>
+      <a class="button" href="/work/canvasser/">Read the case study</a>
+      <a class="button button--secondary" href="/nomaan-akram-cv.pdf">Download CV (PDF)</a>
     </div>
-    <ul class="swatches">
-      <li>
-        <span class="swatch swatch--bg"></span>
-        <span class="name">bg</span>
-        <span class="hex">#ffffff</span>
-      </li>
-      <li>
-        <span class="swatch swatch--surface"></span>
-        <span class="name">surface</span>
-        <span class="hex">#faf8f5</span>
-      </li>
-      <li>
-        <span class="swatch swatch--text"></span>
-        <span class="name">text</span>
-        <span class="hex">#1a1a1a</span>
-      </li>
-      <li>
-        <span class="swatch swatch--muted"></span>
-        <span class="name">text-muted</span>
-        <span class="hex">#5c5650</span>
-      </li>
-      <li>
-        <span class="swatch swatch--accent"></span>
-        <span class="name">accent</span>
-        <span class="hex">#bc3b1a</span>
-      </li>
-      <li>
-        <span class="swatch swatch--accent-strong"></span>
-        <span class="name">accent-strong</span>
-        <span class="hex">#9a2f14</span>
-      </li>
-    </ul>
   </section>
-  <Section id="components" eyebrow="Sample" title="Component check" tone="surface">
-    <div class="component-stack">
-      <StatGrid>
-        <Stat value="123" label="Sample stat" />
-        <Stat value="123" label="Sample stat" />
-        <Stat value="123" label="Sample stat" />
-      </StatGrid>
-      <ChipList items={['Sample chip', 'Astro', 'Figma']} label="Sample tools" />
-      <DecisionCard
-        index={1}
-        title="Sample decision"
-        decision="Sample decision text."
-        why="Sample reasoning."
-        tradeoff="Sample trade-off."
+
+  <Section id="work" eyebrow="Work" title="Selected work">
+    <ProjectCard
+      featured
+      headingLevel={3}
+      meta="First Home Improvements · 2026"
+      title="D2D: from paper surveys to live data"
+      summary="I knocked doors on this team, then designed and built the app it now runs on. Used daily by 60+ canvassers across 5 South West branches."
+      tags={['Field research', 'UX/UI', 'Offline-first', 'Next.js', 'Supabase']}
+      href="/work/canvasser/"
+      linkLabel="Read the case study"
+    />
+    <div class="card-grid">
+      <ProjectCard
+        meta="Barclays · 2022-2026"
+        title="UX Designer"
+        summary="4 years across Business Banking, Customer Care and Transact & Pay. I led the Premier offers onboarding flow end to end, and redesigned a CHAPS outage banner that lifted link success by 90% in testing."
+        tags={['User research', 'UserZoom', 'Figma', 'Design systems']}
       />
-      <div class="card-grid">
-        <div class="card-grid__feature">
-          <ProjectCard
-            featured
-            title="Sample project"
-            summary="Sample summary."
-            meta="Sample · 2026"
-            tags={['Sample', 'Tags']}
-            href="#work"
-            linkLabel="Read the case study"
-            image={sample}
-            imageAlt="Sample image"
-          />
-        </div>
-        <ProjectCard title="Sample project" summary="Sample summary." href="#work" />
-        <ProjectCard title="Sample project" summary="Sample summary." />
-      </div>
-      <Figure image={sample} alt="Sample image" caption="Sample caption under a figure." />
+      <ProjectCard
+        meta="Client · Everlink"
+        title="NFC jewellery store"
+        summary="A Shopify store, plus a separate site where each piece links to its owner's personal page through an NFC tag. Designs and a proof of concept delivered. The project is paused."
+        tags={['Shopify', 'Figma', 'APIs and webhooks']}
+        href="https://github.com/nomaan02/everlink-nfc-commerce"
+        linkLabel="View on GitHub"
+      />
+      <ProjectCard
+        meta="Client · Looptech"
+        title="Shopify storefront"
+        summary="Ongoing Shopify work. I built the Brand New and Renewed toggle, product filtering and a Smart Pick recommendation, with prices and details updating as you choose."
+        tags={['Shopify', 'Liquid', 'TypeScript']}
+      />
+      <ProjectCard
+        meta="Side project · with a business partner"
+        title="QuantTrader architecture"
+        summary="The data pipeline behind a trading platform I'm building with a partner, including a local LLM layer for analysis."
+        tags={['React', 'Ollama']}
+        href="https://github.com/nomaan02/quanttrader-architecture"
+        linkLabel="View on GitHub"
+      />
+      <ProjectCard
+        meta="Personal tool"
+        title="VoxPrompt"
+        summary="A voice-to-prompt tool I built and use every day."
+        href="https://github.com/nomaan02/voxprompt"
+        linkLabel="View on GitHub"
+      />
+      <ProjectCard
+        meta="Personal tool"
+        title="CISI revision hub"
+        summary="A revision app for the CISI finance exams."
+        href="https://github.com/nomaan02/cisi-revision-hub"
+        linkLabel="View on GitHub"
+      />
     </div>
   </Section>
-  <section id="work" class="container">
-    <h2>Work</h2>
-  </section>
+
+  <Section id="about" eyebrow="About" title="A designer who builds" tone="surface">
+    <div class="about">
+      <p>
+        I'm a UX and Product Designer in Bristol. I spent 4 years on the UX team at Barclays through a degree apprenticeship with Manchester Metropolitan University, shipping 2-3 projects and dev handovers a month.
+      </p>
+      <p>
+        I've coded since I was 13, so I work close to developers. At Barclays I built a design-to-dev handover framework that two teams adopted, and I ran a weekly design crit for 30-40 people.
+      </p>
+      <p>
+        Since 2021 I've run NakoLabs, a small studio for design, dev and 3D motion, with 100+ projects for 30+ clients.
+      </p>
+    </div>
+    <div class="actions">
+      <a class="button" href="/nomaan-akram-cv.pdf">Download CV (PDF)</a>
+      <a class="button button--secondary" href="mailto:nomaanakram4@gmail.com">Email me</a>
+    </div>
+  </Section>
 </BaseLayout>
 
 <style>
-  .style-check {
-    padding-block: var(--space-8);
+  .hero {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-7);
   }
 
-  .style-check > * + * {
-    margin-top: var(--space-5);
+  .hero h1 {
+    max-width: 18ch;
+    margin-top: var(--space-3);
   }
 
   .lead {
+    margin-top: var(--space-5);
     font-size: var(--text-lg);
     color: var(--color-text-muted);
   }
@@ -118,84 +132,28 @@ import StatGrid from '../components/StatGrid.astro';
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
-  }
-
-  .swatches {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    max-width: none;
-  }
-
-  .swatches li {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-1);
-    max-width: none;
-  }
-
-  .swatch {
-    width: var(--space-8);
-    height: var(--space-8);
-    border: 1px solid var(--color-border);
-  }
-
-  .swatch--bg {
-    background-color: var(--color-bg);
-  }
-
-  .swatch--surface {
-    background-color: var(--color-surface);
-  }
-
-  .swatch--text {
-    background-color: var(--color-text);
-  }
-
-  .swatch--muted {
-    background-color: var(--color-text-muted);
-  }
-
-  .swatch--accent {
-    background-color: var(--color-accent);
-  }
-
-  .swatch--accent-strong {
-    background-color: var(--color-accent-strong);
-  }
-
-  .name,
-  .hex {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-  }
-
-  #work {
-    padding-block: var(--space-8);
-  }
-
-  .component-stack {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-7);
+    margin-top: var(--space-6);
   }
 
   .card-grid {
     display: grid;
     gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
   }
 
   @media (min-width: 48rem) {
-    .card-grid {
-      grid-template-columns: 1fr 1fr;
+    .hero {
+      padding-top: var(--space-9);
     }
 
-    .card-grid__feature {
-      grid-column: 1 / -1;
+    .card-grid {
+      grid-template-columns: 1fr 1fr;
     }
   }
 </style>

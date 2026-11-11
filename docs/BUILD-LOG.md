@@ -22,3 +22,8 @@ Format:
 - Changed: src/styles/tokens.css, src/styles/global.css, src/components/Header.astro, src/components/Footer.astro, src/components/Section.astro, src/components/Stat.astro, src/components/StatGrid.astro, src/components/ChipList.astro, src/components/DecisionCard.astro, src/components/ProjectCard.astro, src/components/Figure.astro, src/assets/sample/figure-sample.png, src/pages/index.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass
 - Notes: sharp printed `ok`. Sample image is a flat fill, so the picture areas look empty. Horizontal overflow was 0 at 320, 375, 390, 430 and 1280. Chromium logged a 404 for /favicon.ico. The page does not link a favicon.
+
+## site-1-04 · 2026-11-11 · done
+- Changed: public/og.png, public/favicon.svg, public/apple-touch-icon.png, public/robots.txt, public/nomaan-akram-cv.pdf, src/layouts/BaseLayout.astro, src/pages/index.astro, docs/DECISIONS.md, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md, deleted src/assets/sample/figure-sample.png and the empty src/assets/sample/ and src/assets/ folders
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass, 11 pass
+- Notes: CV PDF present, copied from Claude outputs/site-1-04/assets/ and left in place there. The first `npm run build` hit a Windows file lock (EBUSY) and crashed. The re-run exited 0 with no warnings. At 1280 the featured card is 1120px wide, and ProjectCard's featured grid (3fr 2fr) puts the text in the first column only, so the second column is about 448px of empty card. The component was not edited. Hero h1 is 2 lines at 375. Horizontal overflow was 0 at 320, 375, 390, 430 and 1280. Preview logged no console errors and no failed requests.
