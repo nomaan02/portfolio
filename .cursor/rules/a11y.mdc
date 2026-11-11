@@ -15,7 +15,7 @@ alwaysApply: true
 
 ## Colour and contrast
 - Body text 4.5:1 minimum. Large text (24px+, or 18.66px+ bold) and UI parts 3:1.
-- Accent `#BC3B1A` on white = 5.56:1, OK for text. On dark backgrounds it fails as body text, so don't put it there.
+- Accent `#1C4AA6` on white = 8.15:1 and on surface `#F4F7FD` = 7.59:1, OK for text. On near-black it's about 2.1:1, so never use it for text on dark backgrounds.
 - Never use colour alone to carry meaning (links in body copy are underlined).
 
 ## Focus and keyboard

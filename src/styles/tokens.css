@@ -1,15 +1,15 @@
 :root {
-  /* Colour */
+  /* Colour (blue, from the D2D app. Changed from rust in site-2-01) */
   --color-bg: #ffffff;
-  --color-surface: #faf8f5;        /* warm off-white for cards and sections */
-  --color-text: #1a1a1a;           /* 17.4:1 on bg */
-  --color-text-muted: #5c5650;     /* 7.24:1 on bg, 6.83:1 on surface */
-  --color-accent: #bc3b1a;         /* 5.56:1 on bg, 5.24:1 on surface */
-  --color-accent-strong: #9a2f14;  /* hover/active, 7.52:1 on bg */
-  --color-on-accent: #ffffff;      /* text on accent fill, 5.56:1 */
-  --color-border: #e5e1da;         /* decorative dividers only */
-  --color-border-strong: #8a847c;  /* UI boundaries that must be seen, 3.7:1 */
-  --color-focus: #bc3b1a;
+  --color-surface: #f4f7fd;        /* cool off-white for cards and sections */
+  --color-text: #1a1a1a;           /* 17.4:1 on bg, 16.2:1 on surface */
+  --color-text-muted: #4b5563;     /* 7.56:1 on bg, 7.05:1 on surface */
+  --color-accent: #1c4aa6;         /* 8.15:1 on bg, 7.59:1 on surface */
+  --color-accent-strong: #163b85;  /* hover/active, 10.5:1 on bg */
+  --color-on-accent: #ffffff;      /* text on accent fill, 8.15:1 */
+  --color-border: #dce3f0;         /* decorative dividers only */
+  --color-border-strong: #7c8597;  /* UI boundaries that must be seen, 3.7:1 on bg, 3.4:1 on surface */
+  --color-focus: #1c4aa6;
 
   /* Type */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;

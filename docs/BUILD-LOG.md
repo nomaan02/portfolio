@@ -47,3 +47,8 @@ Format:
 - Changed: src/components/CaseStudyNav.astro, src/pages/work/canvasser.astro, src/styles/tokens.css, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass, 11 pass, 12 pass, 13 pass, 14 pass
 - Notes: Lighthouse on /work/canvasser/ was Performance 100, Accessibility 100, Best Practices 100, SEO 100, mobile and desktop. CLS 0 on both. The supplied sidebar observer treated a hero nav that was still below the fold as already gone, so the sidebar covered the title at 1280x800, and a jump that skipped that nav never revealed the sidebar. The script now reads those rectangles on scroll. Astro scoped the new mobile `section[id]` rule to the page, so case-study sections keep a 24px scroll margin. The Outcome h2 still clears the 46px bar (h2 top about 106px).
+
+## site-2-01 · 2026-11-11 · partial
+- Changed: src/styles/tokens.css, public/favicon.svg, public/apple-touch-icon.png, public/og.png, docs/DECISIONS.md, .cursor/rules/a11y.mdc, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 partial, 10 pass, 11 not run, 12 pass, 13 pass
+- Notes: Re-ran checks 1, 3 and 6 on 2026-11-11. Build exited 0 with no warnings. The contrast script prints 8.14:1 and 7.04:1 where the token comments say 8.15 and 7.05. Every line is PASS. Case study h1 and stats at 1280x800 match the site-1-09 rects exactly. Home and 390 were measured, and the screenshot mask compare was not run. Lighthouse produced no reports and no scores. Check 13 also lists the owner's canvasser image files. Those were left untouched. Preview checks used the preview already serving http://127.0.0.1:4322/.

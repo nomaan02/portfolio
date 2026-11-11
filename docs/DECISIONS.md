@@ -9,7 +9,7 @@ Last updated: 2026-11-11
 | Stack | Astro, static output, plain CSS, no UI framework, no Tailwind |
 | Allowed dependencies | `astro`, `@astrojs/sitemap`. Nothing else without the owner's approval |
 | Fonts | Inter, self-hosted woff2 in `public/fonts/` (SIL OFL). No Google Fonts, no CDN |
-| Accent | `#BC3B1A` (rust). Light theme only in v1 |
+| Accent | `#1C4AA6` (blue, from the D2D app). Changed from rust `#BC3B1A` in site-2-01. Light theme only |
 | Contact | `mailto:nomaanakram4@gmail.com`, LinkedIn `https://www.linkedin.com/in/nomaan-akram-b35565223/`, GitHub `https://github.com/nomaan02` |
 | v1 pages | Home (positioning + project cards), Canvasser case study (condensed), CV PDF download |
 | Launch | Everything goes live together after QA (site-1-07). Deploy is site-1-08 |
@@ -25,4 +25,4 @@ Last updated: 2026-11-11
 - Privacy and content rules: see `.cursor/rules/copy-tone.mdc`.
 
 ## v2 (not now)
-Barclays write-up page, Looptech and Everlink pages, About page, 3D/motion reel, full 12-section case study, GitHub banner restyle to rust, custom domain.
+Barclays write-up page, Looptech and Everlink pages, About page, 3D/motion reel, full 12-section case study, GitHub banner restyle to blue, custom domain.
