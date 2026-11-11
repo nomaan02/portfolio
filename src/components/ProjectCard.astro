@@ -1,0 +1,171 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import ChipList from './ChipList.astro';
+
+type Props = {
+  title: string;
+  summary: string;
+  meta?: string;
+  tags?: string[];
+  href?: string;
+  linkLabel?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  featured?: boolean;
+  headingLevel?: 2 | 3;
+};
+
+const {
+  title,
+  summary,
+  meta,
+  tags,
+  href,
+  linkLabel = 'Read more',
+  image,
+  imageAlt,
+  featured = false,
+  headingLevel = 3,
+} = Astro.props;
+
+if (image && !imageAlt) {
+  throw new Error('ProjectCard: imageAlt is required when image is set.');
+}
+
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 50vw, 100vw';
+---
+
+<article class:list={['card', featured && 'card--featured', href && 'card--link']}>
+  {
+    image && imageAlt && (
+      <Image
+        src={image}
+        alt={imageAlt}
+        widths={[480, 800, 1200]}
+        sizes={sizes}
+        format="webp"
+        class="card__img"
+      />
+    )
+  }
+  <div class="card__body">
+    {meta && <p class="card__meta">{meta}</p>}
+    <Heading class="card__title">
+      {href ? <a href={href}>{title}</a> : title}
+    </Heading>
+    <p class="card__summary">{summary}</p>
+    {tags && <ChipList items={tags} label={`${title} tools`} />}
+    {href && <span class="card__cue" aria-hidden="true">{linkLabel} →</span>}
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .card :global(.card__img) {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .card__body {
+      padding: var(--space-6);
+    }
+  }
+
+  .card__meta {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .card__title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+  }
+
+  .card__title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .card__title a:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .card--link .card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__cue {
+    margin-top: auto;
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .card--link:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .card--link:hover .card__cue {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .card--link:has(a:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .card__title a:focus-visible {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card--link {
+      transition: border-color var(--duration-fast);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .card--featured {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+    }
+
+    .card--featured :global(.card__img) {
+      height: 100%;
+      aspect-ratio: auto;
+      border-bottom: 0;
+      border-right: 1px solid var(--color-border);
+    }
+
+    .card--featured .card__title {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>

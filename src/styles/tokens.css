@@ -51,4 +51,9 @@
   --duration-fast: 150ms;
   --duration-base: 220ms;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Added in site-1-03 */
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --text-stat: clamp(2.5rem, 2rem + 2vw, 3.5rem);  /* 40 to 56 */
+  --radius-full: 999px;
 }

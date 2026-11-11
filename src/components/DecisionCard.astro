@@ -1,0 +1,75 @@
+---
+type Props = {
+  index: number;
+  title: string;
+  decision: string;
+  why: string;
+  tradeoff: string;
+  headingLevel?: 3 | 4;
+};
+
+const { index, title, decision, why, tradeoff, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 4 ? 'h4' : 'h3';
+---
+
+<article class="decision">
+  <p class="eyebrow">Decision {String(index).padStart(2, '0')}</p>
+  <Heading>{title}</Heading>
+  <p class="decision__what">{decision}</p>
+  <dl>
+    <div>
+      <dt>Why</dt>
+      <dd>{why}</dd>
+    </div>
+    <div>
+      <dt>Trade-off</dt>
+      <dd>{tradeoff}</dd>
+    </div>
+  </dl>
+</article>
+
+<style>
+  .decision {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .decision {
+      padding: var(--space-6);
+    }
+  }
+
+  .decision > :global(h3),
+  .decision > :global(h4) {
+    margin-top: var(--space-2);
+  }
+
+  .decision__what {
+    margin-top: var(--space-3);
+  }
+
+  dl {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: var(--space-5) 0 0;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  dd {
+    margin: var(--space-1) 0 0;
+  }
+</style>

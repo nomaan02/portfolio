@@ -1,5 +1,13 @@
 ---
+import sample from '../assets/sample/figure-sample.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ChipList from '../components/ChipList.astro';
+import DecisionCard from '../components/DecisionCard.astro';
+import Figure from '../components/Figure.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Section from '../components/Section.astro';
+import Stat from '../components/Stat.astro';
+import StatGrid from '../components/StatGrid.astro';
 ---
 
 <BaseLayout
@@ -52,6 +60,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </li>
     </ul>
   </section>
+  <Section id="components" eyebrow="Sample" title="Component check" tone="surface">
+    <div class="component-stack">
+      <StatGrid>
+        <Stat value="123" label="Sample stat" />
+        <Stat value="123" label="Sample stat" />
+        <Stat value="123" label="Sample stat" />
+      </StatGrid>
+      <ChipList items={['Sample chip', 'Astro', 'Figma']} label="Sample tools" />
+      <DecisionCard
+        index={1}
+        title="Sample decision"
+        decision="Sample decision text."
+        why="Sample reasoning."
+        tradeoff="Sample trade-off."
+      />
+      <div class="card-grid">
+        <div class="card-grid__feature">
+          <ProjectCard
+            featured
+            title="Sample project"
+            summary="Sample summary."
+            meta="Sample · 2026"
+            tags={['Sample', 'Tags']}
+            href="#work"
+            linkLabel="Read the case study"
+            image={sample}
+            imageAlt="Sample image"
+          />
+        </div>
+        <ProjectCard title="Sample project" summary="Sample summary." href="#work" />
+        <ProjectCard title="Sample project" summary="Sample summary." />
+      </div>
+      <Figure image={sample} alt="Sample image" caption="Sample caption under a figure." />
+    </div>
+  </Section>
   <section id="work" class="container">
     <h2>Work</h2>
   </section>
@@ -133,5 +176,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   #work {
     padding-block: var(--space-8);
+  }
+
+  .component-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+
+  .card-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .card-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .card-grid__feature {
+      grid-column: 1 / -1;
+    }
   }
 </style>

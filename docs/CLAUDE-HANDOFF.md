@@ -1,71 +1,80 @@
 # Handoff
 
-- **Item:** site-1-02
-- **Status:** partial
-- **Versions:** Node v24.19.0, Astro 7.4.10, @astrojs/sitemap 3.7.4, Inter 4.1 (InterVariable.woff2, 352240 bytes)
+- **Item:** site-1-03
+- **Status:** done
 - **Files created or edited:**
-  - `.nvmrc`
-  - `package.json`
-  - `package-lock.json`
-  - `astro.config.mjs`
-  - `tsconfig.json`
-  - `public/fonts/InterVariable.woff2`
-  - `public/fonts/Inter-LICENSE.txt`
   - `src/styles/tokens.css`
   - `src/styles/global.css`
-  - `src/layouts/BaseLayout.astro`
   - `src/components/Header.astro`
   - `src/components/Footer.astro`
+  - `src/components/Section.astro`
+  - `src/components/Stat.astro`
+  - `src/components/StatGrid.astro`
+  - `src/components/ChipList.astro`
+  - `src/components/DecisionCard.astro`
+  - `src/components/ProjectCard.astro`
+  - `src/components/Figure.astro`
+  - `src/assets/sample/figure-sample.png`
   - `src/pages/index.astro`
   - `docs/BUILD-LOG.md`
   - `docs/CLAUDE-HANDOFF.md`
 - **Check results:**
   1. pass. `npm run build` exited 0. No warnings. Last 15 lines:
      ```
-     13:47:31 [build] Collecting build info...
-     13:47:31 [build] ✓ Completed in 85ms.
-     13:47:31 [build] Building static entrypoints...
-     13:47:31 [vite] ✓ built in 212ms
-     13:47:31 [vite] ✓ built in 17ms
-     13:47:31 [build] Rearranging server assets...
+     14:00:57 [vite] ✓ built in 12ms
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_26FzR5.webp (before: 21kB, after: 0kB) (+143ms) (1/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_Z177xnT.webp (before: 21kB, after: 0kB) (+26ms) (2/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_ZeUWLF.webp (before: 21kB, after: 1kB) (+45ms) (3/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_1aETg2.webp (before: 21kB, after: 0kB) (+16ms) (4/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_Z1yOsBy.webp (before: 21kB, after: 0kB) (+25ms) (5/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_1AMHVr.webp (before: 21kB, after: 1kB) (+46ms) (6/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_Z2h5tj3.webp (before: 21kB, after: 2kB) (+62ms) (7/8)
+     14:00:57   ▶ /_astro/figure-sample.T_vKbMLZ_ZBBux.webp (before: 21kB, after: 2kB) (+63ms) (8/8)
+     14:00:57 ✓ Completed in 428ms.
 
-      generating static routes
-     13:47:31   ├─ /index.html (+9ms)
-     13:47:31 ✓ Completed in 21ms.
-
-     13:47:31 [build] ✓ Completed in 312ms.
-     13:47:31 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
-     13:47:31 [build] 1 page(s) built in 406ms
-     13:47:31 [build] Complete!
+     14:00:57 [build] ✓ Completed in 789ms.
+     14:00:57 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+     14:00:57 [build] 1 page(s) built in 891ms
+     14:00:57 [build] Complete!
      ```
-  2. pass. `dist/index.html`, `dist/sitemap-index.xml` and `dist/fonts/InterVariable.woff2` exist.
-  3. pass. Raw output of `grep -rnE "googleapis|gstatic|cdn\.|unpkg|jsdelivr" dist src` is empty (exit 1, no matches).
-  4. pass. Raw output of `grep -rnP "\x{2014}|\x{2013}" src` is empty (exit 1, no matches).
-  5. pass. Raw output of `grep -rnE "#[0-9a-fA-F]{3,6}\b" src --include=*.css --include=*.astro | grep -v -e tokens.css -e pages/index.astro` is empty (exit 1, no matches).
-  6. pass. `node_modules/`, `dist/` and `.astro/` do not appear. Raw output of `git status --short -uall`:
+  2. pass. Raw output of `git diff --stat -- package.json package-lock.json` is empty.
+  3. pass. Raw output of `ls dist/_astro | grep -c "\.webp$"`:
+     ```
+     8
+     ```
+  4. pass. Em-dash grep printed nothing.
+  5. pass. Raw-hex grep printed nothing.
+  6. pass. Split `dist/index.html` on `<article class="card` and counted `<a ` in each article. Raw output:
+     ```
+     cards 3
+     card 1 anchors 1
+     card 2 anchors 1
+     card 3 anchors 0
+     ```
+  7. pass. Raw output of `git status --short -uall`:
      ```
       M docs/BUILD-LOG.md
       M docs/CLAUDE-HANDOFF.md
-     ?? .nvmrc
-     ?? astro.config.mjs
-     ?? package-lock.json
-     ?? package.json
-     ?? public/fonts/Inter-LICENSE.txt
-     ?? public/fonts/InterVariable.woff2
-     ?? src/components/Footer.astro
-     ?? src/components/Header.astro
-     ?? src/layouts/BaseLayout.astro
-     ?? src/pages/index.astro
-     ?? src/styles/global.css
-     ?? src/styles/tokens.css
-     ?? tsconfig.json
+      M src/components/Footer.astro
+      M src/components/Header.astro
+      M src/pages/index.astro
+      M src/styles/global.css
+      M src/styles/tokens.css
+     ?? src/assets/sample/figure-sample.png
+     ?? src/components/ChipList.astro
+     ?? src/components/DecisionCard.astro
+     ?? src/components/Figure.astro
+     ?? src/components/ProjectCard.astro
+     ?? src/components/Section.astro
+     ?? src/components/Stat.astro
+     ?? src/components/StatGrid.astro
      ```
-  7. partial. Screenshots saved at the four viewports. Horizontal overflow was 0 at 390, 375, 430, 1280 and 320. Tab once shows the skip link (`position: fixed`, 151 by 51, top 16, left 16). Enter moves focus to `<main id="main">`. Lighthouse was not run.
+  8. pass. Full-page screenshots saved. Horizontal overflow: 320 = 0, 375 = 0, 390 = 0, 430 = 0, 1280 = 0. Header and footer borders are 1px and span the viewport (left 0, width 1280 at 1280). Featured card is two columns at 1280 (image x 81, body x 752) and stacked at 390 (image y 2162, body y 2358). Tab reached the featured card link. Its outline is 2px solid with 2px offset around the 1120×379 card. Enter moved the URL to `#work`.
 - **Screenshots:**
-  - `Claude outputs/site-1-02/390.png` (390×763)
-  - `Claude outputs/site-1-02/375.png` (375×667)
-  - `Claude outputs/site-1-02/430.png` (430×850)
-  - `Claude outputs/site-1-02/1280.png` (1280×800)
-- **Deviations from this prompt:** Lighthouse (mobile) Accessibility and Best Practices scores were not collected. The Lighthouse CLI is not installed. Installing it would add a package outside `astro` and `@astrojs/sitemap`.
-- **Open questions for the owner:** none
-- **Next item:** site-1-03 (components from the Figma kit)
+  - `Claude outputs/site-1-03/390.png`
+  - `Claude outputs/site-1-03/375.png`
+  - `Claude outputs/site-1-03/430.png`
+  - `Claude outputs/site-1-03/1280.png`
+- **Deviations:** none
+- **Open questions:** none
+- **Next item:** site-1-04 (Home page)

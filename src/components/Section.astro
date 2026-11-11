@@ -1,0 +1,67 @@
+---
+type Props = {
+  id?: string;
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  tone?: 'default' | 'surface';
+};
+
+const { id, eyebrow, title, intro, tone = 'default' } = Astro.props;
+
+const slug = title
+  .toLowerCase()
+  .trim()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-|-$/g, '');
+
+const headingId = id ? `${id}-title` : slug;
+---
+
+<section
+  id={id}
+  aria-labelledby={headingId}
+  class:list={['section', tone === 'surface' && 'section--surface']}
+>
+  <div class="container">
+    <div class="section__head">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 id={headingId}>{title}</h2>
+      {intro && <p class="intro">{intro}</p>}
+    </div>
+    <div class="section__body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-7);
+  }
+
+  @media (min-width: 48rem) {
+    .section {
+      padding-block: var(--space-9);
+    }
+  }
+
+  .section--surface {
+    background-color: var(--color-surface);
+  }
+
+  .section__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .section__body {
+    margin-top: var(--space-6);
+  }
+
+  .intro {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+</style>
