@@ -1,6 +1,16 @@
 export type Card = { eyebrow?: string; title: string; body: string };
 export type Decision = { index: number; title: string; decision: string; why: string; tradeoff: string };
 
+export type Finding = { eyebrow: string; title?: string; quote?: string; body: string };
+export type Persona = {
+  role: string;
+  title: string;
+  summary: string;
+  needs: string[];
+  frustrations: string[];
+  shaped: string[];
+};
+
 export const meta = {
   title: 'D2D case study · Nomaan Akram',
   description:
@@ -34,7 +44,7 @@ export const hero = {
 export const tldr = [
   { term: 'Problem', detail: 'Areas were planned from memory and circled on WhatsApp. Every knock was written on paper. Nobody could answer "we knocked this area six weeks ago: which doors are left?"' },
   { term: 'What I built', detail: 'A canvasser app that logs a door in one tap, works with no signal and follows a generated walking route. A manager dashboard to draw areas, allocate teams, see coverage and coach from real numbers. The company CRM syncs back in every night.' },
-  { term: 'How', detail: "I worked the job myself, wrote down the team's unwritten rules (how they walk a street, what counts as a contact), designed in Figma, and shipped in tested phases with AI-assisted delivery, accelerated by batch scripting and manual checks and corrections." },
+  { term: 'How', detail: "I worked the job myself, interviewed everyone the tool would touch, wrote down the team's unwritten rules (how they walk a street, what counts as a contact), designed in Figma, and shipped in tested phases with AI-assisted delivery, accelerated by batch scripting and manual checks and corrections." },
   { term: 'Result', detail: 'Live across 5 South West branches, used daily by 60+ canvassers. Leads per week up 40% on average in a 5-week pilot. Talks about expanding further are under way.' },
 ];
 
@@ -56,6 +66,108 @@ export const context = {
   insiderTitle: "An insider's brief",
   insider:
     'Building for a job I do every day meant I didn\'t have to guess at the field conditions: rain on the screen, one hand free, patchy signal, a partner leapfrogging ahead of me. It also meant I knew the team\'s unwritten rules, like what actually counts as a "contact" (someone you could book, not just anyone who opened the door). Those rules became hard requirements later.',
+};
+
+export const research = {
+  title: 'Talking to everyone a prop touches',
+  intro:
+    "Before designing anything, I spoke to everyone the tool would affect: all 8 canvassers on my team, the team leaders, the office staff, and a former manager I'm good friends with. Most of it happened on shift, between doors. The rest was in the office and over a few phone calls outside work.",
+  methodsTitle: 'How I did the research',
+  methods: [
+    {
+      eyebrow: 'On shift',
+      title: 'Interviews between doors',
+      body: 'I talked to canvassers while we worked the same props, so I heard about problems as they happened, not from memory at the end of a shift.',
+    },
+    {
+      eyebrow: 'Office and phone',
+      title: 'The people behind the shift',
+      body: 'Team leaders and office staff in the office, plus a few longer phone calls with a former manager about how props were really chosen and rotated.',
+    },
+    {
+      eyebrow: 'Time log',
+      title: 'Two months of wasted time, written down',
+      body: 'Through August and September I noted every bit of wasted time on shift in my phone, then added it up to project what a better tool could save.',
+    },
+  ] satisfies Card[],
+  findingsTitle: 'Three findings that changed the plan',
+  findings: [
+    {
+      eyebrow: 'Finding 01 · from the manager interviews',
+      title: "The data wasn't the problem. The props were.",
+      body: 'I started out sure that energy-certificate data would find better doors. Talking it through with my former manager showed where the real loss was: how props were chosen, rotated and worked out. That moved the project from scoring doors to planning areas from history.',
+    },
+    {
+      eyebrow: 'Finding 02 · a canvasser',
+      quote: '"I feel like I\'m destined for a bad result every time I\'m put with a new starter. They never know the routes."',
+      body: "This is why routes got their own design track: drawn before the team arrives, following the team's own walking rules, and simple enough for someone in their first week.",
+    },
+    {
+      eyebrow: 'Finding 03 · a canvasser',
+      quote: '"I\'m sick of hearing this is an amazing area for leads, when it\'s something we just knocked two weeks ago."',
+      body: 'This drove prop planning on the manager side: door history, rotation and suggested props, so the choice of area is backed by data, not just a hunch.',
+    },
+  ] satisfies Finding[],
+};
+
+export const personas = {
+  title: 'Three people the tool had to work for',
+  intro:
+    'I turned the interviews into three personas. Each one shaped specific features and decisions further down this page.',
+  items: [
+    {
+      role: 'New starter',
+      title: 'Week one, no map in their head',
+      summary: "Keen, but doesn't know the patch, the routes or the team's unwritten rules yet.",
+      needs: [
+        'A route that is already drawn when they arrive',
+        'Logging that works without knowing the rules',
+        'One hand, fast, no signal needed',
+      ],
+      frustrations: [
+        'Shadowing someone for weeks before they are useful',
+        'Not knowing which doors have already been done',
+      ],
+      shaped: ['Generated routes (Decision 05)', 'One-tap logging with a 60-second Undo'],
+    },
+    {
+      role: 'Experienced canvasser',
+      title: "Knows the patch, tired of re-knocking it",
+      summary: 'Fast and self-directed. Works in a pair, leapfrogging doors, and is self-employed.',
+      needs: [
+        'Honest information about when an area was last worked',
+        'Nothing that slows them down between doors',
+        'Location sharing that is clear and easy to stop',
+      ],
+      frustrations: [
+        'Being sent back to an area knocked two weeks ago',
+        'Being paired with someone who does not know the route',
+      ],
+      shaped: [
+        'Door history and prop rotation',
+        'No door claiming (Decision 08)',
+        'Current-position-only location (Decision 10)',
+      ],
+    },
+    {
+      role: 'Team leader',
+      title: "Responsible for the team's numbers",
+      summary: 'Canvasses too, trains new starters, and answers for the team at the end of the week.',
+      needs: [
+        'New starters productive quickly',
+        'Coaching based on facts, not feelings',
+        'A clear view of coverage',
+      ],
+      frustrations: [
+        'Results dropping whenever a new starter joins the team',
+        '"Pick it up" feedback with nothing behind it',
+      ],
+      shaped: [
+        'Map-based coaching reviews and per-person counts',
+        'No scores in the canvasser app (Decision 02), so coverage data stays honest',
+      ],
+    },
+  ] satisfies Persona[],
 };
 
 export const problem = {
@@ -90,6 +202,10 @@ export const logger = {
   title: 'Seven versions of one screen',
   intro:
     'The Logger is where a canvasser spends their whole shift: one door, one tap, next door. It went from a pencil sketch to the shipped screen through seven rounds, each changed by something seen on a real street.',
+  fidelity: {
+    eyebrow: 'A note on fidelity',
+    text: "I was the only designer and the only developer, working to a live team's needs in fast cycles. So I chose where to spend polish: on the parts canvassers touch all shift (the log button, the door number, Undo and sync state), not on visual finish. V1 is functional rather than refined, and it's held up in the field every day since October. A visual design pass is next, now that real use shows where it matters most.",
+  },
   roundsTitle: 'The seven rounds',
   rounds: [
     'Pencil sketch',
@@ -174,6 +290,7 @@ export const reflections = {
 export const toc = [
   { href: '#tldr', label: 'TL;DR' },
   { href: '#context', label: 'Context' },
+  { href: '#research', label: 'Research' },
   { href: '#problem', label: 'Problem' },
   { href: '#logger', label: 'The Knock Logger' },
   { href: '#routes', label: 'Routes' },

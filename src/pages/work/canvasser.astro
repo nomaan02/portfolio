@@ -6,6 +6,8 @@ import {
   hero,
   tldr,
   context,
+  research,
+  personas,
   problem,
   logger,
   routes,
@@ -22,6 +24,7 @@ import Stat from '../../components/Stat.astro';
 import ChipList from '../../components/ChipList.astro';
 import DecisionCard from '../../components/DecisionCard.astro';
 import InfoCard from '../../components/InfoCard.astro';
+import PersonaCard from '../../components/PersonaCard.astro';
 import Callout from '../../components/Callout.astro';
 import FigureSlot from '../../components/FigureSlot.astro';
 import CaseStudyNav from '../../components/CaseStudyNav.astro';
@@ -135,7 +138,45 @@ const fig = {
     </div>
   </Section>
 
-  <Section id="problem" eyebrow="Problem and constraints" title={problem.title} intro={problem.intro} tone="surface">
+  <Section id="research" eyebrow="Research" title={research.title} intro={research.intro} tone="surface">
+    <div class="block">
+      <h3>{research.methodsTitle}</h3>
+      <div class="grid grid--3">
+        {
+          research.methods.map((card) => (
+            <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />
+          ))
+        }
+      </div>
+    </div>
+    <div class="block">
+      <h3>{research.findingsTitle}</h3>
+      <div class="findings">
+        {
+          research.findings.map((f) => {
+            if (f.quote) {
+              return <Callout size="lg" eyebrow={f.eyebrow} text={f.quote} note={f.body} />;
+            }
+            if (!f.title) return null;
+            return <InfoCard eyebrow={f.eyebrow} title={f.title} body={f.body} />;
+          })
+        }
+      </div>
+    </div>
+    <div class="block">
+      <h3>{personas.title}</h3>
+      <p>{personas.intro}</p>
+      <div class="grid grid--3">
+        {
+          personas.items.map((persona) => (
+            <PersonaCard {...persona} />
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <Section id="problem" eyebrow="Problem and constraints" title={problem.title} intro={problem.intro}>
     <div class="block">
       <h3>{problem.usersTitle}</h3>
       <div class="grid grid--3">
@@ -164,7 +205,10 @@ const fig = {
     </div>
   </Section>
 
-  <Section id="logger" eyebrow="Design iterations" title={logger.title} intro={logger.intro}>
+  <Section id="logger" eyebrow="Design iterations" title={logger.title} intro={logger.intro} tone="surface">
+    <div class="fidelity">
+      <Callout eyebrow={logger.fidelity.eyebrow} text={logger.fidelity.text} />
+    </div>
     {fig.logger.length > 0 && (
       <div class="figures">
         {fig.logger.map((f) => <FigureSlot {...f} />)}
@@ -186,7 +230,7 @@ const fig = {
     </div>
   </Section>
 
-  <Section id="routes" eyebrow="Design iterations" title={routes.title} intro={routes.intro} tone="surface">
+  <Section id="routes" eyebrow="Design iterations" title={routes.title} intro={routes.intro}>
     {fig.routes.length > 0 && (
       <div class="figures">
         {fig.routes.map((f) => <FigureSlot {...f} />)}
@@ -203,7 +247,7 @@ const fig = {
     </div>
   </Section>
 
-  <Section id="decisions" eyebrow="Decision log" title={decisions.title} intro={decisions.intro}>
+  <Section id="decisions" eyebrow="Decision log" title={decisions.title} intro={decisions.intro} tone="surface">
     <div class="grid grid--decisions">
       {
         decisions.items.map((item) => (
@@ -224,7 +268,7 @@ const fig = {
     )}
   </Section>
 
-  <Section id="outcome" eyebrow="Outcome" title={outcome.title} intro={outcome.intro} tone="surface">
+  <Section id="outcome" eyebrow="Outcome" title={outcome.title} intro={outcome.intro}>
     <div class="block">
       <h3>{outcome.changedTitle}</h3>
       <div class="grid grid--2">
@@ -245,7 +289,7 @@ const fig = {
     </div>
   </Section>
 
-  <Section id="reflections" eyebrow="Reflections" title={reflections.title} intro={reflections.intro}>
+  <Section id="reflections" eyebrow="Reflections" title={reflections.title} intro={reflections.intro} tone="surface">
     <div class="grid grid--3">
       {
         reflections.items.map((card) => (
@@ -374,6 +418,17 @@ const fig = {
 
   .block p {
     margin-top: var(--space-4);
+  }
+
+  .findings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .fidelity {
+    margin-bottom: var(--space-7);
   }
 
   .grid {

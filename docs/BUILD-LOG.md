@@ -72,3 +72,13 @@ Format:
 - Changed: src/data/canvasser.ts (routes-walking-rules.png alt only), docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 fail, 5 pass, 6 not run, 7 fail
 - Notes: Check 4 printed 11 twice. Expected 10. The eleventh img is manager-flows.png. The prompt expected an untracked file named "Key flows.png". That file is not in src/assets/canvasser/. manager-flows.png is untracked instead, and it matches the existing outcome slot, so it renders. The alt text in EDIT 1 was left as specified. No image was touched. Checks 6 and 7 were not used to attempt a fix.
+
+## site-1-10 · 2026-11-11 · done
+- Changed: src/data/canvasser.ts, src/components/PersonaCard.astro, src/pages/work/canvasser.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass
+- Notes: Copy is the prompt text, including the time-log TODO. `grep -n "TODO(owner)" src/data/canvasser.ts` printed one line: `TODO(owner): the headline figure, for example minutes lost per shift.` Headings are 1 h1, 9 h2, 43 h3 and 9 h4, with no skipped levels. The section nav has 9 items and Research is third. On desktop the sidebar active state and the mobile label move from TL;DR to Research. On a 390px width the sticky bar does the same. Horizontal overflow was 0 at 320, 375, 390, 430, 1280 and 1440. Method and persona grids are 1 column below 64rem and 3 columns from 1024px up. No card text overflowed its card. Section backgrounds match the tone table. Info cards and persona cards stay white with a 1px border on the research surface. Lighthouse on /work/canvasser/ was Performance 100, Accessibility 100, Best Practices 100, SEO 100, mobile and desktop. CLS 0 on both. Quote callouts and the fidelity note use Callout, so on a surface section the fill matches the section and the accent bar marks the edge.
+
+## site-2-08 · 2026-11-11 · done
+- Changed: src/data/canvasser.ts (time-log card body only), docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass
+- Notes: The time-log body now ends at "project what a better tool could save." `grep -rn "TODO" src/` printed nothing. `grep -c "TODO" dist/work/canvasser/index.html` printed 0. At 1440 the three research method cards share one row (tops all 80px) and no card text overflowed. Site-1-10 is still uncommitted and was not otherwise changed.

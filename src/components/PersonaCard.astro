@@ -1,0 +1,99 @@
+---
+import type { Persona } from '../data/canvasser';
+
+type Props = Persona & {
+  headingLevel?: 3 | 4;
+};
+
+const { role, title, summary, needs, frustrations, shaped, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 4 ? 'h4' : 'h3';
+const Label = headingLevel === 4 ? 'h5' : 'h4';
+---
+
+<article class="persona">
+  <p class="eyebrow">{role}</p>
+  <Heading class="title">{title}</Heading>
+  <p class="summary">{summary}</p>
+  <div class="group">
+    <Label class="label">Needs</Label>
+    <ul>
+      {needs.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+  <div class="group">
+    <Label class="label">Frustrated by</Label>
+    <ul>
+      {frustrations.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+  <div class="group">
+    <Label class="label">What it shaped</Label>
+    <ul class="shaped">
+      {shaped.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .persona {
+    min-width: 0;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .persona {
+      padding: var(--space-6);
+    }
+  }
+
+  .title {
+    margin-top: var(--space-2);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+  }
+
+  .summary {
+    margin-top: var(--space-2);
+    max-width: var(--measure);
+    color: var(--color-text-muted);
+  }
+
+  .group {
+    margin-top: var(--space-4);
+  }
+
+  .summary + .group {
+    margin-top: var(--space-5);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  ul {
+    min-width: 0;
+    max-width: 100%;
+    margin-top: var(--space-2);
+    padding-left: var(--space-5);
+    list-style: disc;
+  }
+
+  li {
+    min-width: 0;
+    max-width: var(--measure);
+    overflow-wrap: break-word;
+  }
+
+  .shaped li::marker {
+    color: var(--color-accent);
+  }
+</style>
