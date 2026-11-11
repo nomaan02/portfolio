@@ -7,19 +7,33 @@ type Props = {
   image?: ImageMetadata;
   alt: string;
   caption?: string;
-  layout?: 'full' | 'narrow';
+  layout?: 'full' | 'narrow' | 'aside';
+  text?: string;
   priority?: boolean;
 };
 
-const { file, image, alt, caption, layout = 'full', priority = false } = Astro.props;
+const { file, image, alt, caption, text, layout = 'full', priority = false } = Astro.props;
 const ready = Boolean(image) && alt.trim().length > 0;
 const showPlaceholder = !ready && import.meta.env.DEV;
 ---
 
 {
-  ready && image && (
+  ready && image && layout !== 'aside' && (
     <div class:list={['slot', `slot--${layout}`]}>
       <Figure image={image} alt={alt} caption={caption || undefined} priority={priority} />
+    </div>
+  )
+}
+{
+  ready && image && layout === 'aside' && (
+    <div class="slot slot--aside">
+      <div class="slot__text">
+        {text && <p class="slot__lead">{text}</p>}
+        {caption && <p class="slot__note">{caption}</p>}
+      </div>
+      <div class="slot__media">
+        <Figure image={image} alt={alt} priority={priority} />
+      </div>
     </div>
   )
 }
@@ -36,6 +50,50 @@ const showPlaceholder = !ready && import.meta.env.DEV;
 <style>
   .slot--narrow {
     max-width: 32rem;
+  }
+
+  .slot--aside {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius-md) + var(--space-2));
+  }
+
+  .slot__text {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .slot__lead {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    color: var(--color-text);
+  }
+
+  .slot__note {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .slot__media {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  @media (min-width: 48rem) {
+    .slot--aside {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+      gap: var(--space-7);
+    }
+
+    .slot__media {
+      justify-self: end;
+    }
   }
 
   .slot--empty {

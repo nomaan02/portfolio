@@ -57,3 +57,8 @@ Format:
 - Changed: src/components/FigureSlot.astro, src/data/canvasser.ts, src/pages/work/canvasser.astro, src/pages/index.astro, docs/DECISIONS.md, .cursor/rules/copy-tone.mdc, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 partial, 4 pass, 5 pass, 6 partial, 7 pass, 8 pass, 9 pass, 10 pass, 11 pass
 - Notes: Full Lighthouse runs were Performance 100, Accessibility 100, Best Practices 100, SEO 100 on home and the case study, mobile and desktop. CLS 0. Case study transfer size was 134 KiB mobile (137,640 bytes) and 212 KiB desktop (216,652 bytes). Desktop LCP on the case study is the hero image. Mobile LCP is the lead paragraph, on both runs. `grep -c card__img` prints 2 because the inlined stylesheet is a second matching line. One featured image is in the HTML. A first home mobile run scored Performance 89 while another Chrome was busy. The quiet re-run scored 100.
+
+## site-2-04 · 2026-11-11 · done
+- Changed: src/data/canvasser.ts, src/components/FigureSlot.astro, src/assets/canvasser/before-paper-survey.jpg, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass
+- Notes: Lighthouse on /work/canvasser/ was Performance 100, Accessibility 100, Best Practices 100, SEO 100, mobile and desktop. CLS 0 on both. The first `npm run build` crashed with a memory allocation error. The re-run exited 0 with no warnings. At 1280 the text column ends at 767px and the image starts at 815px, 352px wide. The panel stacks on 390 and 375. The survey file was copied as-is.

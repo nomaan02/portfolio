@@ -186,7 +186,8 @@ export type FigureCopy = {
   file: string;
   alt: string;
   caption: string;
-  layout?: 'full' | 'narrow';
+  layout?: 'full' | 'narrow' | 'aside';
+  text?: string;
 };
 
 // Each slot shows on the live site only when its file exists in src/assets/canvasser/ and alt is filled in.
@@ -201,8 +202,10 @@ export const figures = {
   context: [
     {
       file: 'before-paper-survey.jpg',
-      alt: 'A handwritten paper survey sheet: columns of house numbers, each with a tick, a dash or nothing next to it, and the shift totals written at the top.',
-      caption: 'Before the app: one shift on paper. A house number and a mark for every door, with the totals added up at the top.',
+      alt: "A cropped paper survey sheet: the canvasser's name, date and area, the shift totals written in at the top, and the first rows of handwritten house numbers.",
+      text: 'The old way of tracking doors was slow, inefficient and unreliable.',
+      caption: 'Every knock went on a paper sheet like this one, and sheets came back with missing house numbers and street names.',
+      layout: 'aside',
     },
   ],
   logger: [
