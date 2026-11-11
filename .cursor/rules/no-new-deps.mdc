@@ -1,0 +1,13 @@
+---
+description: Dependency and external-resource policy. Stops new packages, CDNs and third-party scripts.
+alwaysApply: true
+---
+
+# No new dependencies without approval
+
+- Allowed packages: `astro`, `@astrojs/sitemap`. That's the full list.
+- Before adding anything else (npm package, Astro integration, PostCSS plugin, icon set), STOP. Don't install it. Report the name, why it's needed and the plain-CSS/Astro alternative you considered.
+- No external scripts, stylesheets or fonts from CDNs. Self-host everything under `public/`.
+- No trackers or analytics in code. Cloudflare Web Analytics gets turned on in the Cloudflare dashboard at deploy time.
+- No new config files beyond `astro.config.mjs`, `package.json`, `package-lock.json` and `tsconfig.json` unless the prompt file names them.
+- Never run `npm audit fix --force` or upgrade major versions.

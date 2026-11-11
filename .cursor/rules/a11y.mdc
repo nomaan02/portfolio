@@ -1,0 +1,37 @@
+---
+description: Accessibility rules for every page, component and style in this site. Target WCAG 2.2 AA.
+globs: ["src/**/*.astro", "src/**/*.css", "src/**/*.md", "src/**/*.mdx"]
+alwaysApply: true
+---
+
+# Accessibility (WCAG 2.2 AA)
+
+## Structure
+- `<html lang="en-GB">` on every page.
+- One `<h1>` per page. Never skip heading levels.
+- Use landmarks: `<header>`, `<nav>`, `<main id="main">`, `<footer>`.
+- The first focusable element is a "Skip to content" link targeting `#main`.
+- Links go somewhere, buttons do something. Never use a `<div>` with a click handler.
+
+## Colour and contrast
+- Body text 4.5:1 minimum. Large text (24px+, or 18.66px+ bold) and UI parts 3:1.
+- Accent `#BC3B1A` on white = 5.56:1, OK for text. On dark backgrounds it fails as body text, so don't put it there.
+- Never use colour alone to carry meaning (links in body copy are underlined).
+
+## Focus and keyboard
+- Every interactive element is reachable and usable by keyboard, in visual order.
+- Visible focus with `:focus-visible`: 2px solid outline, 2px offset, 3:1 against its background. Never `outline: none` without a replacement.
+- Touch targets at least 44×44px on mobile. Never below 24×24px (WCAG 2.5.8).
+
+## Images and media
+- Every `<img>` has `alt`. Decorative images get `alt=""`.
+- Case-study images get alt text that states what the image shows and why it matters, not "screenshot of".
+- Always set `width` and `height` (or aspect-ratio) so the layout doesn't shift.
+
+## Motion
+- Wrap all non-essential motion in `@media (prefers-reduced-motion: no-preference)`.
+- Animate only `transform` and `opacity`. Nothing auto-plays.
+
+## Layout
+- No horizontal page scroll from 320px to 1280px.
+- Body text max 70ch per line. Text must reflow at 200% zoom with nothing lost.

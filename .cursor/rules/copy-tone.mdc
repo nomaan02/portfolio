@@ -1,0 +1,30 @@
+---
+description: Voice, tone and content-safety rules for all site copy, alt text and metadata.
+globs: ["src/**/*.astro", "src/**/*.md", "src/**/*.mdx", "src/**/*.ts"]
+alwaysApply: true
+---
+
+# Copy tone
+
+## Voice
+- Sound like Nomaan: warm and plain. First person ("I designed", "I built").
+- UK English spelling (organise, colour, centre).
+- Short sentences. One idea per sentence.
+- Lead with the outcome, then how.
+- Numbers beat adjectives: "cut logging to 2 taps", not "dramatically improved logging".
+
+## Banned
+- Em dashes (U+2014) and en dashes (U+2013) used as dashes. Use a hyphen or a comma.
+- Buzzword stacks and filler: passionate, leverage, synergy, seamless, cutting-edge, innovative, robust, delve, elevate, empower, journey (as a metaphor), "in today's fast-paced world".
+- Button labels OK, Submit, Proceed, Click here. Buttons start with a verb: "Download CV", "Read the case study", "Email me".
+
+## Never invent
+- Never invent metrics, quotes, dates, client names or outcomes. If copy needs a fact you don't have, write `TODO(owner): <what's needed>` and list it in your report.
+
+## Content safety (hard rules)
+- Canvasser case study: no resident or homeowner names, no addresses, no door-level data. Property-level and synthetic data only.
+- No real CRM screenshots unless they are blurred.
+- EPC and HM Land Registry Price Paid data: describe the method only. Never republish the data.
+- Barclays: process and outcomes only. No internal screens, code or confidential data.
+- Looptech, Everlink: show only what the owner has supplied for the site.
+- No API keys, tokens or secrets anywhere, including in code samples and screenshots.
