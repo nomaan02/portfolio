@@ -32,3 +32,8 @@ Format:
 - Changed: src/components/ProjectCard.astro, src/pages/index.astro, src/data/canvasser.ts, src/components/InfoCard.astro, src/components/Callout.astro, src/pages/work/canvasser.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 fail, 10 pass, 10b pass, 11 pass
 - Notes: Check 9 matches "street names" twice. The pattern's word boundary sits only before the group, so "street name" matches inside "street names". The strings are the approved copy and were not edited. The dash grep needs `LC_ALL=C.UTF-8` in this Git Bash; that run printed nothing. Featured card at 1280 is flex, body 1118px inside a 1120px card, summary capped at 726px. Case study headings are 1 h1, 8 h2 and 33 h3. Horizontal overflow was 0 at 320, 375, 390, 430 and 1280.
+
+## site-1-06 · 2026-11-11 · done
+- Changed: src/assets/canvasser/logger-sketch.png, src/assets/canvasser/logger-interaction-model.png, src/data/canvasser.ts, src/pages/work/canvasser.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass
+- Notes: Images copied from `Claude outputs/site 1-06/assets/` (space in the folder name). `site-1-06` does not exist. Sources were left in place. logger-sketch.png is 840×858. logger-interaction-model.png is 2200×1664. Shipped image not supplied. Both are at least 800px wide. A 1280 load transferred 559,595 bytes (HTML 31,883, font 352,240, CSS 15,055, favicon 8,057, sketch WebP 72,326, interaction WebP 80,034).

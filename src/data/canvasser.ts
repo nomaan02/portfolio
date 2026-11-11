@@ -181,3 +181,23 @@ export const toc = [
   { href: '#outcome', label: 'Outcome' },
   { href: '#reflections', label: 'Reflections' },
 ];
+
+export type FigureCopy = { file: string; alt: string; caption: string };
+
+export const loggerFigures: FigureCopy[] = [
+  {
+    file: 'logger-sketch.png',
+    alt: 'Pencil sketch on squared paper of the logging screen: a large door number, outcome buttons down the right edge and a notes box.',
+    caption: 'Round 1: the first paper sketch. One door, a huge number, big outcome buttons.',
+  },
+  {
+    file: 'logger-interaction-model.png',
+    alt: 'Two phone mockups. Tapping an outcome on door 24 moves straight to door 25, with progress shown as 13 of 50.',
+    caption: 'Round 3: the annotated interaction model. One tap logs the outcome and moves to the next door, with no confirmation step.',
+  },
+  {
+    file: 'logger-shipped.png',
+    alt: 'The shipped Logger screen on a phone, with a directions banner at the top.',
+    caption: 'Round 7: shipped, then tuned in the field, with a directions banner added after a dry run.',
+  },
+];
