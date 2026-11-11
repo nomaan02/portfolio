@@ -240,7 +240,7 @@ export const figures = {
   routes: [
     {
       file: 'routes-walking-rules.png',
-      alt: "Three route maps. Left, labelled existing (fail): the first generated route, crossing back and forth. Middle, labelled target: the team's hand-drawn route. Right: a simpler area with the rules written on it: go up one side, cross at the end, come back on the opposite side.",
+      alt: "Three route maps. Left, labelled existing (fail): the first generated route, crossing back and forth. Middle, labelled target: the team's hand-drawn route. Right: a simpler area with the rules written on it: go up one side, cross at the end, come back on the opposite side. The text beside them reads: It was important the route finder adopted our existing ways of working. The app needed to feel like a seamless extension of our current operations and processes, not another blocker.",
       caption: "Attempt 1 next to the team's own drawings. Their rules (go up, cross at the end, come back the other side) became the spec for attempt 2.",
     },
     {

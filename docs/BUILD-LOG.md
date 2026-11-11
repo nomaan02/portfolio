@@ -67,3 +67,8 @@ Format:
 - Changed: src/data/canvasser.ts, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass
 - Notes: The Round 1 sketch uses the same aside panel as the Context survey. At 1280 both panels have a 20px radius, 32px padding and a 25px lead. The sketch text ends at 767px and the image starts at 815px, 352px wide. Round 2 stays full width at 880px with its caption. During the checks, hero.png was briefly a black 13KB file. It was restored from the last commit and is not part of this change.
+
+## site-2-06 · 2026-11-11 · blocked
+- Changed: src/data/canvasser.ts (routes-walking-rules.png alt only), docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 fail, 5 pass, 6 not run, 7 fail
+- Notes: Check 4 printed 11 twice. Expected 10. The eleventh img is manager-flows.png. The prompt expected an untracked file named "Key flows.png". That file is not in src/assets/canvasser/. manager-flows.png is untracked instead, and it matches the existing outcome slot, so it renders. The alt text in EDIT 1 was left as specified. No image was touched. Checks 6 and 7 were not used to attempt a fix.
