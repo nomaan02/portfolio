@@ -6,14 +6,15 @@ type Props = {
   why: string;
   tradeoff: string;
   headingLevel?: 3 | 4;
+  label?: string;
 };
 
-const { index, title, decision, why, tradeoff, headingLevel = 3 } = Astro.props;
+const { index, title, decision, why, tradeoff, headingLevel = 3, label } = Astro.props;
 const Heading = headingLevel === 4 ? 'h4' : 'h3';
 ---
 
 <article class="decision">
-  <p class="eyebrow">Decision {String(index).padStart(2, '0')}</p>
+  <p class="eyebrow">{label ?? `Decision ${String(index).padStart(2, '0')}`}</p>
   <Heading>{title}</Heading>
   <p class="decision__what">{decision}</p>
   <dl>

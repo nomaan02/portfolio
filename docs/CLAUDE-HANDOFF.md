@@ -1,20 +1,21 @@
 # Handoff
 
-- **Item:** site-2-11
+- **Item:** site-3-03
 - **Status:** done
 - **Files:**
-  - `src/pages/index.astro` (hero headline, hero lead, Barclays title, About crit line)
+  - `src/assets/ai-workflow/cross-family-review.png`
+  - `src/data/ai-workflow.ts` (judgement alt text and caption)
+  - `src/pages/work/ai-workflow.astro` (judgement figure moved out of the card grid)
   - `docs/BUILD-LOG.md`
   - `docs/CLAUDE-HANDOFF.md`
 - **Check results:**
-  1. pass. `npm run build` exited 0. No warnings.
-  2. pass. `grep -n "I design products, then I build them" src/pages/index.astro` printed nothing.
-  3. pass. `grep -n "Most recently" src/pages/index.astro` printed nothing.
-  4. pass. `grep -rn 'title="UX Designer"' src` and `grep -rn "30 to 40 people" src` both printed nothing.
-  5. pass. `LC_ALL=C.UTF-8 grep -nP '[\x{2013}\x{2014}]' src/pages/index.astro` printed nothing.
-  6. pass. `git diff --stat -- package.json package-lock.json` printed nothing.
-  7. pass. At 375, 768, 1280 and 1440 the headline wraps to three lines, ending "design and build the fix." Horizontal overflow was 0 at 375. No single word on the last line at 1280 or 1440, so `text-wrap: balance` was not added to the hero h1.
-- **Screenshots:** checked in the browser at 375, 768, 1280 and 1440, plus the Barclays card at 375 and 1280. None saved in the repo.
+  1. pass. `npm run build` exited 0. No warnings. `4 page(s) built`.
+  2. pass. `ls src/assets/ai-workflow` printed `audit-tracker.png`, `cross-family-review.png`, `hero.png`, `obsidian-vault.png`, `startup-log.png`.
+  3. pass. The dash grep printed nothing.
+  4. pass. Preview `/work/ai-workflow/`. `main img` count is 5. The judgement section has Overrule 01, Overrule 02, Overrule 03, Caught 04 and Caught 05, then the cross-model check image below the grid at the column width. The caption starts "A cross-model check on Captain's code." `scrollWidth - clientWidth` was 0 at 320, 375, 390, 430, 768, 1280 and 1440. Headings: 1 h1, 9 h2, 18 h3, 0 h4.
+  5. pass. Dev `/work/ai-workflow/` has no dashed image placeholders.
+  6. pass. `?? src/assets/ai-workflow/cross-family-review.png` is in the status. No path under `Claude outputs/` appears. Site-3-01 and site-3-02 are still uncommitted, so their files are listed too.
+- **Screenshots:** checked in the browser on preview at 1280 (image under the last overrule card, caption visible) and overflow at the seven widths. The dev placeholder check was done before switching to preview. None saved in the repo.
 - **Deviations:** none
 - **Open questions:** none
-- **Next item:** none (owner reviews and commits)
+- **Next item:** none. Owner to confirm the overrule cards before pushing

@@ -1,0 +1,61 @@
+---
+type Props = {
+  file: string;
+  code: string;
+  caption?: string;
+};
+
+const { file, code, caption } = Astro.props;
+---
+
+<figure class="code">
+  <p class="code__file">{file}</p>
+  <pre tabindex="0"><code>{code}</code></pre>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .code {
+    margin: 0;
+    min-width: 0;
+    background-color: var(--color-text);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .code {
+      padding: var(--space-6);
+    }
+  }
+
+  /* #c9ced8 on #1a1a1a is 11.6:1. #e8ebf1 on #1a1a1a is 15.4:1. */
+  .code__file,
+  figcaption {
+    font-size: var(--text-sm);
+    color: #c9ced8;
+  }
+
+  .code__file {
+    font-family: var(--font-mono);
+  }
+
+  pre {
+    margin: var(--space-4) 0 0;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    color: #e8ebf1;
+  }
+
+  pre:focus-visible {
+    outline: 2px solid #e8ebf1;
+    outline-offset: 2px;
+  }
+
+  figcaption {
+    margin-top: var(--space-4);
+    max-width: var(--measure);
+  }
+</style>

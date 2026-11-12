@@ -1,0 +1,129 @@
+---
+import type { TableData } from '../data/ai-workflow';
+
+type Props = TableData;
+
+const { caption, columns, rows } = Astro.props;
+---
+
+<div class="table-wrap">
+  <table role="table">
+    <caption class="visually-hidden">{caption}</caption>
+    <thead role="rowgroup">
+      <tr role="row">
+        {columns.map((col) => <th role="columnheader" scope="col">{col}</th>)}
+      </tr>
+    </thead>
+    <tbody role="rowgroup">
+      {
+        rows.map((row) => (
+          <tr role="row">
+            {row.map((cell, i) =>
+              i === 0 ? (
+                <th role="rowheader" scope="row">{cell}</th>
+              ) : (
+                <td role="cell" data-label={columns[i]}>{cell}</td>
+              ),
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-wrap {
+    min-width: 0;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-base);
+  }
+
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  thead th {
+    background-color: var(--color-surface);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  tbody th {
+    font-weight: var(--weight-semibold);
+  }
+
+  tbody tr {
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* Small screens: each row becomes a stacked card. Roles above keep table semantics. */
+  @media (max-width: 47.99rem) {
+    table,
+    thead,
+    tbody,
+    tr,
+    th,
+    td {
+      display: block;
+    }
+
+    thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    tbody tr:first-child {
+      border-top: 0;
+    }
+
+    tbody tr {
+      padding: var(--space-4) var(--space-5);
+    }
+
+    th,
+    td {
+      padding: 0;
+    }
+
+    td {
+      margin-top: var(--space-3);
+    }
+
+    td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: var(--space-1);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    tbody th {
+      width: 26%;
+    }
+  }
+</style>

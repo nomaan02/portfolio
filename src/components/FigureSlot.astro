@@ -10,9 +10,10 @@ type Props = {
   layout?: 'full' | 'narrow' | 'aside';
   text?: string;
   priority?: boolean;
+  dir?: string;
 };
 
-const { file, image, alt, caption, text, layout = 'full', priority = false } = Astro.props;
+const { file, image, alt, caption, text, layout = 'full', priority = false, dir = 'canvasser' } = Astro.props;
 const ready = Boolean(image) && alt.trim().length > 0;
 const showPlaceholder = !ready && import.meta.env.DEV;
 ---
@@ -41,8 +42,8 @@ const showPlaceholder = !ready && import.meta.env.DEV;
   showPlaceholder && (
     <div class:list={['slot', `slot--${layout}`, 'slot--empty']} aria-hidden="true">
       <p>Image slot</p>
-      <code>src/assets/canvasser/{file}</code>
-      <p>{image ? 'File found. Add alt text in src/data/canvasser.ts' : 'Add this file to show it'}</p>
+      <code>src/assets/{dir}/{file}</code>
+      <p>{image ? `File found. Add alt text in src/data/${dir}.ts` : 'Add this file to show it'}</p>
     </div>
   )
 }

@@ -28,3 +28,9 @@ alwaysApply: true
 - Barclays: process and outcomes only. No internal screens, code or confidential data.
 - Looptech, Everlink: show only what the owner has supplied for the site.
 - No API keys, tokens or secrets anywhere, including in code samples and screenshots.
+- QuantTrader and the AI workflow case study (`/work/ai-workflow/`):
+  - Never name the business partner. Write "my business partner".
+  - No strategy logic: no signals, entry or exit rules, parameters, weights, instruments tied to a strategy, backtest results, returns, P&L, account sizes or account IDs.
+  - Name the broker as "ProjectX API" only. No venue, prop firm, account type, rule names or evaluation results.
+  - No server IPs, hostnames, tower names, usernames or credentials in copy, code samples or images.
+  - Images of dashboards only with demo or blurred data. No real trades, prices or balances.

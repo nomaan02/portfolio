@@ -1,0 +1,224 @@
+---
+import type { FlowItem } from '../data/ai-workflow';
+
+type Props = {
+  label: string;
+  items: FlowItem[];
+  layout?: 'row' | 'grid';
+  arrows?: boolean;
+  caption?: string;
+  note?: string;
+};
+
+const { label, items, layout = 'row', arrows = true, caption, note } = Astro.props;
+const showArrows = arrows && layout === 'row';
+---
+
+<figure class:list={['flow', `flow--${layout}`, showArrows && 'flow--arrows']}>
+  <p class="eyebrow flow__label">{label}</p>
+  <ol class="flow__list">
+    {
+      items.map((item, i) => (
+        <li class="flow__item">
+          {showArrows && i > 0 && (
+            <span class="flow__link">
+              <span class="flow__arrow" aria-hidden="true">→</span>
+              {item.via && <span class="flow__via">{item.via}</span>}
+            </span>
+          )}
+          <div class:list={['flow__box', `flow__box--${item.variant ?? 'default'}`]}>
+            {item.eyebrow && <p class="flow__eyebrow">{item.eyebrow}</p>}
+            <p class="flow__title">{item.title}</p>
+            {item.mono && <p class="flow__mono">{item.mono}</p>}
+            {item.body && <p class="flow__body">{item.body}</p>}
+            {item.list && (
+              <ul class="flow__points">
+                {item.list.map((point) => <li>{point}</li>)}
+              </ul>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+  {note && <p class="flow__note">{note}</p>}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .flow {
+    margin: 0;
+    min-width: 0;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .flow {
+      padding: var(--space-6);
+    }
+  }
+
+  .flow__list {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+
+  .flow__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    max-width: none;
+  }
+
+  .flow__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-left: var(--space-4);
+    color: var(--color-accent);
+  }
+
+  .flow__arrow {
+    display: inline-block;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    transform: rotate(90deg);
+  }
+
+  .flow__via {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .flow__box {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+  }
+
+  .flow__box--soft {
+    background-color: var(--color-surface);
+  }
+
+  .flow__box--dashed {
+    border: 1px dashed var(--color-border-strong);
+  }
+
+  .flow__box--accent {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  .flow__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .flow__title {
+    margin-top: var(--space-1);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+  }
+
+  .flow__mono {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  .flow__body,
+  .flow__points {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .flow__points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: 0;
+    padding-left: var(--space-5);
+  }
+
+  .flow__box--accent .flow__eyebrow,
+  .flow__box--accent .flow__body,
+  .flow__box--accent .flow__points {
+    color: var(--color-on-accent);
+  }
+
+  .flow__note {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  figcaption {
+    margin-top: var(--space-4);
+    max-width: var(--measure);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .flow--grid .flow__list {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+    }
+
+    .flow--grid .flow__item {
+      flex-direction: row;
+    }
+
+    /* Boxes share the width equally. Arrows sit in the gap between them. */
+    .flow--row .flow__list {
+      display: flex;
+      align-items: stretch;
+      gap: var(--space-5);
+    }
+
+    .flow--arrows .flow__list {
+      gap: 6.5rem;
+    }
+
+    .flow--row .flow__item {
+      position: relative;
+      flex: 1 1 0;
+    }
+
+    .flow--row .flow__box {
+      height: 100%;
+    }
+
+    .flow__link {
+      position: absolute;
+      top: 50%;
+      left: -6.5rem;
+      width: 6.5rem;
+      flex-direction: column;
+      gap: var(--space-1);
+      padding: 0 var(--space-2);
+      text-align: center;
+      transform: translateY(-50%);
+    }
+
+    .flow__arrow {
+      transform: none;
+    }
+  }
+</style>

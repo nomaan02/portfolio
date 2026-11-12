@@ -1,0 +1,445 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { FigureCopy } from '../../data/canvasser';
+import {
+  meta,
+  hero,
+  tldr,
+  context,
+  rules,
+  routing,
+  memory,
+  loop,
+  judgement,
+  outcome,
+  reflections,
+  toc,
+  figures,
+} from '../../data/ai-workflow';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import Stat from '../../components/Stat.astro';
+import ChipList from '../../components/ChipList.astro';
+import DecisionCard from '../../components/DecisionCard.astro';
+import InfoCard from '../../components/InfoCard.astro';
+import Callout from '../../components/Callout.astro';
+import FigureSlot from '../../components/FigureSlot.astro';
+import CaseStudyNav from '../../components/CaseStudyNav.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
+import AuthorityLadder from '../../components/AuthorityLadder.astro';
+import DataTable from '../../components/DataTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import BarChart from '../../components/BarChart.astro';
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/ai-workflow/*.{png,jpg,jpeg}',
+  { eager: true },
+);
+const isDev = import.meta.env.DEV;
+const slots = (list: FigureCopy[]) =>
+  list
+    .map((f) => ({ ...f, dir: 'ai-workflow', image: images[`../../assets/ai-workflow/${f.file}`]?.default }))
+    .filter((f) => isDev || (Boolean(f.image) && f.alt.trim().length > 0));
+const fig = {
+  hero: slots(figures.hero),
+  memory: slots(figures.memory),
+  loop: slots(figures.loop),
+  judgement: slots(figures.judgement),
+  outcome: slots(figures.outcome),
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <script is:inline slot="head">document.documentElement.classList.add('toc-js');</script>
+  <section class="container hero" aria-labelledby="cs-title">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1 id="cs-title">{hero.title}</h1>
+    <p class="lead">{hero.lead}</p>
+    {fig.hero.length > 0 && (
+      <div class="hero-figure">
+        {fig.hero.map((f) => <FigureSlot {...f} priority />)}
+      </div>
+    )}
+    <div class="stats">
+      <StatGrid>
+        {hero.stats.map((stat) => <Stat value={stat.value} label={stat.label} />)}
+      </StatGrid>
+    </div>
+    <p class="measure-link"><a href="#numbers">What these numbers do and don't show</a></p>
+    <dl class="facts">
+      {
+        hero.facts.map((fact) => (
+          <div>
+            <dt>{fact.term}</dt>
+            <dd>{fact.detail}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <div class="tools">
+      <ChipList items={hero.stack} label="Models, tools and stack used" />
+    </div>
+    <nav class="toc" aria-label="On this page" data-toc-hero>
+      <p class="eyebrow">On this page</p>
+      <ul>
+        {
+          toc.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </section>
+
+  <div class="cs-body">
+  <CaseStudyNav items={toc} />
+
+  <Section id="tldr" eyebrow="TL;DR" title="The 60-second version" tone="surface">
+    <dl class="tldr">
+      {
+        tldr.map((row) => (
+          <>
+            <dt>{row.term}</dt>
+            <dd>{row.detail}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <Section id="context" eyebrow="Context" title={context.title} intro={context.intro}>
+    <FlowDiagram label={context.flowLabel} items={context.flow} caption={context.flowCaption} />
+    <div class="grid grid--2 grid--top">
+      <InfoCard eyebrow={context.why.eyebrow} title={context.why.title} body={context.why.body} />
+      <Callout size="lg" eyebrow={context.rule.eyebrow} text={context.rule.text} />
+    </div>
+  </Section>
+
+  <Section id="rules" eyebrow="Ground rules" title={rules.title} intro={rules.intro} tone="surface">
+    <div class="grid grid--3">
+      {rules.items.map((card) => <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />)}
+    </div>
+    <div class="space-top">
+      <FlowDiagram label={rules.boundaryLabel} items={rules.boundary} caption={rules.boundaryCaption} />
+    </div>
+  </Section>
+
+  <Section id="routing" eyebrow="Model routing" title={routing.title} intro={routing.intro}>
+    <FlowDiagram label={routing.ladderLabel} items={routing.ladder} layout="grid" arrows={false} />
+    <div class="space-top">
+      <DataTable {...routing.table} />
+    </div>
+    <div class="callout-top">
+      <Callout eyebrow={routing.rule.eyebrow} text={routing.rule.text} />
+    </div>
+  </Section>
+
+  <Section id="memory" eyebrow="Pinned context" title={memory.title} intro={memory.intro} tone="surface">
+    <AuthorityLadder label={memory.ladderLabel} levels={memory.levels} caption={memory.ladderCaption} />
+    <div class="space-top">
+      <DataTable {...memory.table} />
+    </div>
+    <div class="grid grid--3 grid--top">
+      {memory.cards.map((card) => <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />)}
+    </div>
+    <div class="pair">
+      <CodeBlock {...memory.code} />
+      {fig.memory.map((f) => <FigureSlot {...f} />)}
+    </div>
+  </Section>
+
+  <Section id="loop" eyebrow="Delivery loop" title={loop.title} intro={loop.intro}>
+    <FlowDiagram label={loop.stagesLabel} items={loop.stages} layout="grid" arrows={false} note={loop.stagesNote} />
+    <div class="space-top">
+      <FlowDiagram label={loop.rolesTitle} items={loop.roles} layout="grid" arrows={false} />
+    </div>
+    <div class="callout-top">
+      <Callout size="lg" eyebrow={loop.permissions.eyebrow} text={loop.permissions.text} />
+    </div>
+    <div class="pair">
+      <CodeBlock {...loop.code} />
+      {fig.loop.map((f) => <FigureSlot {...f} />)}
+    </div>
+  </Section>
+
+  <Section id="judgement" eyebrow="Judgement" title={judgement.title} intro={judgement.intro} tone="surface">
+    <div class="grid grid--decisions">
+      {
+        judgement.items.map((item) => (
+          <DecisionCard
+            index={item.index}
+            label={item.label}
+            title={item.title}
+            decision={item.decision}
+            why={item.why}
+            tradeoff={item.tradeoff}
+          />
+        ))
+      }
+    </div>
+    {fig.judgement.length > 0 && (
+      <div class="figures figures--top">
+        {fig.judgement.map((f) => <FigureSlot {...f} />)}
+      </div>
+    )}
+  </Section>
+
+  <Section id="outcome" eyebrow="Outcome" title={outcome.title} intro={outcome.intro}>
+    <StatGrid>
+      {outcome.stats.map((stat) => <Stat value={stat.value} label={stat.label} />)}
+    </StatGrid>
+    <div class="space-top">
+      <BarChart label={outcome.chartLabel} bars={outcome.chart} caption={outcome.chartCaption} />
+    </div>
+    <div class="space-top">
+      <DataTable {...outcome.table} />
+    </div>
+    <div id="numbers" class="measure" tabindex="-1">
+      <Callout eyebrow={outcome.numbers.eyebrow} text={outcome.numbers.text} />
+    </div>
+    {fig.outcome.length > 0 && (
+      <div class="figures figures--top">
+        {fig.outcome.map((f) => <FigureSlot {...f} />)}
+      </div>
+    )}
+  </Section>
+
+  <Section id="reflections" eyebrow="Reflections" title={reflections.title} intro={reflections.intro} tone="surface">
+    <div class="grid grid--3">
+      {reflections.items.map((card) => <InfoCard eyebrow={card.eyebrow} title={card.title} body={card.body} />)}
+    </div>
+    <div class="callout-top callout-top--room">
+      <Callout size="lg" eyebrow={reflections.summary.eyebrow} text={reflections.summary.text} />
+    </div>
+  </Section>
+
+  <div class="container end" data-toc-end>
+    <a class="button button--secondary" href="/#work">Back to all work</a>
+    <a class="button button--secondary" href="/work/canvasser/">Read the D2D case study</a>
+    <a class="button button--secondary" href="https://github.com/nomaan02/quanttrader-architecture">View the architecture on GitHub</a>
+    <a class="button" href="mailto:nomaanakram4@gmail.com">Email me</a>
+  </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-7);
+  }
+
+  .hero h1 {
+    max-width: 28ch;
+    margin-top: var(--space-3);
+  }
+
+  .lead {
+    margin-top: var(--space-5);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .stats {
+    margin-top: var(--space-7);
+  }
+
+  .measure-link {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .measure-link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin: var(--space-7) 0 0;
+  }
+
+  .facts div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .facts dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  .tools {
+    margin-top: var(--space-5);
+  }
+
+  .toc {
+    margin-top: var(--space-7);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-5);
+  }
+
+  .toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+
+  .toc li {
+    max-width: none;
+  }
+
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  .tldr {
+    display: grid;
+    row-gap: var(--space-4);
+    margin: 0;
+  }
+
+  .tldr dt {
+    font-weight: var(--weight-semibold);
+  }
+
+  .tldr dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .grid--top {
+    margin-top: var(--space-7);
+  }
+
+  .space-top {
+    margin-top: var(--space-6);
+  }
+
+  .callout-top {
+    margin-top: var(--space-6);
+  }
+
+  .callout-top--room {
+    margin-top: var(--space-7);
+  }
+
+  .pair {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+    align-items: start;
+  }
+
+  .measure {
+    margin-top: var(--space-6);
+  }
+
+  .end {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-9);
+  }
+
+  .figures {
+    display: grid;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .figures--top {
+    margin-top: var(--space-6);
+  }
+
+  .hero-figure {
+    margin-top: var(--space-6);
+  }
+
+  :global(section[id]),
+  #numbers {
+    scroll-margin-top: var(--space-5);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Clear the sticky mobile bar when jumping to a section */
+  @media (max-width: 74.99rem) {
+    section[id],
+    #numbers {
+      scroll-margin-top: calc(var(--tap-min) + var(--space-5));
+    }
+  }
+
+  /* Make room for the desktop sidebar (JS on only) */
+  @media (min-width: 75rem) {
+    :global(.toc-js) .cs-body :global(.container) {
+      padding-left: calc(var(--container-pad) + var(--toc-width) + var(--space-7));
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .facts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      padding-top: var(--space-9);
+    }
+
+    .tldr {
+      grid-template-columns: 10rem 1fr;
+      column-gap: var(--space-5);
+    }
+
+    .grid--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .facts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid--decisions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
