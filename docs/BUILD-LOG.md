@@ -87,3 +87,8 @@ Format:
 - Changed: src/components/Header.astro, src/pages/index.astro, deleted public/nomaan-akram-cv.pdf, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
 - Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass
 - Notes: `git rm` staged the PDF deletion. The other edits are unstaged. Nothing was committed. `npm run build` exited 0 with no warnings. `/nomaan-akram-cv.pdf` returns 404, and the file is not in `dist/`. At 375, 768 and 1280 the header nav (Work, Email) is one line and horizontal overflow was 0. At 375 the hero pair wraps (Read the case study, then Email me) with a 12px gap, both inside the container. The About pair (Email me, GitHub) stays side by side. At 768 and 1280 both pairs sit side by side. The same header is one line with overflow 0 on the case study at 375, 768 and 1280, and on the 404 page at 375. The Barclays card now says 30%.
+
+## site-2-11 · 2026-11-12 · done
+- Changed: src/pages/index.astro, docs/BUILD-LOG.md, docs/CLAUDE-HANDOFF.md
+- Checks: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass
+- Notes: Copy is the prompt text. The headline last line at 1280 and 1440 is "design and build the fix." (5 words), so `text-wrap: balance` was not added. Headings already use it in global.css. Horizontal overflow was 0 at 375. The same three-line wrap holds at 768. Site-2-10 was left in place. Nothing was committed.
