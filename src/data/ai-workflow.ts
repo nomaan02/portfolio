@@ -23,7 +23,7 @@ export const meta = {
 
 export const hero = {
   eyebrow: 'Case study · QuantTrader · 2026',
-  title: 'How I ran AI agents on a trading platform without letting them near the money',
+  title: 'The AI workflow behind QuantTrader',
   lead:
     'Over five months my business partner and I built QuantTrader, a futures research and trading platform. He did the research and the strategy maths. I built and ran everything else, mostly by directing AI agents. This page is about how I set that up: which model did which job, what each one could see and touch, and how I checked the work before it reached a live account.',
   stats: [
