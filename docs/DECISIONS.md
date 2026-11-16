@@ -1,6 +1,6 @@
 # Decisions
 
-Last updated: 2026-11-12
+Last updated: 2026-11-16
 
 | Area | Decision |
 |---|---|
@@ -17,11 +17,12 @@ Last updated: 2026-11-12
 | Case study URL | /work/canvasser/ |
 | Test sizes | 390×763, 375×667, 430×850, 1280 desktop |
 | Case study images | Files live in `src/assets/canvasser/` and are listed in `figures` in `src/data/canvasser.ts`. A slot shows on the live site only when its file exists and its alt text is filled in. In dev, an empty slot shows a dashed placeholder with the filename. Added in site-2-02 |
-| Image clearances | Street names, door numbers and canvasser names shown inside the case study images are cleared by the owner: the streets aren't real props, the numbers are meaningless and the names aren't real. Don't flag or blur them. Case study prose still follows `copy-tone.mdc` |
+| Image clearances | Street names, door numbers and canvasser names shown inside the case study images are cleared by the owner: the streets aren't real props, the numbers are meaningless and the names aren't real. Don't flag or blur them. Case study prose still follows `copy-tone.mdc`. The same applies to `src/assets/logger/`, including the owner's own name on the V1 heatmap (cleared 16 Nov 2026) |
 | AI workflow case study | `/work/ai-workflow/`, added in site-3-01. Copy in `src/data/ai-workflow.ts`, layout in `src/pages/work/ai-workflow.astro`. Planned in Figma file `dJUKGf1CB5vtEsulDCHvag`, page "Portfolio: AI workflow" (`144:214`) |
 | AI workflow images | Files live in `src/assets/ai-workflow/` and are listed in `figures` in `src/data/ai-workflow.ts`. Same slot rules as the D2D case study. Alt text is written after the owner supplies each image |
 | QuantTrader naming | The partner is never named. The broker is "ProjectX API" only. No strategy logic or results. Full rules in `.cursor/rules/copy-tone.mdc` |
-| Home cards | The QuantTrader card links to `/work/ai-workflow/` and sits first in the card grid, under the featured D2D card. The architecture repo is linked from the end of the case study |
+| Home cards | The Logger deep-dive is a second featured card (with image) under the featured D2D card. The QuantTrader card sits first in the card grid and links to `/work/ai-workflow/`. The architecture repo is linked from the end of the AI workflow case study |
+| Logger deep-dive | `/work/canvasser/logger/`, added in site-4-01. Copy in `src/data/logger.ts`, layout in `src/pages/work/canvasser/logger.astro`, images in `src/assets/logger/`. Every image is required: the build fails if one is missing. Linked from the Home grid, a teaser at the end of the D2D Logger section and the D2D end buttons. Planned in Figma file `EHxBRxJZGVAU1MuSU59RTH`, frame `348:3270` |
 | Commits | The owner commits. Never you |
 
 ## Hard rules

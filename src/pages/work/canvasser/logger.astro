@@ -1,0 +1,1923 @@
+---
+import type { ImageMetadata } from 'astro';
+import {
+  meta,
+  hero,
+  observe,
+  measure,
+  decide,
+  research,
+  iterate,
+  interact,
+  stress,
+  next,
+  references,
+} from '../../../data/logger';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PhoneShot from '../../../components/PhoneShot.astro';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../../../assets/logger/*.png', { eager: true });
+const img = (file: string): ImageMetadata => {
+  const found = images[`../../../assets/logger/${file}`];
+  if (!found) throw new Error(`Logger deep-dive: missing src/assets/logger/${file}`);
+  return found.default;
+};
+
+const stepSizes = '(min-width: 64rem) 18rem, 18rem';
+const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down', left: 'Left' };
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <div class="dd">
+    <section class="container hero" aria-labelledby="dd-title">
+      <div class="hero__bar">
+        <p class="mono">{hero.crumb}</p>
+        <a class="mono back" href={hero.back.href}><span aria-hidden="true">←&nbsp;</span>{hero.back.label}</a>
+      </div>
+      <div class="hero__grid">
+        <div>
+          <p class="tag">{hero.tag}</p>
+          <h1 id="dd-title">
+            {hero.titleLines.map((line, i) => (
+              <span class="line">{line}{i < hero.titleLines.length - 1 ? ' ' : ''}</span>
+            ))}
+          </h1>
+          <p class="lead">{hero.lead}</p>
+          <dl class="facts">
+            {hero.facts.map((fact) => (
+              <div>
+                <dt class="mono">{fact.term}</dt>
+                <dd>{fact.detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <div class="pair">
+          <figure>
+            <figcaption class="mono">{hero.before.label}</figcaption>
+            <PhoneShot image={img(hero.before.file)} alt={hero.before.alt} priority sizes="(min-width: 64rem) 15rem, 42vw" />
+          </figure>
+          <span class="arrow" aria-hidden="true"></span>
+          <figure>
+            <figcaption class="mono mono--accent">{hero.after.label}</figcaption>
+            <PhoneShot image={img(hero.after.file)} alt={hero.after.alt} priority sizes="(min-width: 64rem) 15rem, 42vw" />
+          </figure>
+        </div>
+      </div>
+      <div class="legend">
+        <p class="mono">{hero.legendTitle}</p>
+        <ul>
+          {hero.legend.map((item) => (
+            <li>
+              <span class:list={['glyph', `glyph--${item.kind}`]} aria-hidden="true">
+                {item.kind === 'step' && '01'}
+                {item.kind === 'decision' && <span>?</span>}
+              </span>
+              {item.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="flow">
+        <section class="step" id="observe" aria-labelledby="observe-title">
+          <span class="node" aria-hidden="true">01</span>
+          <div class="step__head">
+            <p class="eyebrow">{observe.eyebrow}</p>
+            <h2 id="observe-title">{observe.title}</h2>
+            <p class="intro">{observe.intro}</p>
+          </div>
+          <ul class="context">
+            {observe.cards.map((card) => (
+              <li>
+                <p class="mono">{card.label}</p>
+                <p class="context__value">{card.value}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="step" id="measure" aria-labelledby="measure-title">
+          <span class="node" aria-hidden="true">02</span>
+          <div class="step__head">
+            <p class="eyebrow">{measure.eyebrow} <span class="tag">{measure.tag}</span></p>
+            <h2 id="measure-title">{measure.title}</h2>
+            <p class="intro">{measure.intro}</p>
+          </div>
+          <div class="measure">
+            <div class="measure__shots">
+              <figure>
+                <figcaption class="mono">{measure.raw.label}</figcaption>
+                <PhoneShot image={img(measure.raw.file)} alt={measure.raw.alt} sizes="(min-width: 64rem) 16rem, 40vw" />
+              </figure>
+              <span class="arrow" aria-hidden="true"></span>
+              <figure>
+                <figcaption class="mono mono--accent">{measure.overlay.label}</figcaption>
+                <PhoneShot image={img(measure.overlay.file)} alt={measure.overlay.alt} sizes="(min-width: 64rem) 16rem, 40vw" />
+              </figure>
+              <p class="measure__note">{measure.note}</p>
+            </div>
+            <div class="measure__side">
+              <div class="card">
+                <h3 class="card__label">{measure.findingsTitle}</h3>
+                <ol class="pins">
+                  {measure.findings.map((finding) => <li>{finding}</li>)}
+                </ol>
+              </div>
+              <div class="card">
+                <h3 class="card__label">{measure.gripTitle}</h3>
+                <dl class="grip">
+                  {measure.grip.map((item) => (
+                    <div>
+                      <dt>{item.label}</dt>
+                      <dd>{item.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p class="source mono">{measure.gripSource}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="step" id="decide" aria-labelledby="decide-title">
+          <span class="node node--decision" aria-hidden="true"><span>?</span></span>
+          <div class="step__head">
+            <p class="eyebrow">{decide.eyebrow}</p>
+            <h2 id="decide-title">{decide.title}</h2>
+            <p class="intro">{decide.intro}</p>
+          </div>
+          <div class="branches">
+            {decide.options.map((option, i) => (
+              <div class:list={['branch', i === 0 ? 'branch--rejected' : 'branch--chosen']}>
+                <span class="branch__key mono" aria-hidden="true">{option.key}</span>
+                <article class="option">
+                  <p class:list={['tag', i === 0 && 'tag--muted']}>{option.status}</p>
+                  <h3>{option.title}</h3>
+                  <p>{option.body}</p>
+                </article>
+              </div>
+            ))}
+            <p class="return mono">
+              <span class="return__glyph" aria-hidden="true">↓&nbsp;</span><span class="return__text">{decide.next}</span>
+            </p>
+          </div>
+        </section>
+
+        <section class="step" id="research" aria-labelledby="research-title">
+          <span class="node" aria-hidden="true">03</span>
+          <div class="step__head">
+            <p class="eyebrow">{research.eyebrow} <span class="tag">{research.tag}</span></p>
+            <h2 id="research-title">{research.title}</h2>
+            <p class="intro">{research.intro}</p>
+          </div>
+          <ol class="rows">
+            {research.rows.map((row) => (
+              <li class="row">
+                <div class="row__in">
+                  <p class="mono">{row.source}</p>
+                  <p>{row.finding}</p>
+                </div>
+                <span class="arrow arrow--v arrow--v-md" aria-hidden="true"></span>
+                <div class="row__out">
+                  <p class="mono mono--accent">{research.decisionLabel}</p>
+                  <p class="row__decision">{row.decision}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p class="caveat"><span class="tag tag--warn">{research.caveatLabel}</span> <span>{research.caveat}</span></p>
+        </section>
+
+        <section class="step" id="iterate" aria-labelledby="iterate-title">
+          <span class="node" aria-hidden="true">04</span>
+          <div class="step__head">
+            <p class="eyebrow">{iterate.eyebrow}</p>
+            <h2 id="iterate-title">{iterate.title}</h2>
+            <p class="intro">{iterate.intro}</p>
+          </div>
+          <div class="passes">
+            {iterate.passes.map((pass, i) => (
+              <Fragment>
+                {i > 0 && (
+                  <div class="joint" aria-hidden="true">
+                    <span class="pill">{iterate.joints[i - 1]}</span>
+                    <span class="arrow arrow--v arrow--v-lg"></span>
+                  </div>
+                )}
+                <article class="pass">
+                  <p class:list={['mono', i === iterate.passes.length - 1 && 'mono--accent']}>{pass.label}</p>
+                  <PhoneShot image={img(pass.file)} alt={pass.alt} sizes={stepSizes} />
+                  <h3>{pass.title}</h3>
+                  <ul class="notes">
+                    {pass.notes.map((note) => (
+                      <li class:list={['note', `note--${note.kind}`]}>
+                        <span class="visually-hidden">{note.kind === 'plus' ? 'Better: ' : 'Problem: '}</span>{note.text}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Fragment>
+            ))}
+          </div>
+        </section>
+
+        <section class="step" id="interact" aria-labelledby="interact-title">
+          <span class="node" aria-hidden="true">05</span>
+          <div class="interact-head">
+            <div class="step__head">
+              <p class="eyebrow">{interact.eyebrow}</p>
+              <h2 id="interact-title">{interact.title}</h2>
+              <p class="intro">{interact.intro}</p>
+            </div>
+            <figure class="dirkey">
+              <figcaption class="mono">{interact.keyTitle}</figcaption>
+              <ul>
+                {interact.key.map((item) => (
+                  <li class={`dirkey__item dirkey__item--${item.dir}`}>
+                    <span class="visually-hidden">{dirWord[item.dir]}: </span>{item.label}
+                  </li>
+                ))}
+              </ul>
+            </figure>
+          </div>
+          <div class="gesture">
+            {interact.steps.map((step, i) => (
+              <Fragment>
+                {i > 0 && (
+                  <div class="gjoint" aria-hidden="true">
+                    <span class="arrow arrow--v"></span>
+                    <svg class="elbow" viewBox="0 0 80 100" width="80" height="100" focusable="false">
+                      <path d="M0 6H32a8 8 0 0 1 8 8V86a8 8 0 0 0 8 8H69" fill="none" stroke="currentColor" stroke-width="2" />
+                      <path d="M80 94l-11-6v12z" fill="currentColor" />
+                    </svg>
+                    <span class="pill">{interact.joints[i - 1]}</span>
+                  </div>
+                )}
+                <article class="gstep">
+                  <div class="gstep__title">
+                    <span class="pin" aria-hidden="true">{i + 1}</span>
+                    <h3>{step.title}</h3>
+                  </div>
+                  <PhoneShot image={img(step.file)} alt={step.alt} sizes={stepSizes} />
+                  <p>{step.caption}</p>
+                </article>
+              </Fragment>
+            ))}
+          </div>
+        </section>
+
+        <section class="step" id="stress" aria-labelledby="stress-title">
+          <span class="node" aria-hidden="true">06</span>
+          <div class="step__head">
+            <p class="eyebrow">{stress.eyebrow}</p>
+            <h2 id="stress-title">{stress.title}</h2>
+            <p class="intro">{stress.intro}</p>
+          </div>
+          <div class="cases">
+            {stress.cases.map((item) => (
+              <article class="case">
+                <span class="mini-diamond" aria-hidden="true"><span>?</span></span>
+                <h3>{item.question}</h3>
+                <span class="arrow arrow--v" aria-hidden="true"></span>
+                <PhoneShot image={img(item.file)} alt={item.alt} sizes="(min-width: 64rem) 14rem, 14rem" />
+                <p>{item.caption}</p>
+              </article>
+            ))}
+          </div>
+          <p class="eyebrow details-title">{stress.detailsTitle}</p>
+          <div class="details">
+            {stress.details.map((detail) => (
+              <article class="card detail">
+                <div class="specimen">
+                  <PhoneShot image={img(detail.file)} alt={detail.alt} tone="specimen" sizes="(min-width: 64rem) 20rem, 90vw" />
+                </div>
+                <p class="tag">{detail.tag}</p>
+                <h3>{detail.title}</h3>
+                <p>{detail.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="step step--last" id="next" aria-labelledby="next-title">
+          <span class="node" aria-hidden="true">07</span>
+          <div class="step__head">
+            <p class="eyebrow">{next.eyebrow}</p>
+            <h2 id="next-title">{next.title}</h2>
+          </div>
+          <div class="next">
+            <article class="card issues">
+              <h3 class="tag tag--warn">{next.issuesTitle}</h3>
+              <ol>
+                {next.issues.map((issue) => <li>{issue}</li>)}
+              </ol>
+            </article>
+            <article class="card plan">
+              <h3 class="tag tag--good">{next.planTitle}</h3>
+              <p class="plan__lead">{next.planLead}</p>
+              <dl class="measures">
+                {next.measures.map((item) => (
+                  <div>
+                    <dt>{item.term}</dt>
+                    <dd>{item.detail}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p class="plan__rule">{next.shipRule}</p>
+            </article>
+            <p class="loop mono"><span class="loop__glyph" aria-hidden="true">↺&nbsp;</span><span class="loop__text">{next.loop}</span></p>
+          </div>
+        </section>
+      </div>
+
+      <section class="refs" aria-labelledby="refs-title">
+        <div>
+          <h2 id="refs-title" class="eyebrow">{references.title}</h2>
+          <ol>
+            {references.items.map((ref) => (
+              <li><a href={ref.href}>{ref.text}</a></li>
+            ))}
+          </ol>
+        </div>
+        <a class="backcard" href={references.back.href}>
+          <span class="mono">{references.back.eyebrow}</span>
+          <span class="backcard__title">{references.back.title}<span aria-hidden="true">&nbsp;→</span></span>
+          <span class="backcard__body">{references.back.body}</span>
+        </a>
+      </section>
+
+      <div class="end">
+        <a class="button button--secondary" href="/#work">Back to all work</a>
+        <a class="button button--secondary" href="/work/canvasser/">Read the full D2D case study</a>
+        <a class="button" href="mailto:nomaanakram4@gmail.com">Email me</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Page tokens. The flow spine, nodes and arrows follow the Figma deep-dive. */
+  .dd {
+    --spine: #c3d0ea;
+    --tint: #e8eefb;
+    --warn-bg: #fdf1dc;
+    --warn-text: #7a4a00;
+    --good-bg: #e3f4ea;
+    --good-text: #1d6b45;
+    --bad-text: #b4232a;
+    --node: 2rem;
+    --rail: 2.75rem;
+    background-color: var(--color-surface);
+    padding-bottom: var(--space-8);
+  }
+
+  @media (min-width: 48rem) {
+    .dd {
+      --node: 2.5rem;
+      --rail: 4.5rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .dd {
+      --node: 3rem;
+      --rail: 7rem;
+    }
+  }
+
+  /* ---------- shared ---------- */
+  .mono {
+    max-width: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .mono--accent {
+    color: var(--color-accent);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    max-width: none;
+    padding: 0.125rem 0.625rem;
+    border-radius: var(--radius-full);
+    background-color: var(--tint);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: var(--weight-regular);
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .tag--muted {
+    background-color: #eceff4;
+    color: var(--color-text-muted);
+  }
+
+  .tag--warn {
+    background-color: var(--warn-bg);
+    color: var(--warn-text);
+  }
+
+  .tag--good {
+    background-color: var(--good-bg);
+    color: var(--good-text);
+  }
+
+  .card {
+    min-width: 0;
+    padding: var(--space-5);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .card__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .pill {
+    display: inline-flex;
+    padding: 0.125rem 0.625rem;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* Arrows: horizontal by default. .arrow--v points down, and the -md / -lg modifiers turn it back to horizontal at that width. */
+  .arrow {
+    position: relative;
+    display: block;
+    flex: none;
+    width: 2.5rem;
+    height: 0.75rem;
+    color: var(--color-accent);
+  }
+
+  .arrow::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    right: 0.5rem;
+    height: 2px;
+    background-color: currentColor;
+  }
+
+  .arrow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: 0.375rem solid transparent;
+    border-bottom: 0.375rem solid transparent;
+    border-left: 0.625rem solid currentColor;
+  }
+
+  .arrow--v {
+    width: 0.75rem;
+    height: 2rem;
+  }
+
+  .arrow--v::before {
+    top: 0;
+    bottom: 0.5rem;
+    left: calc(50% - 1px);
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .arrow--v::after {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    border-top: 0.625rem solid currentColor;
+    border-left: 0.375rem solid transparent;
+    border-right: 0.375rem solid transparent;
+    border-bottom: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .arrow--v-md {
+      width: 2.75rem;
+      height: 0.75rem;
+    }
+
+    .arrow--v-md::before {
+      top: calc(50% - 1px);
+      bottom: auto;
+      left: 0;
+      right: 0.5rem;
+      width: auto;
+      height: 2px;
+    }
+
+    .arrow--v-md::after {
+      top: 0;
+      bottom: auto;
+      left: auto;
+      right: 0;
+      border-top: 0.375rem solid transparent;
+      border-bottom: 0.375rem solid transparent;
+      border-left: 0.625rem solid currentColor;
+      border-right: 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .arrow--v-lg {
+      width: 3.25rem;
+      height: 0.75rem;
+    }
+
+    .arrow--v-lg::before {
+      top: calc(50% - 1px);
+      bottom: auto;
+      left: 0;
+      right: 0.5rem;
+      width: auto;
+      height: 2px;
+    }
+
+    .arrow--v-lg::after {
+      top: 0;
+      bottom: auto;
+      left: auto;
+      right: 0;
+      border-top: 0.375rem solid transparent;
+      border-bottom: 0.375rem solid transparent;
+      border-left: 0.625rem solid currentColor;
+      border-right: 0;
+    }
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-7);
+  }
+
+  .hero__bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero__bar .mono {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-size: 0.75rem;
+  }
+
+  .back {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .back:hover {
+    text-decoration: underline;
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+    margin-top: var(--space-7);
+  }
+
+  .hero h1 {
+    margin-top: var(--space-4);
+    font-size: clamp(2.25rem, 1.4rem + 3.4vw, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .hero h1 .line {
+    display: block;
+  }
+
+  .lead {
+    max-width: 34rem;
+    margin-top: var(--space-5);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-5);
+    max-width: 34rem;
+    margin: var(--space-6) 0 0;
+  }
+
+  .facts div {
+    min-width: 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .facts dt {
+    font-size: 0.75rem;
+  }
+
+  .facts dd {
+    margin: var(--space-1) 0 0;
+    font-weight: var(--weight-semibold);
+  }
+
+  figure {
+    display: grid;
+    gap: var(--space-3);
+    min-width: 0;
+    margin: 0;
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    max-width: 34rem;
+  }
+
+  .pair figcaption,
+  .measure__shots figcaption {
+    font-size: 0.6875rem;
+  }
+
+  .pair .arrow {
+    width: 1.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-7);
+    margin-top: var(--space-7);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .legend .mono {
+    font-size: 0.75rem;
+  }
+
+  .legend ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: none;
+    min-height: 1.75rem;
+    font-size: var(--text-sm);
+  }
+
+  .glyph {
+    display: grid;
+    flex: none;
+    place-items: center;
+  }
+
+  .glyph--step {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+  }
+
+  .glyph--decision {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-inline: 0.25rem;
+    border: 2px solid var(--color-accent);
+    border-radius: 0.25rem;
+    background-color: var(--color-bg);
+    transform: rotate(45deg);
+  }
+
+  .glyph--decision span {
+    transform: rotate(-45deg);
+    color: var(--color-accent);
+    font-size: 0.625rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .glyph--input {
+    width: 2rem;
+    height: 1.25rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.3rem;
+    background-color: var(--color-bg);
+  }
+
+  .glyph--flow,
+  .glyph--rejected {
+    position: relative;
+    width: 2.5rem;
+    height: 0.75rem;
+  }
+
+  .glyph--flow::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    right: 0.5rem;
+    height: 2px;
+    background-color: var(--color-accent);
+  }
+
+  .glyph--flow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: 0.375rem solid transparent;
+    border-bottom: 0.375rem solid transparent;
+    border-left: 0.625rem solid var(--color-accent);
+  }
+
+  .glyph--rejected::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    right: 0;
+    border-top: 2px dashed var(--color-border-strong);
+  }
+
+  @media (min-width: 40rem) {
+    .pair {
+      gap: var(--space-5);
+    }
+
+    .pair .arrow {
+      width: 3rem;
+    }
+
+    .pair figcaption,
+    .measure__shots figcaption {
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .hero {
+      padding-top: var(--space-6);
+    }
+
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .pair {
+      justify-self: end;
+    }
+  }
+
+  /* ---------- flow spine ---------- */
+  .flow {
+    position: relative;
+    padding-top: var(--space-7);
+    background: linear-gradient(var(--spine), var(--spine)) no-repeat calc(var(--node) / 2 - 1px) 0 / 2px calc(100% - 0.5rem);
+  }
+
+  .flow::before,
+  .flow::after {
+    content: '';
+    position: absolute;
+    left: calc(var(--node) / 2 - 0.4375rem);
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+  }
+
+  .flow::before {
+    top: 0;
+  }
+
+  .flow::after {
+    bottom: 0;
+  }
+
+  .step {
+    position: relative;
+    padding-bottom: var(--space-9);
+    padding-left: var(--rail);
+  }
+
+  .node {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: var(--node);
+    height: var(--node);
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    box-shadow: 0 0 0 6px var(--color-surface);
+  }
+
+  .node--decision {
+    top: calc(var(--node) * 0.15);
+    left: calc(var(--node) * 0.15);
+    width: calc(var(--node) * 0.7);
+    height: calc(var(--node) * 0.7);
+    border: 2px solid var(--color-accent);
+    border-radius: 0.375rem;
+    background-color: var(--color-bg);
+    color: var(--color-accent);
+    transform: rotate(45deg);
+  }
+
+  .node--decision span {
+    transform: rotate(-45deg);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .step__head {
+    display: grid;
+    gap: var(--space-3);
+    padding-top: calc((var(--node) - 1.5rem) / 2);
+  }
+
+  .step__head h2 {
+    max-width: 44ch;
+  }
+
+  .step__head .eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .intro {
+    color: var(--color-text-muted);
+  }
+
+  .step__head + *,
+  .interact-head + * {
+    margin-top: var(--space-6);
+  }
+
+  @media (min-width: 64rem) {
+    .node {
+      font-size: var(--text-sm);
+    }
+
+    .step__head + *,
+    .interact-head + * {
+      margin-top: var(--space-7);
+    }
+  }
+
+  /* ---------- 01 observe ---------- */
+  .context {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: var(--space-4);
+    max-width: none;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .context li {
+    max-width: none;
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .context .mono {
+    font-size: 0.75rem;
+  }
+
+  .context__value {
+    margin-top: var(--space-2);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+  }
+
+  /* ---------- 02 measure ---------- */
+  .measure {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .measure__shots {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-3);
+    max-width: 36rem;
+  }
+
+  .measure__shots .arrow {
+    width: 1.5rem;
+    align-self: center;
+    margin-top: 2rem;
+  }
+
+  .measure__note {
+    grid-column: 1 / -1;
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .measure__side {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .pins {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: pin;
+  }
+
+  .pins li {
+    position: relative;
+    min-height: 1.75rem;
+    padding-left: 2.5rem;
+    counter-increment: pin;
+  }
+
+  .pins li::before {
+    content: counter(pin) / '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    font-size: 0.8125rem;
+    font-weight: var(--weight-semibold);
+    box-shadow:
+      0 0 0 2px var(--color-bg),
+      0 2px 6px rgb(18 33 77 / 0.25);
+  }
+
+  .grip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+  }
+
+  .grip div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: var(--space-1);
+  }
+
+  .grip dd {
+    margin: 0;
+    font-size: clamp(1.75rem, 1.4rem + 1vw, 2.125rem);
+    font-weight: var(--weight-semibold);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .grip div:first-child dd {
+    color: var(--color-accent);
+  }
+
+  .grip dt {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .source {
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  @media (min-width: 40rem) {
+    .measure__shots {
+      gap: var(--space-4);
+    }
+
+    .measure__shots .arrow {
+      width: 3rem;
+    }
+
+    .measure__side {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .measure {
+      grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+      align-items: start;
+      gap: var(--space-7);
+    }
+
+    .measure__side {
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: 1.875rem;
+    }
+  }
+
+  /* ---------- decide ---------- */
+  .branches {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .option {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--color-bg);
+    border-radius: var(--radius-md);
+  }
+
+  .option h3 {
+    font-size: var(--text-lg);
+  }
+
+  .branch--rejected .option {
+    border: 1px dashed var(--color-border-strong);
+  }
+
+  .branch--rejected h3,
+  .branch--rejected .option > p:last-child {
+    color: var(--color-text-muted);
+  }
+
+  .branch--chosen .option {
+    border: 2px solid var(--color-accent);
+  }
+
+  .branch--chosen .option > p:last-child {
+    color: var(--color-text-muted);
+  }
+
+  .branch__key {
+    display: none;
+  }
+
+  .return {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 64rem) {
+    .branches {
+      position: relative;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-6);
+      row-gap: 0;
+      padding-top: 3.5rem;
+    }
+
+    .branches::before {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      left: calc(var(--node) / 2 - var(--rail) - 1px);
+      right: calc(25% - var(--space-6) / 4 - 1px);
+      height: 2px;
+      background-color: var(--color-accent);
+    }
+
+    .branch {
+      position: relative;
+    }
+
+    .branch::before {
+      content: '';
+      position: absolute;
+      top: -2.5rem;
+      left: calc(50% - 1px);
+      height: 1.875rem;
+      border-left: 2px solid var(--color-accent);
+    }
+
+    .branch--rejected::before {
+      border-left-style: dashed;
+      border-left-color: var(--color-border-strong);
+    }
+
+    .branch::after {
+      content: '';
+      position: absolute;
+      top: -0.625rem;
+      left: calc(50% - 0.375rem);
+      border-top: 0.625rem solid var(--color-accent);
+      border-left: 0.375rem solid transparent;
+      border-right: 0.375rem solid transparent;
+    }
+
+    .branch--rejected::after {
+      border-top-color: var(--color-border-strong);
+    }
+
+    .branch__key {
+      display: block;
+      position: absolute;
+      top: -2.125rem;
+      left: calc(50% + 0.625rem);
+      font-size: 0.75rem;
+    }
+
+    .branch--chosen .branch__key {
+      color: var(--color-accent);
+    }
+
+    .return {
+      position: relative;
+      grid-column: 1 / -1;
+      height: 4rem;
+    }
+
+    .return::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(var(--node) / 2 - var(--rail) + 0.875rem);
+      right: calc(25% - var(--space-6) / 4 - 1px);
+      height: 3rem;
+      border-right: 2px solid var(--color-accent);
+      border-bottom: 2px solid var(--color-accent);
+      border-bottom-right-radius: 0.875rem;
+    }
+
+    .return::after {
+      content: '';
+      position: absolute;
+      top: calc(3rem - 0.4375rem);
+      left: calc(var(--node) / 2 - var(--rail) + 0.25rem);
+      border-top: 0.375rem solid transparent;
+      border-bottom: 0.375rem solid transparent;
+      border-right: 0.625rem solid var(--color-accent);
+    }
+
+    .return__glyph {
+      display: none;
+    }
+
+    .return__text {
+      position: absolute;
+      top: 1.25rem;
+      right: calc(25% - var(--space-6) / 4 + 1rem);
+    }
+  }
+
+  /* ---------- 03 research ---------- */
+  .rows {
+    display: grid;
+    gap: var(--space-4);
+    max-width: none;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row {
+    display: grid;
+    justify-items: stretch;
+    gap: var(--space-2);
+    max-width: none;
+  }
+
+  .row .arrow {
+    justify-self: center;
+  }
+
+  .row__in,
+  .row__out {
+    display: grid;
+    align-content: center;
+    gap: var(--space-2);
+    min-width: 0;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+  }
+
+  .row__in {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+  }
+
+  .row__in .mono,
+  .row__out .mono {
+    font-size: 0.75rem;
+  }
+
+  .row__in p:last-child {
+    font-size: 0.9375rem;
+  }
+
+  .row__out {
+    background-color: var(--tint);
+  }
+
+  .row__decision {
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+  }
+
+  .caveat {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    max-width: none;
+    margin-top: var(--space-5);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--warn-bg);
+    border-radius: var(--radius-md);
+    color: #5c3d00;
+  }
+
+  .caveat .tag {
+    background-color: #fbe3b8;
+  }
+
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: minmax(0, 1fr) 4.5rem minmax(0, 1fr);
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .row .arrow {
+      align-self: center;
+    }
+  }
+
+  /* ---------- 04 iterate ---------- */
+  .passes {
+    display: grid;
+    gap: var(--space-4);
+    container-type: inline-size;
+  }
+
+  .pass {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    max-width: 16rem;
+  }
+
+  .pass .mono {
+    font-size: 0.75rem;
+  }
+
+  .pass h3,
+  .gstep h3,
+  .case h3,
+  .detail h3 {
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+  }
+
+  .pass h3 {
+    margin-top: var(--space-3);
+  }
+
+  .joint,
+  .gjoint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-left: calc(8rem - 0.375rem);
+  }
+
+  .notes {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .note {
+    position: relative;
+    padding-left: 1.375rem;
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .note::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-mono);
+    font-weight: var(--weight-semibold);
+  }
+
+  .note--plus::before {
+    content: '+' / '';
+    color: var(--good-text);
+  }
+
+  .note--minus::before {
+    content: '\2212' / '';
+    color: var(--bad-text);
+  }
+
+  @media (min-width: 64rem) {
+    .passes {
+      grid-template-columns: minmax(0, 1fr) 5rem minmax(0, 1fr) 5rem minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .pass {
+      max-width: none;
+    }
+
+    .joint {
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-left: 0;
+      /* Lines the arrow up with the middle of the screens: label row, then half the image height (844 / 390 / 2). */
+      padding-top: calc((100cqw - 10rem) / 3 * 1.082 - 0.5rem);
+    }
+  }
+
+  /* ---------- 05 interact ---------- */
+  .interact-head {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .dirkey {
+    width: 13rem;
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .dirkey figcaption {
+    font-size: 0.6875rem;
+  }
+
+  .dirkey ul {
+    display: grid;
+    grid-template-columns: 1fr 3.25rem 1fr;
+    grid-template-rows: auto 3.25rem auto;
+    place-items: center;
+    gap: 0.125rem;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .dirkey ul::before {
+    content: '';
+    grid-area: 2 / 2;
+    width: 3.25rem;
+    height: 3.25rem;
+    background:
+      radial-gradient(circle, var(--color-text) 0 0.3rem, transparent 0.33rem) center / 100% 100% no-repeat,
+      linear-gradient(var(--color-accent), var(--color-accent)) center top / 2px 32% no-repeat,
+      linear-gradient(var(--color-accent), var(--color-accent)) center bottom / 2px 32% no-repeat,
+      linear-gradient(var(--color-accent), var(--color-accent)) left center / 32% 2px no-repeat,
+      linear-gradient(var(--color-accent), var(--color-accent)) right center / 32% 2px no-repeat;
+  }
+
+  .dirkey li {
+    max-width: none;
+    font-size: 0.8125rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .dirkey__item--up {
+    grid-area: 1 / 2;
+  }
+
+  .dirkey__item--right {
+    grid-area: 2 / 3;
+    justify-self: start;
+  }
+
+  .dirkey__item--down {
+    grid-area: 3 / 2;
+  }
+
+  .dirkey__item--left {
+    grid-area: 2 / 1;
+    justify-self: end;
+  }
+
+  .gesture {
+    display: grid;
+    gap: var(--space-4);
+    container-type: inline-size;
+  }
+
+  .gstep {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    max-width: 16rem;
+  }
+
+  .gstep__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .gstep > p {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .pin {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    font-size: 0.8125rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .elbow {
+    display: none;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 64rem) {
+    .interact-head {
+      grid-template-columns: minmax(0, 1fr) 13rem;
+      align-items: start;
+    }
+
+    .gesture {
+      grid-template-columns: minmax(0, 1fr) 5rem minmax(0, 1fr) 5rem minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .gstep {
+      max-width: none;
+    }
+
+    .gstep:nth-of-type(2) {
+      margin-top: 5.5rem;
+    }
+
+    .gstep:nth-of-type(3) {
+      margin-top: 11rem;
+    }
+
+    .gjoint {
+      position: relative;
+      display: block;
+      padding-left: 0;
+      --joint-top: calc(2.375rem + (100cqw - 10rem) / 3 * 1.082 - 0.375rem);
+    }
+
+    .gjoint:nth-of-type(2) {
+      --joint-top: calc(7.875rem + (100cqw - 10rem) / 3 * 1.082 - 0.375rem);
+    }
+
+    .gjoint .arrow {
+      display: none;
+    }
+
+    .gjoint .elbow {
+      display: block;
+      position: absolute;
+      top: var(--joint-top);
+      left: 0;
+      width: 5rem;
+      height: 6.25rem;
+    }
+
+    .gjoint .pill {
+      position: absolute;
+      top: calc(var(--joint-top) + 2.375rem);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ---------- 06 stress-test ---------- */
+  .cases {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .case {
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    gap: var(--space-3);
+    max-width: 18rem;
+    text-align: center;
+  }
+
+  .case :global(img.shot) {
+    max-width: 14rem;
+  }
+
+  .case > p {
+    max-width: 16rem;
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .mini-diamond {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-block: 0.375rem;
+    border: 2px solid var(--color-accent);
+    border-radius: 0.3rem;
+    background-color: var(--color-bg);
+    transform: rotate(45deg);
+  }
+
+  .mini-diamond span {
+    transform: rotate(-45deg);
+    color: var(--color-accent);
+    font-size: 0.8125rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .details-title {
+    max-width: none;
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+  }
+
+  .detail {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: var(--space-3);
+  }
+
+  .specimen {
+    width: 100%;
+    margin-bottom: var(--space-2);
+    padding: var(--space-3);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+  }
+
+  .detail > p:last-child {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 64rem) {
+    .cases {
+      position: relative;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--space-6);
+      padding-top: 2.75rem;
+    }
+
+    .cases::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(var(--node) / 2 - var(--rail) - 1px);
+      right: calc((100% - 2 * var(--space-6)) / 6 - 1px);
+      height: 2px;
+      background-color: var(--color-accent);
+    }
+
+    .case {
+      position: relative;
+      max-width: none;
+    }
+
+    .case::before {
+      content: '';
+      position: absolute;
+      top: -2.75rem;
+      left: calc(50% - 1px);
+      height: 2.125rem;
+      border-left: 2px solid var(--color-accent);
+    }
+
+    .case::after {
+      content: '';
+      position: absolute;
+      top: -0.625rem;
+      left: calc(50% - 0.375rem);
+      border-top: 0.625rem solid var(--color-accent);
+      border-left: 0.375rem solid transparent;
+      border-right: 0.375rem solid transparent;
+    }
+  }
+
+  /* ---------- 07 next ---------- */
+  .step--last {
+    padding-bottom: var(--space-8);
+  }
+
+  .next {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .next .card {
+    position: relative;
+    z-index: 1;
+  }
+
+  .issues ol {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: issue;
+  }
+
+  .issues li {
+    position: relative;
+    padding-left: 2.25rem;
+    counter-increment: issue;
+  }
+
+  .issues li::before {
+    content: counter(issue, decimal-leading-zero) / '';
+    position: absolute;
+    top: 0.0625rem;
+    left: 0;
+    color: var(--warn-text);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  .plan {
+    border: 2px solid var(--color-accent);
+  }
+
+  .plan__lead {
+    margin-top: var(--space-4);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+  }
+
+  .measures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+  }
+
+  .measures div {
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+  }
+
+  .measures dt {
+    font-weight: var(--weight-semibold);
+  }
+
+  .measures dd {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .plan__rule {
+    margin-top: var(--space-4);
+    color: var(--good-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .loop {
+    margin: var(--space-2) 0 0;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 48rem) {
+    .next {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .loop {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .next {
+      column-gap: var(--space-6);
+      row-gap: 0;
+    }
+
+    .next::before {
+      content: '';
+      position: absolute;
+      top: 0.625rem;
+      bottom: 1.5rem;
+      left: calc(var(--node) / 2 - var(--rail) + 2.25rem);
+      right: calc(25% - var(--space-6) / 4 - 1px);
+      border: 2px solid var(--color-accent);
+      border-top: 0;
+      border-radius: 0 0 1.125rem 1.125rem;
+    }
+
+    .next::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(var(--node) / 2 - var(--rail) + 2.25rem - 0.3125rem);
+      border-bottom: 0.625rem solid var(--color-accent);
+      border-left: 0.375rem solid transparent;
+      border-right: 0.375rem solid transparent;
+    }
+
+    .loop {
+      height: 4rem;
+      margin: 0;
+    }
+
+    .loop__glyph {
+      display: none;
+    }
+
+    .loop__text {
+      position: absolute;
+      bottom: 2.125rem;
+      left: calc(var(--node) / 2 - var(--rail) + 3.5rem);
+    }
+  }
+
+  /* ---------- references and end ---------- */
+  .refs {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+    padding-top: var(--space-7);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .refs h2 {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0.08em;
+  }
+
+  .refs ol {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding-left: 1.25rem;
+    font-size: var(--text-sm);
+  }
+
+  .refs li a {
+    color: var(--color-text-muted);
+  }
+
+  .refs li a:hover {
+    color: var(--color-text);
+  }
+
+  .backcard {
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-6);
+    background-color: var(--color-accent);
+    border-radius: var(--radius-md);
+    color: var(--color-on-accent);
+    text-decoration: none;
+  }
+
+  .backcard:hover {
+    background-color: var(--color-accent-strong);
+    color: var(--color-on-accent);
+    text-decoration: none;
+  }
+
+  .backcard .mono {
+    font-size: 0.75rem;
+    color: #c9d6f2;
+  }
+
+  .backcard__title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .backcard__body {
+    font-size: var(--text-sm);
+    color: #dbe4f6;
+  }
+
+  .end {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+  }
+
+  @media (min-width: 64rem) {
+    .refs {
+      grid-template-columns: minmax(0, 1fr) 22rem;
+      align-items: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .backcard {
+      transition: background-color var(--duration-fast);
+    }
+  }
+</style>

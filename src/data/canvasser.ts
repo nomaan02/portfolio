@@ -223,6 +223,14 @@ export const logger = {
     'Counts only (doors, contacts, leads), never rates or rankings, so nobody cherry-picks doors.',
     'Works with no signal. Every tap is queued on the phone and synced exactly once.',
   ],
+  deepDive: {
+    eyebrow: 'Round 8 · Design deep-dive',
+    title: 'One thumb, one mark per door',
+    text: "Tap heatmaps from five canvassers showed V1's outcome buttons sat in the thumb's stretch zone. The deep-dive follows the research and three design passes that turned four buttons into one gesture.",
+    href: '/work/canvasser/logger/',
+    linkLabel: 'Read the design deep-dive',
+    alt: 'The Logger before and after: V1 with four outcome buttons down the right edge, and V2.1 with one outcome dial under the thumb.',
+  },
 };
 
 export const routes = {
@@ -312,7 +320,7 @@ export const figures = {
   hero: [
     {
       file: 'hero.png',
-      alt: "The D2D manager dashboard on a laptop, showing today's doors, contacts and leads for three teams, next to the canvasser Logger on a phone, showing the current door in large type and the outcome buttons.",
+      alt: "The D2D manager dashboard on a laptop, showing today's doors, contacts, leads and contact-to-lead rate, doors by hour, the outcome mix and the teams out, next to the canvasser Logger on a phone with the current door in large type and the round outcome dial.",
       caption: '',
     },
   ],

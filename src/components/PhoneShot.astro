@@ -1,0 +1,50 @@
+---
+// A phone screen or UI specimen from src/assets/logger/, framed like the Figma deep-dive.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+type Props = {
+  image: ImageMetadata;
+  alt: string;
+  sizes?: string;
+  priority?: boolean;
+  tone?: 'phone' | 'specimen';
+};
+
+const {
+  image,
+  alt,
+  sizes = '(min-width: 64rem) 18rem, (min-width: 40rem) 40vw, 70vw',
+  priority = false,
+  tone = 'phone',
+} = Astro.props;
+---
+
+<Image
+  src={image}
+  alt={alt}
+  widths={[240, 360, 480, 640, image.width]}
+  sizes={sizes}
+  format="webp"
+  quality={82}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : undefined}
+  class:list={['shot', `shot--${tone}`]}
+/>
+
+<style>
+  :global(img.shot) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  :global(img.shot--phone) {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 9.5% / 4.4%;
+    box-shadow:
+      0 0.75rem 2rem rgb(18 33 77 / 0.1),
+      0 0.125rem 0.375rem rgb(18 33 77 / 0.06);
+  }
+</style>
