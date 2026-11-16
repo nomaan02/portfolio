@@ -18,7 +18,8 @@ const { file, code, caption } = Astro.props;
   .code {
     margin: 0;
     min-width: 0;
-    background-color: var(--color-text);
+    background-color: var(--color-code-bg);
+    border: 1px solid var(--color-code-border);
     border-radius: var(--radius-md);
     padding: var(--space-5);
   }
@@ -29,11 +30,11 @@ const { file, code, caption } = Astro.props;
     }
   }
 
-  /* #c9ced8 on #1a1a1a is 11.6:1. #e8ebf1 on #1a1a1a is 15.4:1. */
+  /* Code stays dark in both themes. Ratios are in tokens.css (code-text, code-muted). */
   .code__file,
   figcaption {
     font-size: var(--text-sm);
-    color: #c9ced8;
+    color: var(--color-code-muted);
   }
 
   .code__file {
@@ -46,11 +47,11 @@ const { file, code, caption } = Astro.props;
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     line-height: var(--leading-body);
-    color: #e8ebf1;
+    color: var(--color-code-text);
   }
 
   pre:focus-visible {
-    outline: 2px solid #e8ebf1;
+    outline: 2px solid var(--color-code-text);
     outline-offset: 2px;
   }
 

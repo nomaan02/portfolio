@@ -359,18 +359,11 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
 </BaseLayout>
 
 <style>
-  /* Page tokens. The flow spine, nodes and arrows follow the Figma deep-dive. */
+  /* Page layout tokens. Colours now come from tokens.css so the page follows the theme (site-5-01).
+     The page sits straight on the dot grid, like the Figma deep-dive. */
   .dd {
-    --spine: #c3d0ea;
-    --tint: #e8eefb;
-    --warn-bg: #fdf1dc;
-    --warn-text: #7a4a00;
-    --good-bg: #e3f4ea;
-    --good-text: #1d6b45;
-    --bad-text: #b4232a;
     --node: 2rem;
     --rail: 2.75rem;
-    background-color: var(--color-surface);
     padding-bottom: var(--space-8);
   }
 
@@ -408,7 +401,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     max-width: none;
     padding: 0.125rem 0.625rem;
     border-radius: var(--radius-full);
-    background-color: var(--tint);
+    background-color: var(--color-tint);
     color: var(--color-accent);
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -419,24 +412,24 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
   }
 
   .tag--muted {
-    background-color: #eceff4;
+    background-color: var(--color-sunken);
     color: var(--color-text-muted);
   }
 
   .tag--warn {
-    background-color: var(--warn-bg);
-    color: var(--warn-text);
+    background-color: var(--color-warn-bg);
+    color: var(--color-warn);
   }
 
   .tag--good {
-    background-color: var(--good-bg);
-    color: var(--good-text);
+    background-color: var(--color-good-bg);
+    color: var(--color-good);
   }
 
   .card {
     min-width: 0;
     padding: var(--space-5);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
   }
@@ -455,7 +448,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     padding: 0.125rem 0.625rem;
     border: 1px solid var(--color-accent);
     border-radius: var(--radius-full);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     color: var(--color-accent);
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -682,7 +675,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     gap: var(--space-3) var(--space-7);
     margin-top: var(--space-7);
     padding: var(--space-4) var(--space-5);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
   }
@@ -720,7 +713,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
     font-family: var(--font-mono);
     font-size: 0.625rem;
@@ -732,7 +725,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     margin-inline: 0.25rem;
     border: 2px solid var(--color-accent);
     border-radius: 0.25rem;
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     transform: rotate(45deg);
   }
 
@@ -748,7 +741,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     height: 1.25rem;
     border: 1px solid var(--color-border-strong);
     border-radius: 0.3rem;
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
   }
 
   .glyph--flow,
@@ -821,7 +814,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
   .flow {
     position: relative;
     padding-top: var(--space-7);
-    background: linear-gradient(var(--spine), var(--spine)) no-repeat calc(var(--node) / 2 - 1px) 0 / 2px calc(100% - 0.5rem);
+    background: linear-gradient(var(--color-spine), var(--color-spine)) no-repeat calc(var(--node) / 2 - 1px) 0 / 2px calc(100% - 0.5rem);
   }
 
   .flow::before,
@@ -859,11 +852,11 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     width: var(--node);
     height: var(--node);
     border-radius: 50%;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    box-shadow: 0 0 0 6px var(--color-surface);
+    box-shadow: 0 0 0 6px var(--color-canvas);
   }
 
   .node--decision {
@@ -873,7 +866,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     height: calc(var(--node) * 0.7);
     border: 2px solid var(--color-accent);
     border-radius: 0.375rem;
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     color: var(--color-accent);
     transform: rotate(45deg);
   }
@@ -936,7 +929,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
   .context li {
     max-width: none;
     padding: var(--space-4) var(--space-5);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
   }
@@ -1011,13 +1004,13 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     width: 1.625rem;
     height: 1.625rem;
     border-radius: 50%;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
     font-size: 0.8125rem;
     font-weight: var(--weight-semibold);
     box-shadow:
-      0 0 0 2px var(--color-bg),
-      0 2px 6px rgb(18 33 77 / 0.25);
+      0 0 0 2px var(--color-surface),
+      var(--shadow-node);
   }
 
   .grip {
@@ -1100,7 +1093,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     gap: var(--space-3);
     height: 100%;
     padding: var(--space-5);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border-radius: var(--radius-md);
   }
 
@@ -1269,7 +1262,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
   }
 
   .row__in {
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
   }
 
@@ -1283,7 +1276,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
   }
 
   .row__out {
-    background-color: var(--tint);
+    background-color: var(--color-tint);
   }
 
   .row__decision {
@@ -1299,13 +1292,13 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     max-width: none;
     margin-top: var(--space-5);
     padding: var(--space-4) var(--space-5);
-    background-color: var(--warn-bg);
+    background-color: var(--color-warn-bg);
     border-radius: var(--radius-md);
-    color: #5c3d00;
+    color: var(--color-warn-strong);
   }
 
   .caveat .tag {
-    background-color: #fbe3b8;
+    background-color: var(--color-warn-strong-bg);
   }
 
   @media (min-width: 48rem) {
@@ -1383,12 +1376,12 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
 
   .note--plus::before {
     content: '+' / '';
-    color: var(--good-text);
+    color: var(--color-good);
   }
 
   .note--minus::before {
     content: '\2212' / '';
-    color: var(--bad-text);
+    color: var(--color-bad);
   }
 
   @media (min-width: 64rem) {
@@ -1419,7 +1412,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
   .dirkey {
     width: 13rem;
     padding: var(--space-3) var(--space-4) var(--space-4);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
   }
@@ -1508,7 +1501,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     width: 1.625rem;
     height: 1.625rem;
     border-radius: 50%;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
     font-size: 0.8125rem;
     font-weight: var(--weight-semibold);
@@ -1607,7 +1600,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     margin-block: 0.375rem;
     border: 2px solid var(--color-accent);
     border-radius: 0.3rem;
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     transform: rotate(45deg);
   }
 
@@ -1639,11 +1632,13 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     gap: var(--space-3);
   }
 
+  /* Specimens are transparent PNGs drawn for a light panel, so the panel stays light in both themes. */
   .specimen {
     width: 100%;
     margin-bottom: var(--space-2);
     padding: var(--space-3);
-    background-color: var(--color-surface);
+    background-color: var(--color-specimen);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
   }
 
@@ -1731,7 +1726,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     position: absolute;
     top: 0.0625rem;
     left: 0;
-    color: var(--warn-text);
+    color: var(--color-warn);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
   }
@@ -1756,7 +1751,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
 
   .measures div {
     padding: var(--space-3) var(--space-4);
-    background-color: var(--color-surface);
+    background-color: var(--color-sunken);
     border-radius: var(--radius-sm);
   }
 
@@ -1772,7 +1767,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
 
   .plan__rule {
     margin-top: var(--space-4);
-    color: var(--good-text);
+    color: var(--color-good);
     font-weight: var(--weight-semibold);
   }
 
@@ -1872,21 +1867,21 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
     align-content: start;
     gap: var(--space-2);
     padding: var(--space-5) var(--space-6);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     border-radius: var(--radius-md);
     color: var(--color-on-accent);
     text-decoration: none;
   }
 
   .backcard:hover {
-    background-color: var(--color-accent-strong);
+    background-color: var(--color-accent-fill-hover);
     color: var(--color-on-accent);
     text-decoration: none;
   }
 
   .backcard .mono {
     font-size: 0.75rem;
-    color: #c9d6f2;
+    color: var(--color-on-accent);
   }
 
   .backcard__title {
@@ -1898,7 +1893,7 @@ const dirWord: Record<string, string> = { up: 'Up', right: 'Right', down: 'Down'
 
   .backcard__body {
     font-size: var(--text-sm);
-    color: #dbe4f6;
+    color: var(--color-on-accent);
   }
 
   .end {

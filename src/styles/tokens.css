@@ -1,15 +1,41 @@
 :root {
-  /* Colour (blue, from the D2D app. Changed from rust in site-2-01) */
-  --color-bg: #ffffff;
-  --color-surface: #f4f7fd;        /* cool off-white for cards and sections */
-  --color-text: #1a1a1a;           /* 17.4:1 on bg, 16.2:1 on surface */
-  --color-text-muted: #4b5563;     /* 7.56:1 on bg, 7.05:1 on surface */
-  --color-accent: #1c4aa6;         /* 8.15:1 on bg, 7.59:1 on surface */
-  --color-accent-strong: #163b85;  /* hover/active, 10.5:1 on bg */
-  --color-on-accent: #ffffff;      /* text on accent fill, 8.15:1 */
-  --color-border: #dce3f0;         /* decorative dividers only */
-  --color-border-strong: #7c8597;  /* UI boundaries that must be seen, 3.7:1 on bg, 3.4:1 on surface */
-  --color-focus: #1c4aa6;
+  /* Colour. Light is the default; [data-theme="dark"] below overrides it.
+     Names match the Figma "site-5 / colour" variables (site-5-01).
+     Ratios are WCAG contrast against the surface the token sits on. */
+  color-scheme: light;
+  --color-canvas: #f7f9fc;            /* page background, carries the dot grid */
+  --color-surface: #ffffff;           /* solid cards, tables, header */
+  --color-sunken: #f0f4fb;            /* table heads, image wells, soft boxes */
+  --color-text: #1a1a1a;              /* 17.4:1 on surface, 16.5:1 on canvas */
+  --color-text-muted: #4b5563;        /* 7.56:1 on surface, 7.17:1 on canvas, 4.59:1 on dot-hot */
+  --color-accent: #0b5384;            /* text, links, meaningful graphics. 8.12:1 on surface, 7.70:1 on canvas */
+  --color-accent-strong: #083e63;     /* link hover, 11.2:1 on surface */
+  --color-accent-fill: #8ad0ff;       /* brand fill: buttons, nodes, decorative marks. Always with on-accent text */
+  --color-accent-fill-hover: #6cc2ff;
+  --color-on-accent: #0b1020;         /* text on accent-fill, 11.3:1 */
+  --color-tint: #e6f4ff;              /* chips, tags, callouts. accent on tint 7.25:1 */
+  --color-border: #dce3f0;            /* decorative dividers only */
+  --color-border-strong: #7c8597;     /* UI boundaries that must be seen, 3.71:1 on surface */
+  --color-focus: #0b5384;             /* 7.70:1 on canvas */
+  --color-dot: #dde3ec;               /* dot grid, 1.22:1 on canvas */
+  --color-dot-hot: #c4cad5;           /* dots under the cursor, capped so text on them stays AA */
+  --color-spine: #b9ddf5;             /* Logger flow spine (decorative) */
+  --color-good: #1d6b45;              /* 5.68:1 on good-bg */
+  --color-good-bg: #e3f4ea;
+  --color-warn: #7a4a00;              /* 6.69:1 on warn-bg */
+  --color-warn-bg: #fdf1dc;
+  --color-warn-strong: #5c3d00;       /* 8.85:1 on warn-bg */
+  --color-warn-strong-bg: #fbe3b8;
+  --color-bad: #b4232a;               /* 6.53:1 on surface */
+  --color-code-bg: #1a1a1a;           /* code stays dark in both themes */
+  --color-code-border: #1a1a1a;
+  --color-code-text: #e8ebf1;         /* 15.4:1 */
+  --color-code-muted: #c9ced8;        /* 11.6:1 */
+  --color-specimen: #f0f4fb;          /* light panel for transparent UI specimens, both themes */
+  --shadow-card: 0 1px 3px rgb(18 33 77 / 0.06);
+  --shadow-lift: 0 1px 3px rgb(18 33 77 / 0.06), 0 12px 28px -6px rgb(18 33 77 / 0.07);
+  --shadow-phone: 0 0.75rem 2rem rgb(18 33 77 / 0.1), 0 0.125rem 0.375rem rgb(18 33 77 / 0.06);
+  --shadow-node: 0 2px 6px rgb(18 33 77 / 0.25);
 
   /* Type */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -59,4 +85,42 @@
 
   /* Added in site-1-09 */
   --toc-width: 12rem;
+}
+
+/* Dark theme. Set on <html> by the inline script in BaseLayout (stored choice, else the OS setting). */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-canvas: #0e1420;
+  --color-surface: #151c2b;
+  --color-sunken: #0b101a;
+  --color-text: #e8ecf4;              /* 14.4:1 on surface, 15.6:1 on canvas */
+  --color-text-muted: #a3adc2;        /* 7.55:1 on surface, 8.17:1 on canvas, 4.98:1 on dot-hot */
+  --color-accent: #8ad0ff;            /* 10.2:1 on surface, 11.0:1 on canvas */
+  --color-accent-strong: #b3e0ff;
+  --color-accent-fill: #8ad0ff;
+  --color-accent-fill-hover: #b3e0ff;
+  --color-on-accent: #0b1020;         /* 11.3:1 on accent-fill */
+  --color-tint: #16324d;              /* accent on tint 7.85:1 */
+  --color-border: #263048;
+  --color-border-strong: #66728c;     /* 3.53:1 on surface */
+  --color-focus: #8ad0ff;
+  --color-dot: #232c3e;               /* 1.32:1 on canvas */
+  --color-dot-hot: #323b4e;
+  --color-spine: #2a4a66;
+  --color-good: #6fd39b;              /* 7.81:1 on good-bg */
+  --color-good-bg: #12301f;
+  --color-warn: #f0bf6a;              /* 8.69:1 on warn-bg */
+  --color-warn-bg: #33260c;
+  --color-warn-strong: #f5d08f;       /* 10.1:1 on warn-bg */
+  --color-warn-strong-bg: #4a3712;
+  --color-bad: #ff8a8a;               /* 7.51:1 on surface */
+  --color-code-bg: #0b101a;
+  --color-code-border: #263048;
+  --color-code-text: #e8ebf1;         /* 15.9:1 */
+  --color-code-muted: #a3adc2;        /* 8.44:1 */
+  --color-specimen: #f0f4fb;
+  --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --shadow-lift: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 12px 28px -6px rgb(0 0 0 / 0.28);
+  --shadow-phone: 0 0.75rem 2rem rgb(0 0 0 / 0.35);
+  --shadow-node: 0 2px 6px rgb(0 0 0 / 0.5);
 }

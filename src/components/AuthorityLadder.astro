@@ -31,7 +31,7 @@ const { label, levels, caption } = Astro.props;
   .ladder {
     margin: 0;
     min-width: 0;
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-5);
@@ -86,31 +86,33 @@ const { label, levels, caption } = Astro.props;
     font-size: var(--text-sm);
   }
 
-  /* Colour steps from the accent token. Levels 1 and 2 carry white text (8.2:1 and 5.0:1). */
+  /* Colour steps from accent-fill mixed into the surface, so both themes ramp the same way.
+     Levels 1 and 2 carry on-accent text (11.3:1 and 6.3:1 worst case, dark).
+     Levels 3 and 4 carry normal text (5.2:1 and 7.9:1 worst case, dark). */
   .ladder__item--1 {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
   }
 
   .ladder__item--2 {
-    background-color: color-mix(in srgb, var(--color-accent) 80%, white);
+    background-color: color-mix(in srgb, var(--color-accent-fill) 70%, var(--color-surface));
     color: var(--color-on-accent);
   }
 
   .ladder__item--3 {
-    background-color: color-mix(in srgb, var(--color-accent) 40%, white);
+    background-color: color-mix(in srgb, var(--color-accent-fill) 40%, var(--color-surface));
   }
 
   .ladder__item--4 {
-    background-color: color-mix(in srgb, var(--color-accent) 22%, white);
+    background-color: color-mix(in srgb, var(--color-accent-fill) 22%, var(--color-surface));
   }
 
   .ladder__item--5 {
-    background-color: var(--color-surface);
+    background-color: var(--color-sunken);
   }
 
   .ladder__item--6 {
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     border-color: var(--color-border-strong);
   }
 

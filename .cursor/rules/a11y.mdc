@@ -15,7 +15,10 @@ alwaysApply: true
 
 ## Colour and contrast
 - Body text 4.5:1 minimum. Large text (24px+, or 18.66px+ bold) and UI parts 3:1.
-- Accent `#1C4AA6` on white = 8.15:1 and on surface `#F4F7FD` = 7.59:1, OK for text. On near-black it's about 2.1:1, so never use it for text on dark backgrounds.
+- Two themes (light and dark). Every colour comes from `src/styles/tokens.css`, which lists the ratio next to each token. Never hardcode a hex value in a component or page.
+- Check every new text or UI pair in both themes. Text can sit straight on the dot-grid canvas, so check it against `--color-dot-hot` too (worst case 4.59:1 light, 4.98:1 dark).
+- `--color-accent-fill` (`#8AD0FF`) is a fill only. It is 1.59:1 on the light canvas, so never use it for text, links, focus rings or graphics that carry meaning. Put `--color-on-accent` text on it (11.3:1).
+- `--color-accent` is the text, link, focus and chart colour: `#0B5384` light (7.70:1 on canvas), `#8AD0FF` dark (11.0:1 on canvas).
 - Never use colour alone to carry meaning (links in body copy are underlined).
 
 ## Focus and keyboard
@@ -29,7 +32,7 @@ alwaysApply: true
 - Always set `width` and `height` (or aspect-ratio) so the layout doesn't shift.
 
 ## Motion
-- Wrap all non-essential motion in `@media (prefers-reduced-motion: no-preference)`.
+- Wrap all non-essential motion in `@media (prefers-reduced-motion: no-preference)`. The cursor spotlight and section fade-ups also check reduced motion in `src/scripts/site.ts`.
 - Animate only `transform` and `opacity`. Nothing auto-plays.
 
 ## Layout

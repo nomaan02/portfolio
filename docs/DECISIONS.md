@@ -1,6 +1,6 @@
 # Decisions
 
-Last updated: 2026-11-16
+Last updated: 2026-11-16 (site-5-01)
 
 | Area | Decision |
 |---|---|
@@ -9,7 +9,11 @@ Last updated: 2026-11-16
 | Stack | Astro, static output, plain CSS, no UI framework, no Tailwind |
 | Allowed dependencies | `astro`, `@astrojs/sitemap`. Nothing else without the owner's approval |
 | Fonts | Inter, self-hosted woff2 in `public/fonts/` (SIL OFL). No Google Fonts, no CDN |
-| Accent | `#1C4AA6` (blue, from the D2D app). Changed from rust `#BC3B1A` in site-2-01. Light theme only |
+| Accent | `#8AD0FF` (site-5-01). Was `#1C4AA6` (site-2-01), rust `#BC3B1A` before that. It fails as text on light (1.59:1), so it is split by role: `--color-accent-fill` `#8AD0FF` for fills with dark `--color-on-accent` text in both themes; `--color-accent` for text, links, focus and meaningful graphics is `#0B5384` in light and `#8AD0FF` in dark |
+| Themes | Light and dark (site-5-01). Default follows the OS (`prefers-color-scheme`); the header toggle stores the choice in `localStorage` (`theme`). An inline script in `BaseLayout` sets `data-theme` on `<html>` before first paint. Without JS the site is light and the toggle is hidden. All colours live in `src/styles/tokens.css`; token names match the Figma variable collection "site-5 / colour" (file `dJUKGf1CB5vtEsulDCHvag`, page 174:214). No hex values outside `tokens.css` |
+| Workspace canvas | Site-wide dot grid on `body` (24px, 2px dots, scrolls with the page, no `background-attachment: fixed`). A cursor spotlight (`.canvas-glow`, 180px radius, dots grow to 4px) shows only for fine pointers with hover, and never with reduced motion. `--color-dot-hot` is capped so muted and accent text sitting on a hot dot still pass AA (4.59:1 light, 4.98:1 dark) |
+| Artboards | Sections are outlined frames on the canvas: the Home hero and `Section tone="surface"` have no fill, just a 1px `--color-border` frame. Cards, callouts, tables, code blocks, stat tiles and flow cards stay solid. Code blocks stay dark in both themes. Logger specimen PNGs keep a light panel (`--color-specimen`) in both themes |
+| Motion | Sections (`.reveal`) fade up 12px over 220ms, once, as they scroll into view. Anything already on screen at load shows at once. Off with reduced motion, and in print |
 | Contact | `mailto:nomaanakram4@gmail.com`, LinkedIn `https://www.linkedin.com/in/nomaan-akram-b35565223/`, GitHub `https://github.com/nomaan02` |
 | v1 pages | Home (positioning + project cards), Canvasser case study (condensed), CV PDF download |
 | Launch | Everything goes live together after QA (site-1-07). Deploy is site-1-08 |

@@ -53,7 +53,10 @@ body {
   font-weight: var(--weight-regular);
   line-height: var(--leading-body);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  background-color: var(--color-canvas);
+  /* Dot grid: the page is a workspace. Scrolls with the page, never background-attachment: fixed. */
+  background-image: radial-gradient(circle at center, var(--color-dot) 1px, transparent 1.5px);
+  background-size: 24px 24px;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'cv11', 'ss01';
 }
@@ -159,7 +162,7 @@ a:hover {
   clip: auto;
   white-space: normal;
   padding: var(--space-3) var(--space-4);
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-fill);
   color: var(--color-on-accent);
   text-decoration: none;
   border-radius: var(--radius-sm);
@@ -173,16 +176,20 @@ a:hover {
   padding-inline: var(--space-5);
   border: 0;
   border-radius: var(--radius-sm);
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-fill);
   color: var(--color-on-accent);
   font-weight: var(--weight-semibold);
   text-decoration: none;
 }
 
 .button:hover {
-  background-color: var(--color-accent-strong);
+  background-color: var(--color-accent-fill-hover);
   color: var(--color-on-accent);
   text-decoration: none;
+}
+
+.button:active {
+  transform: translateY(1px);
 }
 
 .button--secondary {
@@ -198,6 +205,10 @@ a:hover {
   text-decoration: none;
 }
 
+.button--secondary:active {
+  background-color: var(--color-sunken);
+}
+
 .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -205,6 +216,55 @@ a:hover {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-accent);
+}
+
+/* Cursor spotlight on the dot grid (site-5-01). Mouse and trackpad only, never with reduced motion.
+   Same 24px grid as body, offset by scroll so the dots line up. Dots under the cursor grow from 2px to 4px. */
+.canvas-glow {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .canvas-glow {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle at center, var(--color-dot-hot) 2px, transparent 2.5px);
+    background-size: 24px 24px;
+    background-position: 0 calc(var(--sy, 0px) * -1);
+    -webkit-mask-image: radial-gradient(circle 180px at var(--mx, -999px) var(--my, -999px), black 0%, rgb(0 0 0 / 0.6) 45%, transparent 100%);
+    mask-image: radial-gradient(circle 180px at var(--mx, -999px) var(--my, -999px), black 0%, rgb(0 0 0 / 0.6) 45%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-out);
+  }
+
+  .canvas-glow.is-on {
+    opacity: 1;
+  }
+}
+
+/* Entrance motion (site-5-01): sections fade up 12px once, as they scroll into view.
+   Only hidden once the script has run (html.reveal-on), and never with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-on .reveal {
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
+  }
+
+  html.reveal-on .reveal:not(.is-in) {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 .tabular {

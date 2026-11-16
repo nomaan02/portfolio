@@ -21,16 +21,18 @@ const headingId = id ? `${id}-title` : slug;
 <section
   id={id}
   aria-labelledby={headingId}
-  class:list={['section', tone === 'surface' && 'section--surface']}
+  class:list={['section', 'reveal', tone === 'surface' && 'section--surface']}
 >
   <div class="container">
-    <div class="section__head">
-      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-      <h2 id={headingId}>{title}</h2>
-      {intro && <p class="intro">{intro}</p>}
-    </div>
-    <div class="section__body">
-      <slot />
+    <div class:list={[tone === 'surface' && 'section__frame']}>
+      <div class="section__head">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h2 id={headingId}>{title}</h2>
+        {intro && <p class="intro">{intro}</p>}
+      </div>
+      <div class="section__body">
+        <slot />
+      </div>
     </div>
   </div>
 </section>
@@ -46,8 +48,17 @@ const headingId = id ? `${id}-title` : slug;
     }
   }
 
-  .section--surface {
-    background-color: var(--color-surface);
+  /* site-5-01: "surface" sections are outlined artboards on the dot grid. No fill, a 1px frame. */
+  .section__frame {
+    padding: var(--space-6) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 48rem) {
+    .section__frame {
+      padding: var(--space-7);
+    }
   }
 
   .section__head {
