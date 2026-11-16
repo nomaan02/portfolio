@@ -5,6 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import loggerCard from '../assets/logger/card.png';
+import quantCard from '../assets/ai-workflow/hero.png';
+import { figures as aiFigures } from '../data/ai-workflow';
 
 const cardImages = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/canvasser/*.{png,jpg,jpeg}',
@@ -13,6 +15,9 @@ const cardImages = import.meta.glob<{ default: ImageMetadata }>(
 const cardImage = homeCardImage.alt.trim()
   ? cardImages[`../assets/canvasser/${homeCardImage.file}`]?.default
   : undefined;
+
+const quantCardAlt = aiFigures.hero[0]?.alt ?? '';
+if (!quantCardAlt) throw new Error('index: the ai-workflow hero alt text is missing.');
 
 const person = {
   '@context': 'https://schema.org',
@@ -35,6 +40,7 @@ const person = {
   <script type="application/ld+json" set:html={JSON.stringify(person)} slot="head" />
 
   <section class="hero container" aria-labelledby="hero-title">
+    <p class="artboard-label" aria-hidden="true">home / hero</p>
     <div class="hero__frame">
       <p class="eyebrow">UX and Product Designer · Bristol</p>
       <h1 id="hero-title">Hi, I'm Nomaan.</h1>
@@ -54,12 +60,16 @@ const person = {
     </div>
   </section>
 
-  <Section id="work" eyebrow="Work" title="Selected work">
+  <Section id="work" number="01" eyebrow="Work" title="Selected work">
     <ProjectCard
       featured
       headingLevel={3}
       image={cardImage}
       imageAlt={cardImage ? homeCardImage.alt : undefined}
+      chips={[
+        { label: 'Live', tone: 'live' },
+        { label: 'Case study', tone: 'category' },
+      ]}
       meta="First Home Improvements · 2026"
       title="D2D: from paper surveys to live data"
       summary="I knocked doors on this team, then designed and built the app it now runs on. Used daily by 60+ canvassers across 5 South West branches."
@@ -67,23 +77,26 @@ const person = {
       href="/work/canvasser/"
       linkLabel="Read the case study"
     />
-    <div class="feature-gap">
+    <div class="card-grid">
       <ProjectCard
-        featured
-        headingLevel={3}
         image={loggerCard}
         imageAlt="The D2D Logger before and after: V1 with four outcome buttons down the right edge, and V2.1 with one outcome dial under the thumb."
-        meta="Design deep-dive · D2D · 2026"
+        chips={[
+          { label: 'New', tone: 'category' },
+          { label: 'Deep-dive', tone: 'category' },
+        ]}
+        meta="D2D · 2026"
         title="One thumb, one mark per door"
         summary="Tap heatmaps from five canvassers showed the Logger's buttons sat in the thumb's stretch zone. The research, three design passes and the press, drag and release gesture that replaced them."
         tags={['Field research', 'Interaction design', 'Figma', 'Accessibility']}
         href="/work/canvasser/logger/"
         linkLabel="Read the deep-dive"
       />
-    </div>
-    <div class="card-grid">
       <ProjectCard
-        meta="Case study · QuantTrader · 2026"
+        image={quantCard}
+        imageAlt={quantCardAlt}
+        chips={[{ label: 'Case study', tone: 'category' }]}
+        meta="QuantTrader · 2026"
         title="Running AI agents on a trading platform"
         summary="How I ran AI agents on a futures platform I built with a business partner: one job per model, pinned context, two human approval gates, and no agent ever near the broker keys."
         tags={['AI agents', 'Claude Code', 'MCP', 'Python']}
@@ -91,13 +104,18 @@ const person = {
         linkLabel="Read the case study"
       />
       <ProjectCard
+        chips={[{ label: 'Role', tone: 'category' }]}
         meta="Barclays · 2022-2026"
         title="UX / Product Designer"
         summary="4 years across Business Banking, Customer Care and Transact & Pay. I led the Premier offers onboarding flow end to end, and redesigned a CHAPS outage banner that lifted link success by 30% in testing."
         tags={['User research', 'UserZoom', 'Figma', 'Design systems']}
       />
       <ProjectCard
-        meta="Client · Everlink"
+        chips={[
+          { label: 'Paused', tone: 'paused' },
+          { label: 'Client', tone: 'category' },
+        ]}
+        meta="Everlink"
         title="NFC jewellery store"
         summary="A Shopify store, plus a separate site where each piece links to its owner's personal page through an NFC tag. Designs and a proof of concept delivered. The project is paused."
         tags={['Shopify', 'Figma', 'APIs and webhooks']}
@@ -105,29 +123,44 @@ const person = {
         linkLabel="View on GitHub"
       />
       <ProjectCard
-        meta="Client · Looptech"
+        chips={[
+          { label: 'Ongoing', tone: 'ongoing' },
+          { label: 'Client', tone: 'category' },
+        ]}
+        meta="Looptech"
         title="Shopify storefront"
         summary="Ongoing Shopify work. I built the Brand New and Renewed toggle, product filtering and a Smart Pick recommendation, with prices and details updating as you choose."
         tags={['Shopify', 'Liquid', 'TypeScript']}
       />
       <ProjectCard
-        meta="Personal tool"
+        chips={[{ label: 'Tool', tone: 'category' }]}
+        meta="Personal"
         title="VoxPrompt"
         summary="A voice-to-prompt tool I built and use every day."
         href="https://github.com/nomaan02/voxprompt"
         linkLabel="View on GitHub"
       />
       <ProjectCard
-        meta="Personal tool"
+        chips={[{ label: 'Tool', tone: 'category' }]}
+        meta="Personal"
         title="CISI revision hub"
         summary="A revision app for the CISI finance exams."
         href="https://github.com/nomaan02/cisi-revision-hub"
         linkLabel="View on GitHub"
       />
+      <ProjectCard
+        chips={[{ label: 'Studio', tone: 'category' }]}
+        meta="NakoLabs · since 2021"
+        title="3D and motion work"
+        summary="My 3D and motion design, from promo for live music events to client work. Made in Blender, Cinema 4D and After Effects."
+        tags={['Blender', 'Cinema 4D', 'After Effects']}
+        href="https://www.instagram.com/nako.labs/"
+        linkLabel="View on Instagram"
+      />
     </div>
   </Section>
 
-  <Section id="about" eyebrow="About" title="A designer who builds" tone="surface">
+  <Section id="about" number="02" eyebrow="About" title="A designer who builds" tone="surface">
     <div class="about">
       <p>
         I'm a UX and Product Designer in Bristol. I spent 4 years on the UX team at Barclays through a degree apprenticeship with Manchester Metropolitan University, shipping 2 to 3 projects and dev handovers a month.
@@ -163,6 +196,26 @@ const person = {
     .hero__frame {
       padding: var(--space-8);
     }
+  }
+
+  /* site-5-02: a Figma-style frame name above the hero artboard. Decorative, hidden from screen readers. */
+  .artboard-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: none;
+    margin-bottom: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .artboard-label::before {
+    content: '';
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 1px;
+    background-color: var(--color-accent-fill);
   }
 
   .hero h1 {
@@ -204,10 +257,6 @@ const person = {
     flex-wrap: wrap;
     gap: var(--space-3);
     margin-top: var(--space-6);
-  }
-
-  .feature-gap {
-    margin-top: var(--space-5);
   }
 
   .card-grid {

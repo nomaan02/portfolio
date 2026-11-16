@@ -3,10 +3,15 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import ChipList from './ChipList.astro';
 
+// Chips on Home cards (site-5-02). Status chips carry a dot plus a word, so colour is never the only signal.
+type ChipTone = 'live' | 'paused' | 'ongoing' | 'category';
+type Chip = { label: string; tone: ChipTone };
+
 type Props = {
   title: string;
   summary: string;
   meta?: string;
+  chips?: Chip[];
   tags?: string[];
   href?: string;
   linkLabel?: string;
@@ -20,6 +25,7 @@ const {
   title,
   summary,
   meta,
+  chips,
   tags,
   href,
   linkLabel = 'Read more',
@@ -35,23 +41,42 @@ if (image && !imageAlt) {
 
 const Heading = headingLevel === 2 ? 'h2' : 'h3';
 const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 50vw, 100vw';
+const isStatus = (tone: ChipTone): boolean => tone !== 'category';
 ---
 
 <article class:list={['card', featured && 'card--featured', image && 'card--has-image', href && 'card--link']}>
   {
     image && imageAlt && (
-      <Image
-        src={image}
-        alt={imageAlt}
-        widths={[480, 800, 1200]}
-        sizes={sizes}
-        format="webp"
-        class="card__img"
-      />
+      <div class="card__media">
+        <Image
+          src={image}
+          alt={imageAlt}
+          widths={[480, 800, 1200]}
+          sizes={sizes}
+          format="webp"
+          class="card__img"
+        />
+      </div>
     )
   }
   <div class="card__body">
-    {meta && <p class="card__meta">{meta}</p>}
+    {
+      (chips || meta) && (
+        <div class="card__top">
+          {chips && (
+            <ul class="card__chips" aria-label="Status and type">
+              {chips.map((chip) => (
+                <li class:list={['chip', `chip--${chip.tone}`]}>
+                  {isStatus(chip.tone) && <span class="chip__dot" aria-hidden="true" />}
+                  {chip.label}
+                </li>
+              ))}
+            </ul>
+          )}
+          {meta && <p class="card__meta">{meta}</p>}
+        </div>
+      )
+    }
     <Heading class="card__title">
       {href ? <a href={href}>{title}</a> : title}
     </Heading>
@@ -62,6 +87,7 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
 </article>
 
 <style>
+  /* site-5-02: solid card on the dot grid. 1px border first, then a soft shadow (light) or edge light (dark). */
   .card {
     position: relative;
     display: flex;
@@ -70,14 +96,23 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
     overflow: hidden;
+  }
+
+  /* Screenshots have light UI baked in, so they sit in a sunken well with their own frame. */
+  .card__media {
+    padding: var(--space-4);
+    background-color: var(--color-sunken);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .card :global(.card__img) {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     width: 100%;
-    border-bottom: 1px solid var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
   }
 
   .card__body {
@@ -89,13 +124,69 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
   }
 
   @media (min-width: 48rem) {
+    .card__media {
+      padding: var(--space-5);
+    }
+
     .card__body {
       padding: var(--space-6);
     }
   }
 
+  .card__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .card__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    max-width: none;
+    padding: 0.125rem 0.625rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-tint);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .chip--live {
+    background-color: var(--color-good-bg);
+    color: var(--color-good);
+  }
+
+  .chip--paused {
+    background-color: var(--color-warn-bg);
+    color: var(--color-warn);
+  }
+
+  .chip__dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
   .card__meta {
-    font-size: var(--text-sm);
+    max-width: none;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
     color: var(--color-text-muted);
   }
 
@@ -120,6 +211,10 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
     inset: 0;
   }
 
+  .card__summary {
+    color: var(--color-text-muted);
+  }
+
   .card__cue {
     margin-top: auto;
     color: var(--color-accent);
@@ -129,6 +224,7 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
 
   .card--link:hover {
     border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-lift);
   }
 
   .card--link:hover .card__cue {
@@ -147,7 +243,14 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
 
   @media (prefers-reduced-motion: no-preference) {
     .card--link {
-      transition: border-color var(--duration-fast);
+      transition:
+        border-color var(--duration-fast),
+        box-shadow var(--duration-base) var(--ease-out),
+        transform var(--duration-base) var(--ease-out);
+    }
+
+    .card--link:hover {
+      transform: translateY(-2px);
     }
   }
 
@@ -157,11 +260,19 @@ const sizes = featured ? '(min-width: 48rem) 60vw, 100vw' : '(min-width: 48rem) 
       grid-template-columns: 3fr 2fr;
     }
 
-    .card--featured.card--has-image :global(.card__img) {
-      height: 100%;
-      aspect-ratio: auto;
+    .card--featured .card__media {
+      display: flex;
+      align-items: center;
       border-bottom: 0;
       border-right: 1px solid var(--color-border);
+    }
+
+    .card--featured .card__body {
+      justify-content: center;
+    }
+
+    .card--featured .card__cue {
+      margin-top: var(--space-2);
     }
 
     .card--featured .card__title {
