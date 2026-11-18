@@ -46,13 +46,23 @@ const headingId = id ? `${id}-title` : slug;
 </section>
 
 <style>
+  /* site-5-03: the space above a section is margin, not padding, so a jump to #id lands on the
+     section's first line instead of an empty band. scroll-margin-top leaves a small gap above it.
+     Case-study pages raise scroll-margin-top below 75rem to clear their sticky "On this page" bar. */
   .section {
-    padding-block: var(--space-7);
+    margin-top: var(--space-7);
+    padding-bottom: var(--space-6);
+  }
+
+  /* Unscoped and low specificity on purpose, so a page's section[id] rule can override it. */
+  :global(.section) {
+    scroll-margin-top: var(--space-5);
   }
 
   @media (min-width: 48rem) {
     .section {
-      padding-block: var(--space-9);
+      margin-top: var(--space-8);
+      padding-bottom: var(--space-7);
     }
   }
 

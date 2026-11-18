@@ -623,7 +623,7 @@ const fig = {
 
   /* Clear the sticky mobile bar when jumping to a section */
   @media (max-width: 74.99rem) {
-    section[id],
+    :global(section[id]),
     #measurement {
       scroll-margin-top: calc(var(--tap-min) + var(--space-5));
     }
