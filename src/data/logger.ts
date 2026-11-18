@@ -15,13 +15,13 @@ export const hero = {
   crumb: 'D2D canvasser platform / Logger deep-dive',
   back: { label: 'Full D2D case study', href: '/work/canvasser/' },
   tag: 'UX deep-dive · 5 min read',
-  titleLines: ['One thumb,', 'one mark per door.'],
+  titleLines: ['One thumb.', 'One mark per door.'],
   lead: "Heatmaps from five canvassers showed V1's outcome buttons sat in the thumb's stretch zone. This page is how four buttons became one gesture.",
   facts: [
     { term: 'Role', detail: 'Research, design, build' },
     { term: 'Input', detail: 'Heatmaps · 5 canvassers' },
     { term: 'Scope', detail: 'Logger screen · 6 states' },
-    { term: 'Status', detail: 'Designed · field test next' },
+    { term: 'Status', detail: 'V2.1 live · field data coming in' },
   ],
   before: {
     file: 'v1.png',
@@ -30,7 +30,7 @@ export const hero = {
   },
   after: {
     file: 'v21-rest.png',
-    label: 'After · V2.1',
+    label: 'After · V2.1 (shipped)',
     alt: 'The V2.1 Logger at rest: door 71 in large type, one row of counts, and a round outcome dial low in the centre with Contact at the top, Lead on the right, Not in at the bottom and Rented on the left.',
   },
   legendTitle: 'How to read this page',
@@ -283,15 +283,15 @@ export const next = {
     'The undo countdown is a 2 px bar. V1 chose text over a bar because of glare. Revisit.',
     "A dial has to be learned; four buttons don't. Labels and tap stay as the safety net.",
   ],
-  planTitle: 'Field test plan',
-  planLead: 'Same five canvassers. V1 vs a V2.1 prototype, one shift each.',
+  planTitle: 'Field test, now running',
+  planLead: 'V2.1 is live. The same five canvassers, measured against their V1 baseline.',
   measures: [
     { term: 'Time per log', detail: 'Is it actually faster?' },
     { term: 'Undo rate', detail: 'Stand-in for mis-logs' },
     { term: 'Tap vs drag', detail: 'Is the gesture being learned?' },
     { term: 'Heatmap re-run', detail: 'Did taps move into comfort?' },
   ],
-  shipRule: 'Ship if logs are no slower and undos drop.',
+  shipRule: 'Keep V2.1 if logs are no slower and undos drop. Results go here when the data is in.',
   loop: 'Loop back to 02 · Measure, with V2.1',
 };
 
